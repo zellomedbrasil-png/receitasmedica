@@ -27,8 +27,8 @@ const Precos = () => {
               <p className="text-sm text-muted-foreground font-medium mb-2 uppercase tracking-wide">Consulta + Receita</p>
               <div className="flex items-baseline justify-center gap-1 mb-8">
                 <span className="text-sm text-muted-foreground">R$</span>
-                <span className="text-6xl font-semibold text-foreground tracking-tighter-custom">89</span>
-                <span className="text-sm text-muted-foreground">,90</span>
+                <span className="text-6xl font-semibold text-foreground tracking-tighter-custom">39</span>
+                <span className="text-sm text-muted-foreground">,00</span>
               </div>
               <ul className="space-y-3 text-left mb-8">
                 {included.map((item) => (

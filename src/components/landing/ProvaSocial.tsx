@@ -5,7 +5,7 @@ import ScrollReveal from "./ScrollReveal";
 const stats = [
   { value: 15000, label: "Receitas Renovadas", prefix: "+" },
   { value: 98, label: "Taxa de Aprovação", suffix: "%" },
-  { value: 20, label: "Tempo Médio (min)", suffix: "min" },
+  { value: 7, label: "Tempo Médio (min)", suffix: "min" },
 ];
 
 const testimonials = [
