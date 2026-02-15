@@ -25,7 +25,7 @@ const categoriasVerdes = [
     icon: Pill,
     title: "Outros Tratamentos Contínuos",
     desc: "Asma, alergias crônicas, dermatologia básica e antibióticos.",
-    exemplos: "Sujeito à avaliação médica rigorosa",
+    exemplos: "Sujeito à avaliação médica",
   },
 ];
 
