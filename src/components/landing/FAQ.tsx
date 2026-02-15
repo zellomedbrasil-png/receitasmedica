@@ -1,6 +1,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 
 const faqData = [
   {
@@ -44,40 +45,46 @@ const FAQ = () => {
   return (
     <section id="faq" className="py-24 bg-card border-t border-border">
       <div className="max-w-5xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-semibold text-foreground tracking-tighter-custom mb-4">Perguntas Frequentes</h2>
-          <p className="text-muted-foreground text-sm max-w-lg mx-auto">
-            Tire suas dúvidas sobre o processo, legalidade e funcionamento da nossa plataforma.
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-semibold text-foreground tracking-tighter-custom mb-4">Perguntas Frequentes</h2>
+            <p className="text-muted-foreground text-sm max-w-lg mx-auto">
+              Tire suas dúvidas sobre o processo, legalidade e funcionamento da nossa plataforma.
+            </p>
+          </div>
+        </ScrollReveal>
 
         <div className="grid md:grid-cols-2 gap-6">
           {[col1, col2].map((col, ci) => (
-            <Accordion key={ci} type="single" collapsible className="space-y-4">
-              {col.map((item, i) => (
-                <AccordionItem
-                  key={i}
-                  value={`item-${ci}-${i}`}
-                  className="border border-border rounded-xl bg-card hover:border-primary/30 transition-colors px-5"
-                >
-                  <AccordionTrigger className="text-left font-medium text-foreground text-sm hover:no-underline">
-                    {item.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
-                    {item.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            <ScrollReveal key={ci} delay={ci * 0.15}>
+              <Accordion type="single" collapsible className="space-y-4">
+                {col.map((item, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`item-${ci}-${i}`}
+                    className="border border-border rounded-xl bg-card hover:border-primary/30 transition-colors px-5"
+                  >
+                    <AccordionTrigger className="text-left font-medium text-foreground text-sm hover:no-underline">
+                      {item.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </ScrollReveal>
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <Button size="lg" className="rounded-full px-8 py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2">
-            Iniciar Avaliação
-            <ArrowRight className="w-[18px] h-[18px]" />
-          </Button>
-        </div>
+        <ScrollReveal delay={0.3}>
+          <div className="mt-16 text-center">
+            <Button size="lg" className="rounded-full px-8 py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2">
+              Iniciar Avaliação
+              <ArrowRight className="w-[18px] h-[18px]" />
+            </Button>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

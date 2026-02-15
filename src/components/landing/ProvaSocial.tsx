@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
+import ScrollReveal from "./ScrollReveal";
 
 const stats = [
   { value: 15000, label: "Receitas Renovadas", prefix: "+" },
@@ -66,31 +67,33 @@ const ProvaSocial = () => {
   return (
     <section className="py-24 bg-background">
       <div className="max-w-5xl mx-auto px-6">
-        {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-20">
-          {stats.map((s) => (
-            <div key={s.label} className="text-center">
-              <AnimatedNumber value={s.value} prefix={s.prefix} suffix={s.suffix} />
-              <p className="text-sm text-muted-foreground mt-2 font-medium">{s.label}</p>
-            </div>
+          {stats.map((s, i) => (
+            <ScrollReveal key={s.label} delay={i * 0.1}>
+              <div className="text-center">
+                <AnimatedNumber value={s.value} prefix={s.prefix} suffix={s.suffix} />
+                <p className="text-sm text-muted-foreground mt-2 font-medium">{s.label}</p>
+              </div>
+            </ScrollReveal>
           ))}
         </div>
 
-        {/* Testimonials */}
         <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <div key={t.name} className="bg-card rounded-2xl p-6 border border-border shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                ))}
+          {testimonials.map((t, i) => (
+            <ScrollReveal key={t.name} delay={i * 0.12}>
+              <div className="bg-card rounded-2xl p-6 border border-border shadow-sm hover:shadow-md transition-shadow h-full">
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: t.rating }).map((_, j) => (
+                    <Star key={j} className="w-4 h-4 fill-primary text-primary" />
+                  ))}
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">"{t.text}"</p>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">{t.name}</p>
+                  <p className="text-xs text-muted-foreground">{t.city}</p>
+                </div>
               </div>
-              <p className="text-sm text-muted-foreground leading-relaxed mb-4">"{t.text}"</p>
-              <div>
-                <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.city}</p>
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
