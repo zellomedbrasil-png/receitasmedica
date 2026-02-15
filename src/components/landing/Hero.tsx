@@ -37,12 +37,16 @@ const Hero = () => {
 
           <ScrollReveal delay={0.3}>
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto rounded-full px-8 py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2">
-                <FileText className="w-5 h-5" />
-                Solicitar Receita
+              <Button asChild size="lg" className="w-full sm:w-auto rounded-full px-8 py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2">
+                <a href="https://wa.me/5585991275429?text=Gostaria%20de%20renovar%20minha%20receita%20m%C3%A9dica." target="_blank" rel="noopener noreferrer">
+                  <FileText className="w-5 h-5" />
+                  Renovar minha Receita
+                </a>
               </Button>
-              <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-card hover:bg-secondary gap-2">
-                Verificar medicamentos
+              <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-card hover:bg-secondary gap-2">
+                <a href="#medicamentos">
+                  Consultar lista de remédios
+                </a>
               </Button>
             </div>
           </ScrollReveal>

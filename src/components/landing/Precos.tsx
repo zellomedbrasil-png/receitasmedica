@@ -38,8 +38,10 @@ const Precos = () => {
                   </li>
                 ))}
               </ul>
-              <Button size="lg" className="w-full rounded-full py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all">
-                Solicitar Receita Agora
+              <Button asChild size="lg" className="w-full rounded-full py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all">
+                <a href="https://wa.me/5585991275429?text=Gostaria%20de%20renovar%20minha%20receita%20m%C3%A9dica." target="_blank" rel="noopener noreferrer">
+                  Renovar minha Receita
+                </a>
               </Button>
               <div className="mt-6 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <ShieldCheck className="w-4 h-4 text-primary" />

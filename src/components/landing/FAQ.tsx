@@ -79,9 +79,11 @@ const FAQ = () => {
 
         <ScrollReveal delay={0.3}>
           <div className="mt-16 text-center">
-            <Button size="lg" className="rounded-full px-8 py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2">
-              Iniciar Avaliação
-              <ArrowRight className="w-[18px] h-[18px]" />
+            <Button asChild size="lg" className="rounded-full px-8 py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2">
+              <a href="https://wa.me/5585991275429?text=Gostaria%20de%20renovar%20minha%20receita%20m%C3%A9dica." target="_blank" rel="noopener noreferrer">
+                Renovar Agora
+                <ArrowRight className="w-[18px] h-[18px]" />
+              </a>
             </Button>
           </div>
         </ScrollReveal>
