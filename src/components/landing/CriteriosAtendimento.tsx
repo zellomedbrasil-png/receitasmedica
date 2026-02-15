@@ -130,7 +130,7 @@ const CriteriosAtendimento = () => {
               Não encontrou o seu medicamento na lista ou está na dúvida?
             </p>
             <p className="text-xs text-muted-foreground mb-5">
-              Fique tranquilo: se você pagar e seu remédio não puder ser renovado, devolvemos 100% do valor na hora.
+              Não encontrou seu medicamento? Fale com a nossa triagem no WhatsApp e tire sua dúvida na hora, sem compromisso.
             </p>
             <Button asChild size="lg" className="gap-2">
               <a href={WA_LINK} target="_blank" rel="noopener noreferrer">
