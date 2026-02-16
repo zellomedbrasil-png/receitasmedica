@@ -15,7 +15,7 @@ const Hero = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
               </span>
-              <span className="text-xs font-medium text-muted-foreground tracking-tight">Plantão Médico Online Agora</span>
+              <span className="text-xs font-medium text-muted-foreground tracking-tight">Atendimento Rápido Online</span>
             </div>
           </ScrollReveal>
 
