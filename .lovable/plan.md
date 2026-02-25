@@ -1,44 +1,84 @@
 
-# Reestruturar Secao de Medicamentos / Criterios de Atendimento
+# Nova Landing Page: "O Código da Farmácia" — E-book
 
-## Resumo
-Reescrever completamente o componente `CriteriosAtendimento.tsx` para aumentar o nivel de informacao, persuasao e clareza visual, seguindo as 4 diretrizes fornecidas.
+## Visão Geral
 
-## Alteracoes no arquivo `src/components/landing/CriteriosAtendimento.tsx`
+Criar uma **nova rota `/ebook`** com uma landing page de alta conversão para o produto "O Código da Farmácia". A página existente (`/`) da receitas.site **não será alterada**. A nova landing page será um arquivo independente em `src/pages/Ebook.tsx`, composto por seções inline (sem componentes separados para manter simplicidade).
 
-### 1. Coluna Verde — "O que renovamos" (destaque visual)
-Substituir as 3 linhas genericas por 4 categorias detalhadas com icones tematicos, titulos e exemplos de remedios reais:
+## Arquitetura
 
-- **Saude Cardiovascular e Metabolica** (icone Heart): Uso continuo para hipertensao, diabetes, colesterol e acido urico. Exemplos: Losartana, Metformina, Glifage, Rosuvastatina.
-- **Saude Mental — Receita Branca 2 Vias** (icone Brain): Antidepressivos, ansioliticos leves e estabilizadores de humor. Exemplos: Sertralina, Fluoxetina, Escitalopram, Amitriptilina.
-- **Saude da Mulher e Endocrina** (icone User): Anticoncepcionais, reposicao hormonal e tireoide. Exemplos: Puran T4, pilulas anticoncepcionais.
-- **Outros Tratamentos Continuos** (icone Pill): Asma, alergias cronicas, dermatologia basica e antibioticos (sujeito a avaliacao rigorosa).
+```text
+src/
+  pages/
+    Ebook.tsx          ← nova página completa
+  App.tsx              ← adicionar rota /ebook
+```
 
-Card com fundo esverdeado suave (`bg-emerald-light/50`) e borda verde (`border-primary/20`) para dar mais peso visual ao "SIM".
+## Paleta e Estilo (específica para esta página)
 
-### 2. Inversao de Peso Visual
-- Coluna verde: fundo menta suave, borda verde, sombra mais pronunciada — atrair atencao
-- Coluna vermelha: fundo branco discreto, sem sombra pesada — informativa mas secundaria
+- Fundo geral: `bg-white` / `bg-gray-50` (off-white)
+- Azul escuro de autoridade: `#1E3A5F` (inline via style ou classe Tailwind `blue-900`)
+- Verde CTA: cor primária existente do projeto (`hsl(var(--primary))`) ou `emerald-600`
+- Fonte: Inter (já carregada no projeto)
+- Raio de botões: `rounded-full`
+- Sombras: `shadow-md`, `shadow-xl`
 
-### 3. Coluna Vermelha — "Nao atendemos" (com exemplos)
-Cada item ganha uma descricao e exemplos concretos:
+## Seções a Implementar (na ordem exata solicitada)
 
-- **Receitas Amarelas e Azuis** (tag LEI): Restricao da Anvisa (Notificacao A e B). Ex: Ritalina, Venvanse, Roacutan, Sibutramina, Clonazepam.
-- **Emergencias Medicas** (tag PS): Dores agudas, febre alta, falta de ar. Busque o Pronto Socorro.
-- **Atestados para Afastamento** (tag INSS): Nao emitimos atestados medicos ou laudos para INSS/Trabalho.
+### 1. Trust Badge (topo)
+Barra fixa no topo com: "Um conteúdo exclusivo em parceria com receitas.site" + ícone `BadgeCheck` do Lucide. Fundo `bg-slate-900`, texto branco, tamanho `text-xs`.
 
-### 4. CTA de Resgate (faixa abaixo das colunas)
-Nova faixa horizontal apos o grid com:
-- Texto: "Nao encontrou o seu medicamento na lista ou esta na duvida?"
-- Botao WhatsApp: "Falar com a Triagem Agora" (link para `https://wa.me/5585991275429?text=Gostaria%20de%20renovar%20minha%20receita%20m%C3%A9dica.`)
-- Subtexto de garantia: "Fique tranquilo: se voce pagar e seu remedio nao puder ser renovado, devolvemos 100% do valor na hora."
+### 2. Hero Section (2 colunas desktop / 1 coluna mobile)
+- **Esquerda:** Headline "Pare de Deixar Seu Salário no Balcão da Farmácia." (bold, grande), subheadline, selo "Atualizado para 2026" e botão CTA verde pulsante "QUERO DECIFRAR O CÓDIGO AGORA".
+- **Direita:** Placeholder para mockup 3D do e-book — card com gradiente azul escuro, bordas arredondadas, sombra elegante e texto "Capa do E-book" centralizado.
+- Botão com animação `animate-pulse` no background ou `hover:scale-105 transition-transform`.
 
-### Layout
-- Manter o grid `md:grid-cols-2` com ScrollReveal direcional
-- Titulo e subtitulo da secao permanecem acima do grid
-- CTA de resgate fica abaixo do grid em uma faixa centralizada com fundo sutil
+### 3. Seção Problema (fundo `bg-gray-100`)
+- Título centralizado: "Você sente que comprar remédios virou um aluguel mensal?"
+- 3 Cards brancos com sombra, ícones em vermelho/laranja: `DollarSign`, `HelpCircle`, `ShieldOff`.
+- Cada card: ícone + título curto + descrição.
 
-### Tecnico
-- Importar icones adicionais do lucide-react: `Heart`, `Brain`, `User`, `Pill`, `MessageCircle`
-- Usar `Button` com `asChild` para o link WhatsApp
-- Manter animacoes ScrollReveal existentes
+### 4. Seção Solução (fundo branco)
+- Título: "O que você vai descobrir dentro do Código da Farmácia:"
+- Lista de 4 bullets com ícone `CheckCircle2` verde em cada linha.
+
+### 5. Prova Social / Depoimentos (fundo `bg-gray-50`)
+- Título centralizado.
+- 3 cards com: avatar placeholder circular (iniciais), nome, 5 estrelas amarelas (`Star` fill), texto de depoimento.
+
+### 6. Autoridade do Autor (fundo branco, 2 colunas)
+- Esquerda: avatar circular grande com placeholder.
+- Direita: título "Quem está revelando esses bastidores?", bio, menção ao receitas.site com ícone `BadgeCheck`.
+
+### 7. Pitch Final e Oferta (fundo `bg-[#1E3A5F]`, texto branco)
+- Título impactante, texto de valor, preço riscado (`R$ 49,00`) com destaque no preço real (`R$ 9,90`).
+- Botão CTA gigante (`py-5 px-12 text-xl`) em verde ou laranja (`bg-orange-500`).
+- Selo de garantia 7 dias com ícone `ShieldCheck`.
+
+### 8. FAQ (Accordion)
+- Fundo `bg-gray-50`.
+- 3 perguntas usando o componente `Accordion` já existente no projeto.
+
+### 9. Footer
+- Links: Termos, Privacidade, Contato.
+- Copyright.
+- Ícones de pagamento seguros (placeholder com texto).
+- Disclaimer em texto pequeno e cinza.
+
+## Roteamento
+
+Adicionar `<Route path="/ebook" element={<Ebook />} />` no `App.tsx`.
+
+## Arquivos a Modificar / Criar
+
+| Arquivo | Ação |
+|---|---|
+| `src/pages/Ebook.tsx` | Criar (nova página completa) |
+| `src/App.tsx` | Adicionar rota `/ebook` |
+
+## Notas Técnicas
+
+- Todos os ícones importados do `lucide-react` (já instalado).
+- Componentes `Accordion*` e `Button` já existem no projeto — serão reutilizados.
+- O `ScrollReveal` (framer-motion) será usado para entradas suaves nas seções.
+- Nenhum arquivo da landing page principal (`/`) será alterado.
