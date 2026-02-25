@@ -10,18 +10,20 @@ import {
   CheckCircle2,
   Star,
   ShieldCheck,
-  User,
   CreditCard,
   Lock,
   Smartphone,
   TrendingDown,
-  Pill,
   FileText,
   Share2,
   ArrowRight,
   Zap,
   MapPin,
   MessageCircle,
+  Stethoscope,
+  GraduationCap,
+  Award,
+  Clock,
 } from "lucide-react";
 import {
   Accordion,
@@ -29,7 +31,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 
 /* ─── Helpers ───────────────────────────────────────────────────────────── */
 const SR = ({
@@ -85,24 +86,29 @@ function AnimatedNumber({
     return () => obs.disconnect();
   }, [value]);
   return (
-    <div ref={ref} className="text-4xl md:text-5xl font-semibold tracking-tighter-custom" style={{ color: "hsl(var(--emerald))" }}>
+    <div ref={ref} className="text-4xl md:text-5xl font-semibold tracking-tight" style={{ color: "hsl(var(--emerald))" }}>
       {prefix}{display.toLocaleString("pt-BR")}{suffix}
     </div>
   );
 }
 
+/* ─── Countdown Timer — deadline fixo de 24h ────────────────────────────── */
 function CountdownTimer() {
-  const KEY = "ebook_offer_deadline_v2";
+  const KEY = "ebook_offer_deadline_v3";
   const getDeadline = () => {
     const s = localStorage.getItem(KEY);
-    if (s) { const d = parseInt(s, 10); if (d > Date.now()) return d; }
-    const sec = 18 * 60 + Math.floor(Math.random() * (5 * 60 + 59));
-    const d = Date.now() + sec * 1000;
+    if (s) {
+      const d = parseInt(s, 10);
+      if (d > Date.now()) return d;
+    }
+    // Deadline fixo: 23h59m59s (1 dia completo — comportamento honesto)
+    const d = Date.now() + 24 * 60 * 60 * 1000 - 1000;
     localStorage.setItem(KEY, d.toString());
     return d;
   };
   const [deadline] = useState(getDeadline);
   const [rem, setRem] = useState(() => Math.max(0, Math.floor((deadline - Date.now()) / 1000)));
+
   useEffect(() => {
     if (rem <= 0) return;
     const id = setInterval(() => {
@@ -112,25 +118,39 @@ function CountdownTimer() {
     }, 1000);
     return () => clearInterval(id);
   }, [deadline, rem]);
+
   const pad = (n: number) => String(n).padStart(2, "0");
   const h = Math.floor(rem / 3600);
   const m = Math.floor((rem % 3600) / 60);
   const s = rem % 60;
   const expired = rem <= 0;
+
   return (
-    <div className={`flex flex-col items-center gap-3 ${expired ? "opacity-50" : ""}`}>
-      <p className="text-xs font-bold uppercase tracking-widest" style={{ color: expired ? "rgba(255,255,255,0.3)" : "hsl(var(--emerald))" }}>
-        {expired ? "Oferta encerrada" : "⚡ Esta oferta expira em"}
-      </p>
+    <div className={`flex flex-col items-center gap-3 ${expired ? "opacity-40" : ""}`}>
+      <div className="flex items-center gap-1.5">
+        <Clock className="w-3.5 h-3.5 shrink-0" style={{ color: expired ? "rgba(255,255,255,0.3)" : "hsl(var(--emerald))" }} />
+        <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: expired ? "rgba(255,255,255,0.3)" : "hsl(var(--emerald))" }}>
+          {expired ? "Oferta encerrada" : "Oferta válida por"}
+        </p>
+      </div>
       <div className="flex items-center gap-2">
-        {[{ l: "h", v: pad(h) }, { l: "min", v: pad(m) }, { l: "seg", v: pad(s) }].map((u, i) => (
+        {[{ l: "horas", v: pad(h) }, { l: "min", v: pad(m) }, { l: "seg", v: pad(s) }].map((u, i) => (
           <div key={u.l} className="flex items-center gap-2">
-            {i > 0 && <span className="text-2xl font-bold pb-4" style={{ color: "rgba(255,255,255,0.25)" }}>:</span>}
+            {i > 0 && (
+              <span className="text-xl font-bold pb-4" style={{ color: "rgba(255,255,255,0.2)" }}>:</span>
+            )}
             <div className="flex flex-col items-center">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center border" style={{ background: "rgba(255,255,255,0.08)", borderColor: "rgba(255,255,255,0.12)" }}>
-                <span className="text-2xl font-semibold tabular-nums tracking-tighter-custom" style={{ color: expired ? "rgba(255,255,255,0.2)" : "white" }}>{u.v}</span>
+              <div
+                className="w-14 h-14 rounded-xl flex items-center justify-center"
+                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.10)" }}
+              >
+                <span className="text-xl font-bold tabular-nums" style={{ color: expired ? "rgba(255,255,255,0.2)" : "white" }}>
+                  {u.v}
+                </span>
               </div>
-              <span className="text-[10px] mt-1.5 uppercase tracking-wider font-medium" style={{ color: "rgba(255,255,255,0.35)" }}>{u.l}</span>
+              <span className="text-[10px] mt-1.5 uppercase tracking-wider font-medium" style={{ color: "rgba(255,255,255,0.3)" }}>
+                {u.l}
+              </span>
             </div>
           </div>
         ))}
@@ -265,66 +285,36 @@ const faqs = [
 
 /* ─── Page ──────────────────────────────────────────────────────────────── */
 const Ebook = () => {
-  const heroRef = useRef<HTMLElement>(null);
-  const [showFloating, setShowFloating] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => {
-      if (!heroRef.current) return;
-      setShowFloating(heroRef.current.getBoundingClientRect().bottom < 0);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <div
       className="min-h-screen font-sans scroll-smooth"
       style={{ background: "#0F1115", color: "#F0F2F5" }}
     >
-      {/* ── FLOATING CTA ───────────────────────────────────────────── */}
-      <motion.div
-        initial={false}
-        animate={showFloating ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
-        style={{ pointerEvents: showFloating ? "auto" : "none" }}
-      >
-        <a
-          href="#oferta"
-          className="flex items-center gap-3 rounded-full px-6 py-3.5 text-sm font-semibold transition-all hover:-translate-y-0.5"
-          style={{
-            background: "hsl(var(--emerald))",
-            color: "white",
-            boxShadow: "0 8px 32px hsl(var(--emerald)/0.4)",
-          }}
-        >
-          <BookOpen className="w-4 h-4 shrink-0" />
-          Comprar por <span className="font-bold">R$ 29</span>
-          <span
-            className="ml-1 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider"
-            style={{ background: "rgba(255,255,255,0.2)" }}
-          >
-            Oferta
-          </span>
-        </a>
-      </motion.div>
 
-      {/* ── 1. TRUST BAR ───────────────────────────────────────────── */}
+      {/* ── 1. TRUST BAR ─────────────────────────────────────────────────── */}
       <div
-        className="py-2 px-4 text-center text-xs flex items-center justify-center gap-2"
-        style={{ background: "rgba(255,255,255,0.04)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+        className="py-2.5 px-4 text-center text-xs flex items-center justify-center gap-2 flex-wrap"
+        style={{ background: "hsl(var(--emerald)/0.10)", borderBottom: "1px solid hsl(var(--emerald)/0.20)" }}
       >
         <BadgeCheck className="w-3.5 h-3.5 shrink-0" style={{ color: "hsl(var(--emerald))" }} />
-        <span style={{ color: "rgba(255,255,255,0.55)" }}>
+        <span style={{ color: "rgba(255,255,255,0.65)" }}>
           Conteúdo oficial em parceria com{" "}
           <span className="font-semibold" style={{ color: "hsl(var(--emerald))" }}>receitas.site</span>
-          {" "}· Mais de <strong style={{ color: "rgba(255,255,255,0.8)" }}>500 leitores</strong> em 2026
+        </span>
+        <span style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
+        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
+          <Star className="w-3 h-3" style={{ fill: "hsl(var(--emerald))", color: "hsl(var(--emerald))" }} />
+          <strong style={{ color: "white" }}>4.9</strong> de 5 · mais de 500 leitores
+        </span>
+        <span style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
+        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
+          <ShieldCheck className="w-3.5 h-3.5" style={{ color: "hsl(var(--emerald))" }} />
+          Garantia de 7 dias
         </span>
       </div>
 
-      {/* ── 2. HERO ────────────────────────────────────────────────── */}
-      <section ref={heroRef} className="relative pt-24 pb-20 lg:pt-36 lg:pb-28 overflow-hidden">
+      {/* ── 2. HERO ──────────────────────────────────────────────────────── */}
+      <section className="relative pt-20 pb-20 lg:pt-32 lg:pb-28 overflow-hidden">
         {/* Radial glow bg */}
         <div
           className="absolute w-[900px] h-[900px] top-[-200px] left-1/2 -translate-x-1/2 pointer-events-none"
@@ -351,7 +341,7 @@ const Ebook = () => {
 
               <SR delay={0.08}>
                 <h1
-                  className="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold tracking-tighter-custom leading-[1.08] mb-6"
+                  className="text-4xl sm:text-5xl lg:text-[3.2rem] font-extrabold tracking-tight leading-[1.08] mb-6"
                   style={{ color: "white" }}
                 >
                   Você está pagando mais caro por remédios…{" "}
@@ -376,18 +366,19 @@ const Ebook = () => {
               <SR delay={0.22}>
                 <a
                   href="#oferta"
-                  className="inline-flex items-center justify-center gap-2.5 rounded-full px-8 py-4 text-base font-bold w-full sm:w-auto transition-all hover:-translate-y-0.5 mb-4"
+                  className="inline-flex items-center justify-center gap-2.5 rounded-2xl px-8 py-4 text-base font-bold w-full sm:w-auto transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:scale-95 mb-4"
                   style={{
                     background: "hsl(var(--emerald))",
                     color: "white",
                     boxShadow: "0 0 40px hsl(var(--emerald)/0.35), 0 4px 20px rgba(0,0,0,0.3)",
                   }}
                 >
-                  <Lock className="w-4 h-4" />
+                  <Lock className="w-4 h-4 shrink-0" />
                   Quero Acessar o Código Agora
+                  <ArrowRight className="w-4 h-4 shrink-0" />
                 </a>
                 <p className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>
-                  ✔ Acesso imediato no e-mail &nbsp;·&nbsp; ✔ Garantia de 7 dias &nbsp;·&nbsp; ⭐ 4.9/5 Avaliações
+                  ✔ Acesso imediato no e-mail &nbsp;·&nbsp; ✔ Garantia de 7 dias &nbsp;·&nbsp; ⭐ 4.9/5
                 </p>
               </SR>
 
@@ -398,7 +389,7 @@ const Ebook = () => {
                     { Icon: Lock, label: "SSL Ativo" },
                     { Icon: BadgeCheck, label: "Garantia 7 Dias" },
                   ].map(({ Icon, label }) => (
-                    <div key={label} className="flex items-center gap-1.5 opacity-40 hover:opacity-80 transition-opacity">
+                    <div key={label} className="flex items-center gap-1.5 opacity-40 hover:opacity-70 transition-opacity">
                       <Icon className="w-3.5 h-3.5" style={{ color: "hsl(var(--emerald))" }} />
                       <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: "rgba(255,255,255,0.7)" }}>{label}</span>
                     </div>
@@ -467,13 +458,13 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 3. DOR INVISÍVEL ───────────────────────────────────────── */}
+      {/* ── 3. DOR INVISÍVEL ─────────────────────────────────────────────── */}
       <section className="py-20" style={{ background: "#14181F", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-5xl mx-auto px-6">
           <SR>
             <div className="mb-16">
               <h2
-                className="text-3xl md:text-4xl font-extrabold tracking-tighter-custom mb-3"
+                className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3"
                 style={{ color: "white" }}
               >
                 O balcão da farmácia{" "}
@@ -494,7 +485,7 @@ const Ebook = () => {
             {painPoints.map((card, i) => (
               <SR key={card.num} delay={i * 0.1}>
                 <div
-                  className="rounded-3xl p-8 relative overflow-hidden h-full transition-all duration-300 group"
+                  className="rounded-3xl p-8 relative overflow-hidden h-full transition-all duration-300 hover:-translate-y-1"
                   style={
                     card.dark
                       ? { background: "linear-gradient(145deg, #1C2030, #14181F)", border: "1px solid rgba(255,255,255,0.08)" }
@@ -528,9 +519,9 @@ const Ebook = () => {
                     )}
                   </div>
                   <card.Icon
-                    className="absolute -bottom-5 -right-5 w-[140px] h-[140px] -rotate-[15deg] transition-opacity duration-500 pointer-events-none"
+                    className="absolute -bottom-5 -right-5 w-[140px] h-[140px] -rotate-[15deg] pointer-events-none"
                     strokeWidth={0.5}
-                    style={{ color: card.dark ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.04)" }}
+                    style={{ color: "rgba(255,255,255,0.04)" }}
                   />
                 </div>
               </SR>
@@ -539,12 +530,12 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 4. REVELAÇÃO ───────────────────────────────────────────── */}
+      {/* ── 4. REVELAÇÃO ─────────────────────────────────────────────────── */}
       <section className="py-20" style={{ background: "#0F1115" }}>
         <div className="max-w-5xl mx-auto px-6">
           <SR>
             <div className="mb-16">
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter-custom mb-3" style={{ color: "white" }}>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3" style={{ color: "white" }}>
                 O que você vai descobrir{" "}
                 <span
                   className="bg-clip-text text-transparent"
@@ -561,7 +552,7 @@ const Ebook = () => {
             {chapters.map((c, i) => (
               <SR key={c.title} delay={i * 0.09}>
                 <div
-                  className="rounded-3xl p-8 relative overflow-hidden h-full transition-all duration-300 group"
+                  className="rounded-3xl p-8 relative overflow-hidden h-full transition-all duration-300 hover:-translate-y-1"
                   style={
                     c.highlight
                       ? { background: "linear-gradient(145deg, #1a2535, #0F1520)", border: "1px solid rgba(255,255,255,0.09)" }
@@ -599,7 +590,7 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 5. ANCORAGEM DE VALOR ──────────────────────────────────── */}
+      {/* ── 5. ANCORAGEM DE VALOR ────────────────────────────────────────── */}
       <section className="py-20" style={{ background: "#14181F", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-3xl mx-auto px-6">
           <SR>
@@ -618,7 +609,7 @@ const Ebook = () => {
                 >
                   <Zap className="w-3.5 h-3.5" /> Faça a conta
                 </div>
-                <h2 className="text-2xl md:text-3xl font-extrabold tracking-tighter-custom mb-6" style={{ color: "white" }}>
+                <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-6" style={{ color: "white" }}>
                   Se você gasta R$ 200/mês na farmácia,<br />
                   <span style={{ color: "hsl(var(--emerald))" }}>não saber essas regras te custa R$ 2.400 por ano.</span>
                 </h2>
@@ -650,14 +641,14 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 6. SOCIAL PROOF ────────────────────────────────────────── */}
+      {/* ── 6. SOCIAL PROOF ──────────────────────────────────────────────── */}
       <section className="py-24" style={{ background: "#0F1115" }}>
         <div className="max-w-5xl mx-auto px-6">
           {/* Stats */}
           <div className="grid sm:grid-cols-3 gap-8 mb-20">
             {[
               { value: 500, label: "Leitores satisfeitos", prefix: "+", suffix: "" },
-              { value: 300, label: "Economizados em média/mês", prefix: "R$ ", suffix: "" },
+              { value: 120, label: "Economia média por mês", prefix: "R$ ", suffix: "" },
               { value: 4, label: "Avaliação média", prefix: "", suffix: ".9 ★" },
             ].map((s, i) => (
               <SR key={s.label} delay={i * 0.1}>
@@ -670,7 +661,7 @@ const Ebook = () => {
           </div>
 
           <SR>
-            <h2 className="text-3xl font-extrabold tracking-tighter-custom mb-12" style={{ color: "white" }}>
+            <h2 className="text-3xl font-extrabold tracking-tight mb-12" style={{ color: "white" }}>
               Quem já aplicou o{" "}
               <span
                 className="bg-clip-text text-transparent"
@@ -685,7 +676,7 @@ const Ebook = () => {
             {testimonials.map((t, i) => (
               <SR key={t.name} delay={i * 0.08}>
                 <div
-                  className="rounded-2xl p-6 flex flex-col h-full transition-all duration-300 hover:border-opacity-20"
+                  className="rounded-2xl p-6 flex flex-col h-full transition-all duration-300 hover:-translate-y-1"
                   style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
                 >
                   <div className="flex gap-1 mb-4">
@@ -737,7 +728,7 @@ const Ebook = () => {
                 href={`https://api.whatsapp.com/send?text=${encodeURIComponent("Achei esse guia incrível sobre como economizar na farmácia usando SUS e PBMs: https://receitasmedica.lovable.app/ebook")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold shrink-0 transition-all hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold shrink-0 transition-all hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
                 style={{ background: "hsl(var(--emerald))", color: "white" }}
               >
                 <MessageCircle className="w-4 h-4" />
@@ -748,7 +739,7 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 7. AUTORIDADE ──────────────────────────────────────────── */}
+      {/* ── 7. AUTORIDADE ────────────────────────────────────────────────── */}
       <section className="py-20" style={{ background: "#14181F", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-4xl mx-auto px-6">
           <SR>
@@ -760,27 +751,48 @@ const Ebook = () => {
                 className="absolute top-0 left-0 w-80 h-80 rounded-full blur-3xl pointer-events-none -translate-y-1/2 -translate-x-1/4"
                 style={{ background: "hsl(var(--emerald)/0.07)" }}
               />
-              <div className="grid md:grid-cols-[auto_1fr] gap-10 items-center relative z-10">
-                {/* Avatar */}
-                <div className="flex justify-center md:justify-start">
-                  <div className="relative">
-                    <div className="absolute inset-0 rounded-3xl blur-2xl scale-110 pointer-events-none" style={{ background: "hsl(var(--emerald)/0.12)" }} />
-                    <div
-                      className="relative w-32 h-32 md:w-40 md:h-40 rounded-3xl flex items-center justify-center overflow-hidden"
-                      style={{ background: "linear-gradient(145deg, #1a2535, #0F1115)", border: "1px solid rgba(255,255,255,0.08)" }}
-                    >
-                      <div className="absolute top-0 right-0 w-20 h-20 rounded-full blur-2xl" style={{ background: "hsl(var(--emerald)/0.2)" }} />
-                      <User className="w-14 h-14 relative z-10" style={{ color: "rgba(255,255,255,0.25)" }} strokeWidth={1} />
-                    </div>
+              <div className="grid md:grid-cols-[auto_1fr] gap-10 items-start relative z-10">
+                {/* Credentials column */}
+                <div className="flex flex-col items-center md:items-start gap-4 min-w-[180px]">
+                  {/* Avatar */}
+                  <div
+                    className="w-24 h-24 md:w-32 md:h-32 rounded-3xl flex items-center justify-center"
+                    style={{ background: "linear-gradient(145deg, hsl(var(--emerald)/0.2), hsl(var(--emerald)/0.05))", border: "1px solid hsl(var(--emerald)/0.25)" }}
+                  >
+                    <Stethoscope className="w-10 h-10 md:w-14 md:h-14" style={{ color: "hsl(var(--emerald))" }} strokeWidth={1.5} />
+                  </div>
+                  {/* Credential badges */}
+                  <div className="flex flex-col gap-2 w-full">
+                    {[
+                      { Icon: GraduationCap, label: "Medicina Baseada em Evidências" },
+                      { Icon: Award, label: "Especialista em Saúde Pública" },
+                      { Icon: FileText, label: "receitas.site — Fundador" },
+                    ].map(({ Icon, label }) => (
+                      <div
+                        key={label}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs"
+                        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.55)" }}
+                      >
+                        <Icon className="w-3.5 h-3.5 shrink-0" style={{ color: "hsl(var(--emerald))" }} />
+                        {label}
+                      </div>
+                    ))}
                   </div>
                 </div>
+
                 {/* Text */}
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-extrabold tracking-tighter-custom mb-4" style={{ color: "white" }}>
+                  <p
+                    className="text-xs font-bold uppercase tracking-widest mb-3"
+                    style={{ color: "hsl(var(--emerald))" }}
+                  >
                     Quem está revelando esses bastidores?
+                  </p>
+                  <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-4" style={{ color: "white" }}>
+                    Médico. Especialista. Do seu lado.
                   </h2>
                   <p className="leading-relaxed mb-4 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
-                    Médico Especialista com foco em Medicina Baseada em Evidências e na defesa do paciente inteligente. Após anos de prática clínica, percebeu que a maioria dos pacientes paga valores abusivos por medicamentos que tem direito de acessar de graça — simplesmente por falta de informação.
+                    Após anos de prática clínica, percebeu que a maioria dos pacientes paga valores abusivos por medicamentos que tem direito de acessar de graça — simplesmente por falta de informação.
                   </p>
                   <p className="leading-relaxed mb-6 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
                     Em parceria com a plataforma{" "}
@@ -801,7 +813,7 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 8. PITCH FINAL / OFERTA ────────────────────────────────── */}
+      {/* ── 8. PITCH FINAL / OFERTA ──────────────────────────────────────── */}
       <section id="oferta" className="py-24 relative overflow-hidden" style={{ background: "#070A0D" }}>
         {/* Big glow bg */}
         <div
@@ -820,11 +832,11 @@ const Ebook = () => {
                 <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: "hsl(var(--emerald))" }} />
               </span>
               <span className="text-xs font-medium tracking-tight" style={{ color: "rgba(255,255,255,0.55)" }}>
-                Oferta exclusiva · Somente hoje
+                Oferta com desconto · Acesso imediato
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tighter-custom mb-5 leading-tight" style={{ color: "white" }}>
+            <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-5 leading-tight" style={{ color: "white" }}>
               Quanto vale a sua{" "}
               <span
                 className="bg-clip-text text-transparent"
@@ -835,14 +847,14 @@ const Ebook = () => {
             </h2>
             <p className="text-lg leading-relaxed mb-12 font-light" style={{ color: "rgba(255,255,255,0.45)" }}>
               Este guia vai te fazer economizar centenas de reais já na sua próxima ida à farmácia. É um investimento menor que um lanche, mas que{" "}
-              <strong style={{ color: "white", fontWeight: 500 }}>devolve o seu salário.</strong>
+              <strong style={{ color: "white", fontWeight: 500 }}>devolve o seu dinheiro.</strong>
             </p>
           </SR>
 
           {/* Price card */}
-          <SR delay={0.15}>
+          <SR delay={0.1}>
             <div
-              className="rounded-3xl p-8 md:p-10 mb-8 relative overflow-hidden"
+              className="rounded-3xl p-8 md:p-10 mb-6 relative overflow-hidden"
               style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
             >
               <div
@@ -856,7 +868,7 @@ const Ebook = () => {
                 <div className="flex items-center justify-center gap-5 mb-3">
                   <span className="text-xl font-light line-through" style={{ color: "rgba(255,255,255,0.3)" }}>R$ 97,00</span>
                   <span
-                    className="text-6xl font-extrabold tracking-tighter-custom"
+                    className="text-6xl font-extrabold tracking-tight"
                     style={{ color: "hsl(var(--emerald))" }}
                   >
                     R$ 29
@@ -868,7 +880,12 @@ const Ebook = () => {
                 >
                   Você economiza R$ 68 agora
                 </div>
-                <div className="pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+
+                {/* Countdown separado visualmente */}
+                <div
+                  className="pt-6 mt-2"
+                  style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+                >
                   <CountdownTimer />
                 </div>
               </div>
@@ -876,19 +893,19 @@ const Ebook = () => {
           </SR>
 
           {/* CTA button */}
-          <SR delay={0.2}>
+          <SR delay={0.15}>
             <a
               href="#"
-              className="flex items-center justify-center gap-3 w-full rounded-full py-5 text-lg font-bold transition-all hover:-translate-y-0.5 mb-6"
+              className="flex items-center justify-center gap-3 w-full rounded-2xl py-5 text-lg font-bold transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:scale-[0.98] mb-6"
               style={{
                 background: "hsl(var(--emerald))",
                 color: "white",
                 boxShadow: "0 0 50px hsl(var(--emerald)/0.4), 0 4px 24px rgba(0,0,0,0.4)",
               }}
             >
-              <BookOpen className="w-5 h-5" />
+              <BookOpen className="w-5 h-5 shrink-0" />
               Comprar o E-book por R$ 29 Agora
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 shrink-0" />
             </a>
 
             <div
@@ -905,7 +922,7 @@ const Ebook = () => {
           </SR>
 
           {/* Payment methods */}
-          <SR delay={0.25}>
+          <SR delay={0.2}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               {[
                 { Icon: CreditCard, label: "Cartão de Crédito" },
@@ -926,11 +943,11 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 9. FAQ ─────────────────────────────────────────────────── */}
+      {/* ── 9. FAQ ───────────────────────────────────────────────────────── */}
       <section className="py-20" style={{ background: "#0F1115" }}>
         <div className="max-w-2xl mx-auto px-6">
           <SR>
-            <h2 className="text-3xl font-extrabold tracking-tighter-custom mb-3" style={{ color: "white" }}>
+            <h2 className="text-3xl font-extrabold tracking-tight mb-3" style={{ color: "white" }}>
               Perguntas Frequentes
             </h2>
             <p className="mb-12 font-light" style={{ color: "rgba(255,255,255,0.4)" }}>Tire suas dúvidas antes de decidir.</p>
@@ -966,7 +983,7 @@ const Ebook = () => {
             <div className="mt-12 text-center">
               <a
                 href="#oferta"
-                className="inline-flex items-center gap-2 rounded-full px-8 py-4 text-base font-bold transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-base font-bold transition-all duration-200 hover:-translate-y-1 active:scale-95"
                 style={{
                   background: "hsl(var(--emerald))",
                   color: "white",
@@ -981,7 +998,7 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 10. FOOTER ─────────────────────────────────────────────── */}
+      {/* ── 10. FOOTER ───────────────────────────────────────────────────── */}
       <footer className="py-14 px-6" style={{ background: "#070A0D", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
