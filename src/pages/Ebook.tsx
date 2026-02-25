@@ -192,6 +192,87 @@ const faqs = [
   },
 ];
 
+/* ─── CountdownTimer ────────────────────────────────────────────────────── */
+function CountdownTimer() {
+  const STORAGE_KEY = "ebook_offer_deadline";
+
+  const getOrCreateDeadline = () => {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const deadline = parseInt(stored, 10);
+      if (deadline > Date.now()) return deadline;
+    }
+    // Random between 18min and 23min 59s for urgency
+    const seconds = 18 * 60 + Math.floor(Math.random() * (5 * 60 + 59));
+    const deadline = Date.now() + seconds * 1000;
+    localStorage.setItem(STORAGE_KEY, deadline.toString());
+    return deadline;
+  };
+
+  const [deadline] = useState(() => getOrCreateDeadline());
+  const [remaining, setRemaining] = useState(() =>
+    Math.max(0, Math.floor((deadline - Date.now()) / 1000))
+  );
+
+  useEffect(() => {
+    if (remaining <= 0) return;
+    const id = setInterval(() => {
+      const left = Math.max(0, Math.floor((deadline - Date.now()) / 1000));
+      setRemaining(left);
+      if (left <= 0) clearInterval(id);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [deadline, remaining]);
+
+  const h = Math.floor(remaining / 3600);
+  const m = Math.floor((remaining % 3600) / 60);
+  const s = remaining % 60;
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  const expired = remaining <= 0;
+
+  return (
+    <div className={`flex flex-col items-center gap-3 ${expired ? "opacity-60" : ""}`}>
+      <p className={`text-xs font-semibold uppercase tracking-widest ${expired ? "text-background/40" : "text-primary"}`}>
+        {expired ? "Oferta encerrada" : "⚡ Esta oferta expira em"}
+      </p>
+      <div className="flex items-center gap-2">
+        {[
+          { label: "horas", val: pad(h) },
+          { label: "min", val: pad(m) },
+          { label: "seg", val: pad(s) },
+        ].map((unit, i) => (
+          <div key={unit.label} className="flex items-center gap-2">
+            {i > 0 && (
+              <span className={`text-2xl font-bold pb-4 ${expired ? "text-background/30" : "text-background/50"}`}>:</span>
+            )}
+            <div className="flex flex-col items-center">
+              <div
+                className={`w-16 h-16 rounded-2xl border flex items-center justify-center shadow-inner transition-colors ${
+                  expired
+                    ? "bg-white/5 border-white/10"
+                    : "bg-white/10 border-white/20"
+                }`}
+              >
+                <span
+                  className={`text-2xl font-semibold tabular-nums tracking-tighter-custom ${
+                    expired ? "text-background/30" : "text-background"
+                  }`}
+                >
+                  {unit.val}
+                </span>
+              </div>
+              <span className="text-[10px] text-background/40 mt-1.5 uppercase tracking-wider font-medium">
+                {unit.label}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Component ─────────────────────────────────────────────────────────── */
 const Ebook = () => {
   return (
@@ -618,9 +699,14 @@ const Ebook = () => {
                     R$ 9,90
                   </span>
                 </div>
-                <p className="text-primary text-sm font-medium">
+                <p className="text-primary text-sm font-medium mb-8">
                   Você economiza R$ 39,10 agora
                 </p>
+
+                {/* Countdown */}
+                <div className="pt-6 border-t border-white/10">
+                  <CountdownTimer />
+                </div>
               </div>
             </div>
           </ScrollReveal>
