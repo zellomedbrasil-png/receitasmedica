@@ -1,84 +1,162 @@
 
-# Nova Landing Page: "O Código da Farmácia" — E-book
+# Redesign da Página /ebook — Elevação ao Padrão receitas.site
 
-## Visão Geral
+## Diagnóstico do Problema
 
-Criar uma **nova rota `/ebook`** com uma landing page de alta conversão para o produto "O Código da Farmácia". A página existente (`/`) da receitas.site **não será alterada**. A nova landing page será um arquivo independente em `src/pages/Ebook.tsx`, composto por seções inline (sem componentes separados para manter simplicidade).
+A página atual `/ebook` possui os seguintes problemas de qualidade em relação ao padrão do site:
 
-## Arquitetura
+**Visual e tokens:**
+- Usa cores hardcoded (`bg-gray-100`, `bg-gray-50`, `text-gray-600`) em vez do design system (`bg-background`, `bg-card`, `text-foreground`, `text-muted-foreground`)
+- Sombras genéricas e pesadas (`shadow-md`, `shadow-2xl`) em vez de `shadow-sm` elegantes
+- `rounded-2xl` em vez de `rounded-3xl` (padrão bento do site)
+- Sem borda sutil (`border border-border`) nos cards
 
-```text
-src/
-  pages/
-    Ebook.tsx          ← nova página completa
-  App.tsx              ← adicionar rota /ebook
-```
+**Tipografia:**
+- Headline sem `tracking-tighter-custom` (o site usa `tracking-tighter-custom` em todos os títulos grandes)
+- Hierarquia de fontes incorreta (`font-extrabold` genérico vs. `font-semibold` refinado)
+- Subtítulos sem `font-light` e sem `font-medium` adequados
 
-## Paleta e Estilo (específica para esta página)
+**Layout e Composição:**
+- Hero simples sem o gradiente radial de glow de fundo (assinatura visual do site)
+- Cards sem ícones decorativos gigantes e translúcidos no canto (padrão `ComoFunciona`)
+- Sem card escuro de destaque (`bg-slate-900`) contrastando no grid (padrão bento)
+- CTA Hero sem o badge com pulsing dot animado
 
-- Fundo geral: `bg-white` / `bg-gray-50` (off-white)
-- Azul escuro de autoridade: `#1E3A5F` (inline via style ou classe Tailwind `blue-900`)
-- Verde CTA: cor primária existente do projeto (`hsl(var(--primary))`) ou `emerald-600`
-- Fonte: Inter (já carregada no projeto)
-- Raio de botões: `rounded-full`
-- Sombras: `shadow-md`, `shadow-xl`
+**Seções problemáticas específicas:**
+- `bg-gray-100` na seção Problema → deve ser `bg-card border-y border-border`
+- Mockup do e-book sem decoração de glow radial ao redor
+- Seção de oferta com visual "genérico" sem o card escuro bento dark do padrão
+- FAQ sem a estética de card refinada
 
-## Seções a Implementar (na ordem exata solicitada)
+---
 
-### 1. Trust Badge (topo)
-Barra fixa no topo com: "Um conteúdo exclusivo em parceria com receitas.site" + ícone `BadgeCheck` do Lucide. Fundo `bg-slate-900`, texto branco, tamanho `text-xs`.
+## Solução: Redesign Completo de `src/pages/Ebook.tsx`
 
-### 2. Hero Section (2 colunas desktop / 1 coluna mobile)
-- **Esquerda:** Headline "Pare de Deixar Seu Salário no Balcão da Farmácia." (bold, grande), subheadline, selo "Atualizado para 2026" e botão CTA verde pulsante "QUERO DECIFRAR O CÓDIGO AGORA".
-- **Direita:** Placeholder para mockup 3D do e-book — card com gradiente azul escuro, bordas arredondadas, sombra elegante e texto "Capa do E-book" centralizado.
-- Botão com animação `animate-pulse` no background ou `hover:scale-105 transition-transform`.
+Reescrever o arquivo inteiro adotando 100% o design system e os padrões visuais do receitas.site.
 
-### 3. Seção Problema (fundo `bg-gray-100`)
-- Título centralizado: "Você sente que comprar remédios virou um aluguel mensal?"
-- 3 Cards brancos com sombra, ícones em vermelho/laranja: `DollarSign`, `HelpCircle`, `ShieldOff`.
-- Cada card: ícone + título curto + descrição.
+---
 
-### 4. Seção Solução (fundo branco)
-- Título: "O que você vai descobrir dentro do Código da Farmácia:"
-- Lista de 4 bullets com ícone `CheckCircle2` verde em cada linha.
+## Seção 1 — Trust Badge
 
-### 5. Prova Social / Depoimentos (fundo `bg-gray-50`)
-- Título centralizado.
-- 3 cards com: avatar placeholder circular (iniciais), nome, 5 estrelas amarelas (`Star` fill), texto de depoimento.
+**Antes:** `bg-slate-900` em bloco separado hardcoded
+**Depois:** Manter como barra discreta, porém usando tokens: `bg-foreground text-background` (fundo escuro consistente com o design system). Ícone `BadgeCheck` com `text-primary`.
 
-### 6. Autoridade do Autor (fundo branco, 2 colunas)
-- Esquerda: avatar circular grande com placeholder.
-- Direita: título "Quem está revelando esses bastidores?", bio, menção ao receitas.site com ícone `BadgeCheck`.
+---
 
-### 7. Pitch Final e Oferta (fundo `bg-[#1E3A5F]`, texto branco)
-- Título impactante, texto de valor, preço riscado (`R$ 49,00`) com destaque no preço real (`R$ 9,90`).
-- Botão CTA gigante (`py-5 px-12 text-xl`) em verde ou laranja (`bg-orange-500`).
-- Selo de garantia 7 dias com ícone `ShieldCheck`.
+## Seção 2 — Hero
 
-### 8. FAQ (Accordion)
-- Fundo `bg-gray-50`.
-- 3 perguntas usando o componente `Accordion` já existente no projeto.
+**Antes:** 2 colunas simples com `bg-white`, texto hardcoded
+**Depois:**
+- `relative overflow-hidden` com gradiente radial de glow: `radial-gradient(circle, hsl(var(--emerald)/0.12) 0%, transparent 70%)` posicionado acima e centralizado (exatamente como o Hero principal)
+- Badge superior com **pulsing dot animado** (`animate-pulse-dot`) + texto "E-book · Lançamento 2026"
+- Headline `text-5xl md:text-6xl font-semibold tracking-tighter-custom` com `text-transparent bg-clip-text` no trecho de destaque
+- Mockup do e-book: card `rounded-3xl bg-foreground` com brilho interno, ícone `BookOpen` em `text-primary` e glow radial `bg-primary/20 blur-3xl` atrás
+- CTA: `Button` do design system com `size="lg" rounded-full shadow-xl shadow-primary/20`
+- Trust icons abaixo (ICP-Brasil / Dados Seguros / Garantia 7 Dias) com `grayscale hover:grayscale-0`
 
-### 9. Footer
-- Links: Termos, Privacidade, Contato.
-- Copyright.
-- Ícones de pagamento seguros (placeholder com texto).
-- Disclaimer em texto pequeno e cinza.
+---
 
-## Roteamento
+## Seção 3 — Problema (Dores)
 
-Adicionar `<Route path="/ebook" element={<Ebook />} />` no `App.tsx`.
+**Antes:** `bg-gray-100` com 3 cards brancos genéricos
+**Depois:**
+- Fundo: `bg-card border-y border-border` (padrão `ComoFunciona`)
+- Título alinhado à esquerda: `text-3xl font-semibold tracking-tighter-custom` + subtítulo `text-muted-foreground font-light`
+- 3 cards `rounded-3xl bg-secondary border border-border hover:border-primary/30` com:
+  - Ícone decorativo gigante translúcido no canto inferior direito (`w-[120px] opacity-[0.06] -rotate-12`)
+  - Número de item no topo em `font-mono font-bold`
+  - Título `font-semibold` + descrição `text-muted-foreground text-sm`
+  - 1 card escuro (`bg-slate-900 border-slate-800`) para o ponto de dor mais forte
 
-## Arquivos a Modificar / Criar
+---
+
+## Seção 4 — Solução (O que você vai descobrir)
+
+**Antes:** Lista plana com `bg-emerald-50` genérico
+**Depois:**
+- Layout bento: grid `md:grid-cols-2` com 4 cards `rounded-3xl`
+- 1 card grande `bg-foreground text-background` com `BookOpen` decorativo gigante e glow `bg-primary/20 blur-3xl`
+- 3 cards `bg-secondary border border-border` com ícone `CheckCircle2` em `text-primary`
+- Cada card com título curto bold + descrição `text-muted-foreground text-sm`
+
+---
+
+## Seção 5 — Prova Social (Depoimentos)
+
+**Antes:** Cards com avatar `bg-[#1E3A5F]` hardcoded
+**Depois:**
+- Stats animados no topo (3 números: "500+ Leitores", "R$ 300 Economizados em média", "4.9★ Avaliação") usando `AnimatedNumber` inline
+- Cards `bg-card rounded-2xl border border-border shadow-sm hover:shadow-md transition-shadow` (idêntico ao `ProvaSocial` do site)
+- Estrelas com `fill-primary text-primary` (verde esmeralda, não amarelo)
+- Avatar com `bg-foreground text-background rounded-full` (consistente com o design system)
+
+---
+
+## Seção 6 — Autoridade do Autor
+
+**Antes:** Layout com `User` icon placeholder, texto genérico
+**Depois:**
+- Card único `rounded-3xl bg-card border border-border p-8 md:p-12`
+- Layout `md:grid-cols-[auto_1fr]`
+- Avatar `rounded-3xl bg-foreground` com `User` e glow radial sutil atrás
+- Título `font-semibold tracking-tighter-custom`
+- Badge curadoria com `bg-secondary border border-border rounded-full`
+
+---
+
+## Seção 7 — Pitch Final / Oferta
+
+**Antes:** `background: linear-gradient(160deg, #1E3A5F ...)` hardcoded
+**Depois:**
+- Fundo: `bg-foreground` (consistente com o design system dark)
+- Card de preço: `bg-white/5 border border-white/10 rounded-3xl` com glow `bg-primary/20 blur-3xl` atrás
+- Preço: tipografia `text-6xl font-semibold tracking-tighter-custom text-primary`
+- CTA: botão `bg-primary hover:bg-primary/90 text-primary-foreground rounded-full` (usa o design system, não `bg-orange-500` hardcoded)
+- Garantia: tag `bg-white/10 border border-white/20 rounded-full`
+- Badges de pagamento: mesma estética das trust badges do Hero
+
+---
+
+## Seção 8 — FAQ
+
+**Antes:** `Accordion` em `bg-gray-50` genérico
+**Depois:**
+- Fundo `bg-background`
+- Título `font-semibold tracking-tighter-custom` alinhado à esquerda
+- Cada `AccordionItem` em `bg-card border border-border rounded-2xl px-6 shadow-sm`
+
+---
+
+## Seção 9 — Footer
+
+**Antes:** `bg-slate-900` hardcoded
+**Depois:**
+- `bg-foreground text-background/70` (tokens do design system)
+- Mesmo padrão visual do footer do site principal
+- Badges de pagamento como chips `bg-white/5 border border-white/10`
+
+---
+
+## Arquivo Alterado
 
 | Arquivo | Ação |
 |---|---|
-| `src/pages/Ebook.tsx` | Criar (nova página completa) |
-| `src/App.tsx` | Adicionar rota `/ebook` |
+| `src/pages/Ebook.tsx` | Reescrever completamente com o design system |
 
-## Notas Técnicas
+Nenhum outro arquivo será alterado. O `tailwind.config.ts` e `index.css` já possuem todos os tokens necessários.
 
-- Todos os ícones importados do `lucide-react` (já instalado).
-- Componentes `Accordion*` e `Button` já existem no projeto — serão reutilizados.
-- O `ScrollReveal` (framer-motion) será usado para entradas suaves nas seções.
-- Nenhum arquivo da landing page principal (`/`) será alterado.
+---
+
+## Tokens e Padrões Adotados (resumo)
+
+| Padrão | receitas.site | Ebook atual (antes) |
+|---|---|---|
+| Fundo seções | `bg-background` / `bg-card` | `bg-white` / `bg-gray-100` |
+| Bordas | `border border-border` | sem borda ou `border-gray-200` |
+| Raio cards | `rounded-3xl` | `rounded-2xl` |
+| Tipografia títulos | `font-semibold tracking-tighter-custom` | `font-extrabold` |
+| Cores | tokens CSS | hex hardcoded |
+| Estrelas | `fill-primary text-primary` | `fill-yellow-400` |
+| CTA | `Button` design system | `<a>` com classes manuais |
+| Ícone decorativo | gigante translúcido no card | nenhum |
+| Glow radial | sim, em background | não |
