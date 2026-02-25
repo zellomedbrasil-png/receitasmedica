@@ -275,8 +275,42 @@ function CountdownTimer() {
 
 /* ─── Component ─────────────────────────────────────────────────────────── */
 const Ebook = () => {
+  const heroRef = useRef<HTMLElement>(null);
+  const [showFloating, setShowFloating] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!heroRef.current) return;
+      const { bottom } = heroRef.current.getBoundingClientRect();
+      setShowFloating(bottom < 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background font-sans scroll-smooth">
+
+      {/* ── FLOATING CTA ───────────────────────────────────────────── */}
+      <motion.div
+        initial={false}
+        animate={showFloating ? { y: 0, opacity: 1 } : { y: 100, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
+        style={{ pointerEvents: showFloating ? "auto" : "none" }}
+      >
+        <a
+          href="#oferta"
+          className="flex items-center gap-3 bg-primary text-primary-foreground rounded-full px-6 py-3.5 shadow-2xl shadow-primary/40 hover:-translate-y-0.5 hover:bg-primary/90 transition-all text-sm font-semibold border border-primary/20"
+        >
+          <BookOpen className="w-4 h-4 shrink-0" />
+          Comprar por{" "}
+          <span className="font-bold">R$ 9,90</span>
+          <span className="ml-1 bg-primary-foreground/15 text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+            Oferta
+          </span>
+        </a>
+      </motion.div>
 
       {/* ── 1. TRUST BADGE ─────────────────────────────────────────── */}
       <div className="bg-foreground text-background/80 py-2 px-4 text-center text-xs flex items-center justify-center gap-2">
@@ -288,7 +322,7 @@ const Ebook = () => {
       </div>
 
       {/* ── 2. HERO ────────────────────────────────────────────────── */}
-      <section className="relative pt-24 pb-20 lg:pt-32 lg:pb-28 overflow-hidden">
+      <section ref={heroRef} className="relative pt-24 pb-20 lg:pt-32 lg:pb-28 overflow-hidden">
         {/* Radial glow */}
         <div className="absolute w-[700px] h-[700px] bg-[radial-gradient(circle,hsl(var(--emerald)/0.13)_0%,transparent_70%)] top-[-120px] left-1/2 -translate-x-1/2 z-0 pointer-events-none" />
 
