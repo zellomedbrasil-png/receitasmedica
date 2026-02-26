@@ -831,22 +831,34 @@ const Ebook = () => {
 
             {/* Left — 3D book mockup */}
             <SR delay={0.08} className="flex items-center justify-center">
-              <div className="relative">
-                {/* Radial glow */}
+              <div className="relative flex items-center justify-center">
+                {/* Deep radial glow — matches the teal/emerald bg of the book image */}
                 <div
-                  className="absolute inset-0 rounded-full blur-3xl scale-110 pointer-events-none"
-                  style={{ background: "hsl(var(--emerald)/0.18)" }}
+                  className="absolute w-[110%] h-[110%] rounded-full blur-3xl pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse at 50% 70%, rgba(6,50,35,0.95) 0%, rgba(7,10,13,0.0) 70%)",
+                    zIndex: 0,
+                  }}
+                />
+                {/* Outer ambient glow */}
+                <div
+                  className="absolute w-[85%] h-[85%] rounded-full blur-2xl pointer-events-none"
+                  style={{ background: "hsl(var(--emerald)/0.12)", zIndex: 0 }}
                 />
                 <motion.div
                   animate={{ y: [0, -14, 0] }}
                   transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative"
-                  style={{ filter: "drop-shadow(0 40px 80px rgba(16,185,129,0.30)) drop-shadow(0 10px 30px rgba(0,0,0,0.8))" }}
+                  className="relative z-10"
+                  style={{
+                    filter: "drop-shadow(0 50px 90px rgba(4,30,20,0.98)) drop-shadow(0 8px 32px rgba(16,185,129,0.18))",
+                  }}
                 >
                   <img
                     src={ebookCover3D}
                     alt="Mockup 3D do E-book: O Código da Farmácia"
-                    className="w-64 md:w-80 lg:w-96 object-contain"
+                    className="w-64 md:w-80 lg:w-[22rem] object-contain select-none"
+                    style={{ mixBlendMode: "normal" }}
+                    draggable={false}
                   />
                 </motion.div>
               </div>
