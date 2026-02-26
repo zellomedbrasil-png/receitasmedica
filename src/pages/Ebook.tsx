@@ -907,11 +907,11 @@ const Ebook = () => {
                     {/* Aviso de disponibilidade */}
                     <div
                       className="flex items-start gap-2.5 rounded-2xl px-4 py-3 mb-6 text-left"
-                      style={{ background: "rgba(255, 180, 50, 0.07)", border: "1px solid rgba(255, 180, 50, 0.18)" }}
+                      style={{ background: "rgba(220, 50, 50, 0.08)", border: "1px solid rgba(220, 50, 50, 0.25)" }}
                     >
-                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "rgba(255, 200, 100, 0.85)" }} />
-                      <p className="text-xs leading-relaxed" style={{ color: "rgba(255, 200, 100, 0.75)" }}>
-                        <strong style={{ color: "rgba(255, 210, 120, 0.95)", fontWeight: 600 }}>Não sabemos até quando este material ficará disponível.</strong>{" "}
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "rgba(255, 90, 90, 0.90)" }} />
+                      <p className="text-xs leading-relaxed" style={{ color: "rgba(255, 110, 110, 0.80)" }}>
+                        <strong style={{ color: "rgba(255, 130, 130, 1)", fontWeight: 600 }}>Não sabemos até quando este material ficará disponível.</strong>{" "}
                         Farmácias e operadoras de saúde exercem pressão para que informações como essas não circulem livremente.
                       </p>
                     </div>
