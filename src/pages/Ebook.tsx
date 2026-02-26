@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ebookCover from "@/assets/capa-ebook.png";
 import { motion } from "framer-motion";
 import {
   Eye,
@@ -398,59 +399,31 @@ const Ebook = () => {
               </SR>
             </div>
 
-            {/* Right — book mockup */}
+            {/* Right — book cover */}
             <SR delay={0.18} className="flex items-center justify-center">
               <div className="relative">
+                {/* Ambient glow behind cover */}
                 <div
-                  className="absolute inset-0 rounded-3xl blur-3xl scale-110 pointer-events-none"
-                  style={{ background: "hsl(var(--emerald)/0.18)" }}
+                  className="absolute inset-0 rounded-3xl blur-3xl scale-125 pointer-events-none"
+                  style={{ background: "hsl(var(--emerald)/0.20)" }}
                 />
                 <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative w-52 md:w-64 aspect-[3/4] rounded-3xl flex flex-col items-center justify-center gap-5 p-8 shadow-2xl overflow-hidden"
-                  style={{
-                    background: "linear-gradient(145deg, #1a1e27, #0F1115)",
-                    border: "1px solid rgba(255,255,255,0.10)",
-                  }}
+                  animate={{ y: [0, -12, 0] }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative"
+                  style={{ filter: "drop-shadow(0 30px 60px rgba(16,185,129,0.25)) drop-shadow(0 8px 24px rgba(0,0,0,0.7))" }}
                 >
-                  {/* Inner shine */}
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)" }}
+                  <img
+                    src={ebookCover}
+                    alt="Capa do E-book: O Código da Farmácia"
+                    className="w-52 md:w-72 rounded-2xl object-cover"
+                    style={{ border: "1px solid rgba(255,255,255,0.10)" }}
                   />
-                  {/* Top glow sphere */}
+                  {/* Shine overlay */}
                   <div
-                    className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"
-                    style={{ background: "hsl(var(--emerald)/0.25)" }}
+                    className="absolute inset-0 rounded-2xl pointer-events-none"
+                    style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%)" }}
                   />
-                  <BookOpen
-                    className="w-14 h-14 relative z-10"
-                    style={{ color: "hsl(var(--emerald))" }}
-                    strokeWidth={1.5}
-                  />
-                  <div className="text-center relative z-10 px-2">
-                    <p className="font-bold text-sm leading-tight tracking-tight uppercase" style={{ color: "white" }}>
-                      O Código da Farmácia
-                    </p>
-                    <p className="text-xs mt-2 leading-snug font-light" style={{ color: "hsl(var(--emerald))" }}>
-                      SUS · PBMs · Remédios Baratos
-                    </p>
-                  </div>
-                  {/* Price badge */}
-                  <div
-                    className="absolute bottom-4 right-4 text-[11px] font-bold px-3 py-1.5 rounded-full z-10"
-                    style={{ background: "hsl(var(--emerald))", color: "white" }}
-                  >
-                    R$ 29
-                  </div>
-                  {/* Strikethrough */}
-                  <div
-                    className="absolute bottom-4 left-4 text-[11px] font-medium line-through z-10"
-                    style={{ color: "rgba(255,255,255,0.3)" }}
-                  >
-                    R$ 97
-                  </div>
                 </motion.div>
               </div>
             </SR>
