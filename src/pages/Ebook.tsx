@@ -18,11 +18,8 @@ import {
   Smartphone,
   TrendingDown,
   FileText,
-  Share2,
   ArrowRight,
-  Zap,
   MapPin,
-  MessageCircle,
   Stethoscope,
   GraduationCap,
   Award,
@@ -223,20 +220,6 @@ const testimonials = [
     text: "Abriu meus olhos. Economizei R$ 45 já na primeira compra. Nunca soube que o laboratório tinha um programa gratuito — o receitas.site deveria divulgar isso mais.",
   },
   {
-    initials: "CE",
-    name: "Carlos Eduardo R.",
-    city: "Belo Horizonte, MG",
-    rating: 5,
-    text: "Finalmente entendi por que pedem meu CPF. E aprendi como usar isso completamente a meu favor. Informação que vale muito mais que os R$ 29.",
-  },
-  {
-    initials: "AP",
-    name: "Ana Paula F.",
-    city: "Curitiba, PR",
-    rating: 5,
-    text: "Paguei R$ 0,00 no meu Ozempic esse mês. O guia me mostrou o passo a passo do programa do laboratório — informação que o balcão nunca me deu.",
-  },
-  {
     initials: "JR",
     name: "João Ricardo M.",
     city: "Recife, PE",
@@ -249,13 +232,6 @@ const testimonials = [
     city: "Porto Alegre, RS",
     rating: 5,
     text: "Linguagem direta, sem enrolação. Uma leitura de 20 minutos que me economizou mais de R$ 300 só no primeiro mês. Impressionante.",
-  },
-  {
-    initials: "RT",
-    name: "Roberto T.",
-    city: "Goiânia, GO",
-    rating: 5,
-    text: "Isso deveria ser ensinado antes de qualquer consulta médica. O receitas.site reuniu em poucas páginas o que ninguém no sistema tem interesse em te contar.",
   },
 ];
 
@@ -313,7 +289,7 @@ const Ebook = () => {
         <span style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
         <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
           <Star className="w-3 h-3" style={{ fill: "hsl(var(--emerald))", color: "hsl(var(--emerald))" }} />
-          <strong style={{ color: "white" }}>4.9</strong> de 5 · mais de 500 leitores
+          <strong style={{ color: "white" }}>4.9</strong> de 5
         </span>
         <span style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
         <span className="flex items-center gap-1 font-medium" style={{ color: "rgba(255, 200, 100, 0.80)" }}>
@@ -574,56 +550,6 @@ const Ebook = () => {
         </div>
       </section>
 
-      {/* ── 5. ANCORAGEM DE VALOR ────────────────────────────────────────── */}
-      <section className="py-20" style={{ background: "#14181F", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <SR>
-            <div
-              className="rounded-3xl p-8 md:p-12 relative overflow-hidden text-center"
-              style={{ background: "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))", border: "1px solid rgba(255,255,255,0.08)" }}
-            >
-              <div
-                className="absolute inset-0 rounded-3xl pointer-events-none"
-                style={{ background: "radial-gradient(circle at top right, hsl(var(--emerald)/0.10), transparent 60%)" }}
-              />
-              <div className="relative z-10">
-                <div
-                  className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-8"
-                  style={{ background: "hsl(var(--emerald)/0.15)", border: "1px solid hsl(var(--emerald)/0.3)", color: "hsl(var(--emerald))" }}
-                >
-                  <Zap className="w-3.5 h-3.5" /> Faça a conta
-                </div>
-                <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-6" style={{ color: "white" }}>
-                  Se você gasta R$ 200/mês na farmácia,<br />
-                  <span style={{ color: "hsl(var(--emerald))" }}>desconhecer essas regras te custa R$ 2.400 por ano.</span>
-                </h2>
-                <p className="text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.5)", fontWeight: 300 }}>
-                  O receitas.site mapeou que um único desconto descoberto já paga o guia inteiro —{" "}
-                  <strong style={{ color: "white", fontWeight: 600 }}>e sobra muito troco.</strong>{" "}
-                  É um investimento menor que um xarope com retorno imediato.
-                </p>
-                <div className="grid sm:grid-cols-3 gap-4">
-                  {[
-                    { label: "Custo do guia", value: "R$ 29", sub: "pagamento único" },
-                    { label: "Economia média/mês", value: "R$ 120", sub: "relatada por leitores" },
-                    { label: "ROI médio", value: "413%", sub: "só no 1º mês" },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="rounded-2xl p-5"
-                      style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)" }}
-                    >
-                      <p className="text-2xl font-bold tracking-tight mb-1" style={{ color: "hsl(var(--emerald))" }}>{item.value}</p>
-                      <p className="text-xs font-semibold mb-0.5" style={{ color: "rgba(255,255,255,0.8)" }}>{item.label}</p>
-                      <p className="text-[11px]" style={{ color: "rgba(255,255,255,0.35)" }}>{item.sub}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </SR>
-        </div>
-      </section>
 
       {/* ── 6. SOCIAL PROOF ──────────────────────────────────────────────── */}
       <section className="py-24" style={{ background: "#0F1115" }}>
@@ -671,39 +597,6 @@ const Ebook = () => {
               </SR>
             ))}
           </div>
-
-          {/* Share trigger */}
-          <SR delay={0.3}>
-            <div
-              className="mt-16 rounded-2xl p-6 flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left"
-              style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
-            >
-              <div
-                className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
-                style={{ background: "hsl(var(--emerald)/0.15)", border: "1px solid hsl(var(--emerald)/0.25)" }}
-              >
-                <Share2 className="w-5 h-5" style={{ color: "hsl(var(--emerald))" }} />
-              </div>
-              <div className="flex-1">
-                <p className="font-semibold mb-0.5" style={{ color: "white" }}>
-                  Conhece alguém que gasta muito na farmácia?
-                </p>
-                <p className="text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  Envie este link para familiares e amigos — você pode ajudar a economizar centenas de reais por mês.
-                </p>
-              </div>
-              <a
-                href={`https://api.whatsapp.com/send?text=${encodeURIComponent("Achei esse guia incrível sobre como economizar na farmácia usando SUS e PBMs: https://receitasmedica.lovable.app/ebook")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold shrink-0 transition-all hover:opacity-90 hover:-translate-y-0.5 active:scale-95"
-                style={{ background: "hsl(var(--emerald))", color: "white" }}
-              >
-                <MessageCircle className="w-4 h-4" />
-                Compartilhar no WhatsApp
-              </a>
-            </div>
-          </SR>
         </div>
       </section>
 
