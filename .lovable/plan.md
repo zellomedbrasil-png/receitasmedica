@@ -1,53 +1,39 @@
 
-# Substituir Imagem Estática do Hero por Vídeo em Loop
+## Adicionar bloco de cross-promotion para o receitas.site
 
-## Diagnóstico
-
-No Hero da landing page `/ebook` (linhas 403–430 de `src/pages/Ebook.tsx`), há uma `<img>` estática com a capa do e-book, envolta em um `<motion.div>` com animação de flutuação. O usuário enviou um vídeo MP4 para substituir essa imagem por um loop silencioso — muito mais impactante visualmente.
-
----
-
-## Mudanças Técnicas
-
-### 1. Copiar o asset de vídeo
-```
-user-uploads://Retire_a_musica_e_deixe_ele_em_formato_de_loop_per_7eaca6bb46.mp4
-→ src/assets/ebook-hero.mp4
-```
-
-### 2. Substituir `<img>` por `<video>` no Hero (linhas 417–422)
-
-Trocar o elemento de imagem por uma tag `<video>` com os atributos corretos para loop silencioso e autoplay:
-
-```tsx
-<video
-  src={ebookHeroVideo}
-  autoPlay
-  loop
-  muted
-  playsInline
-  className="w-52 md:w-72 rounded-2xl object-cover"
-  style={{ border: "1px solid rgba(255,255,255,0.10)" }}
-/>
-```
-
-- `autoPlay` — inicia automaticamente
-- `loop` — repete sem parar
-- `muted` — remove o som (exigido pelo browser para autoplay funcionar)
-- `playsInline` — essencial para iOS não abrir em fullscreen
-
-### 3. Manter todos os efeitos visuais existentes
-
-A estrutura de glow esmeralda, animação de flutuação (`y: [0, -12, 0]`), shine overlay e drop-shadow permanecem intactos — apenas o elemento interno muda de `<img>` para `<video>`.
-
-### 4. Importar o asset no componente
-
-```tsx
-import ebookHeroVideo from "@/assets/ebook-hero.mp4";
-```
+### Objetivo
+Inserir um destaque visual na página `/ebook` que converta leitores em potenciais clientes do serviço de renovação de receitas do `receitas.site`, com uma mensagem natural e contextual.
 
 ---
 
-## Resultado Esperado
+### Onde posicionar
 
-O vídeo em loop aparece no lugar da imagem estática no Hero, flutuando suavemente com o mesmo efeito de glow esmeralda. Sem som. Totalmente integrado ao tema dark da landing page.
+**Entre a seção de Autoridade (seção 7) e o Pitch Final/Oferta (seção 8)** — linha ~782, após `</section>` da Autoridade.
+
+Este é o momento ideal: o leitor já foi exposto à narrativa investigativa, conhece o receitas.site como parceiro confiável, e ainda não chegou na oferta do e-book. É o ponto de maior abertura para uma mensagem de serviço.
+
+---
+
+### Design do bloco
+
+Um banner horizontal com duas zonas:
+
+**Esquerda:** Ícone de receita médica + texto com gancho direto:
+- Eyebrow: `receitas.site`
+- Título: "Precisa renovar uma receita médica?"
+- Subtítulo: "Teleconsulta em até 30 minutos. Receita digital válida em todo o Brasil."
+
+**Direita:** Botão CTA verde esmeralda com seta → `"Renovar minha Receita"` apontando para `https://receitas.site` (abre em nova aba).
+
+**Visual:** Fundo levemente distinto (`#0E1117`) com borda e um sutil glow esmeralda no canto — consistente com o tema dark da página. Não deve competir com o CTA de compra do e-book.
+
+---
+
+### Detalhe técnico
+
+- Arquivo: `src/pages/Ebook.tsx`
+- Inserir nova `<section>` entre linha 782 e 784
+- Usar o componente `SR` (ScrollReveal com framer-motion) já existente
+- Reaproveitar ícone `FileText` e `ArrowRight` já importados
+- Link `href="https://receitas.site"` com `target="_blank" rel="noopener noreferrer"`
+- Estilo inline consistente com o restante da página (sem adicionar novas classes Tailwind customizadas)
