@@ -167,22 +167,22 @@ const painPoints = [
   {
     Icon: DollarSign,
     num: "01",
-    title: "O mesmo remédio tem 3 preços diferentes",
-    desc: "Genérico, Similar, Referência — e ninguém no balcão te explica qual comprar. A diferença pode ser de 300% no seu bolso.",
+    title: "O mesmo remédio tem até 3 preços diferentes no balcão",
+    desc: "Genérico, Similar ou Referência — e ninguém te explica qual escolher. A diferença pode chegar a 300% sem que você perceba.",
     dark: false,
   },
   {
     Icon: AlertTriangle,
     num: "02",
-    title: "O 'desconto do CPF' esconde armadilhas",
-    desc: "Você dá seu CPF achando que vai economizar. Na prática, está cadastrando seu perfil de consumo para a farmácia vender mais para você.",
+    title: "O 'desconto do CPF' é uma armadilha disfarçada",
+    desc: "Você acredita que está economizando. Na realidade, está entregando seu perfil de consumo para que a farmácia venda ainda mais para você.",
     dark: false,
   },
   {
     Icon: Search,
     num: "03",
-    title: "Bilhões desperdiçados por falta de informação",
-    desc: "O SUS e os laboratórios têm programas que PAGAM por medicamentos de alto custo. Mas quem não sabe pedir, não recebe.",
+    title: "Bilhões desperdiçados por pura falta de informação",
+    desc: "O SUS e grandes laboratórios mantêm programas que cobrem medicamentos de alto custo. Quem não sabe como pedir, simplesmente não recebe.",
     dark: true,
   },
 ];
@@ -191,25 +191,25 @@ const chapters = [
   {
     Icon: MapPin,
     title: "O mapa completo das PBMs",
-    desc: "Programas de Benefícios em Medicamentos: quem oferece, como acessar e quais são os truques escondidos no contrato.",
+    desc: "Programas de Benefícios em Medicamentos: quem oferece, como acessar e quais cláusulas estão escondidas nos contratos — reveladas pela equipe do receitas.site.",
     highlight: true,
   },
   {
     Icon: Search,
     title: "Desconto real vs. ilusão de desconto",
-    desc: "Como identificar se o 'desconto' que a farmácia oferece é genuíno ou uma armadilha de marketing disfarçada.",
+    desc: "Como identificar na hora se o 'desconto' oferecido é genuíno ou uma estratégia de marketing da farmácia para aumentar o ticket médio.",
     highlight: false,
   },
   {
     Icon: CheckCircle2,
     title: "Benefícios esquecidos do SUS",
-    desc: "Lista atualizada de medicamentos com cobertura federal e o passo a passo para ativá-la sem burocracia.",
+    desc: "Lista atualizada de medicamentos com cobertura federal gratuita e o passo a passo para ativá-la — sem burocracia, sem fila.",
     highlight: false,
   },
   {
     Icon: TrendingDown,
     title: "O checklist anti-preço-cheio",
-    desc: "Uma lista prática para levar na farmácia e nunca mais pagar mais do que deveria por qualquer medicamento.",
+    desc: "Um protocolo prático desenvolvido com o receitas.site para você levar na farmácia e nunca mais pagar acima do necessário.",
     highlight: false,
   },
 ];
@@ -220,69 +220,73 @@ const testimonials = [
     name: "Maria Aparecida S.",
     city: "São Paulo, SP",
     rating: 5,
-    text: "Abriu meus olhos. Economizei R$ 45 na primeira compra depois de ler. Nunca soube que o laboratório tinha programa gratuito.",
+    text: "Abriu meus olhos. Economizei R$ 45 já na primeira compra. Nunca soube que o laboratório tinha um programa gratuito — o receitas.site deveria divulgar isso mais.",
   },
   {
     initials: "CE",
     name: "Carlos Eduardo R.",
     city: "Belo Horizonte, MG",
     rating: 5,
-    text: "Finalmente entendi para que pedem meu CPF. E aprendi como usar isso a meu favor. Vale cada centavo.",
+    text: "Finalmente entendi por que pedem meu CPF. E aprendi como usar isso completamente a meu favor. Informação que vale muito mais que os R$ 29.",
   },
   {
     initials: "AP",
     name: "Ana Paula F.",
     city: "Curitiba, PR",
     rating: 5,
-    text: "Paguei R$ 0,00 no meu Ozempic esse mês. O guia me mostrou o passo a passo do programa do laboratório.",
+    text: "Paguei R$ 0,00 no meu Ozempic esse mês. O guia me mostrou o passo a passo do programa do laboratório — informação que o balcão nunca me deu.",
   },
   {
     initials: "JR",
     name: "João Ricardo M.",
     city: "Recife, PE",
     rating: 5,
-    text: "Minha mãe gastava R$ 380/mês em remédios. Hoje paga R$ 60. Enviei o e-book para toda a família.",
+    text: "Minha mãe gastava R$ 380/mês em remédios. Hoje paga R$ 60. Enviei para toda a família. O receitas.site fez um trabalho investigativo sério aqui.",
   },
   {
     initials: "LS",
     name: "Luciana S.",
     city: "Porto Alegre, RS",
     rating: 5,
-    text: "Linguagem simples, sem enrolação. Leitora de 20 minutos que me economizou R$ 300 só no primeiro mês.",
+    text: "Linguagem direta, sem enrolação. Uma leitura de 20 minutos que me economizou mais de R$ 300 só no primeiro mês. Impressionante.",
   },
   {
     initials: "RT",
     name: "Roberto T.",
     city: "Goiânia, GO",
     rating: 5,
-    text: "Ler isso deveria ser obrigatório antes de qualquer consulta médica. Informação de verdade, sem paternalismo.",
+    text: "Isso deveria ser ensinado antes de qualquer consulta médica. O receitas.site reuniu em poucas páginas o que ninguém no sistema tem interesse em te contar.",
   },
 ];
 
 const faqs = [
   {
     q: "Isso é legal?",
-    a: "100%. O guia não ensina a burlar nenhum sistema — ensina a usar o que já existe. Os programas do SUS, Farmácia Popular e PBMs são regulamentados pelo Ministério da Saúde e pela Anvisa. Você apenas aprende a acessá-los corretamente.",
+    a: "100%. O guia não ensina a burlar nenhum sistema — ensina a usar exatamente o que já existe e é regulamentado. Os programas do SUS, Farmácia Popular e PBMs seguem diretrizes do Ministério da Saúde e da Anvisa. Você simplesmente aprende a acessá-los corretamente.",
   },
   {
-    q: "Serve para mim que compro pouco na farmácia?",
-    a: "Sim! Mesmo quem compra apenas 1 medicamento por mês pode economizar entre R$ 20 e R$ 200 se souber usar as ferramentas certas. O guia é útil para qualquer pessoa que pague alguma coisa na farmácia.",
+    q: "Serve para quem compra pouco na farmácia?",
+    a: "Sim. Mesmo quem adquire apenas 1 medicamento por mês pode economizar entre R$ 20 e R$ 200 sabendo usar as ferramentas certas. O guia é útil para qualquer pessoa que pague algo na farmácia — sem exceção.",
   },
   {
-    q: "É complexo de ler?",
-    a: "Não. Foi escrito especialmente para quem não tem formação na área da saúde. Linguagem direta, exemplos práticos e um checklist no final para você usar na próxima compra.",
+    q: "A linguagem é acessível?",
+    a: "Foi escrito especialmente para quem não tem formação em saúde. Linguagem direta, exemplos reais e um checklist prático no final — para você usar já na próxima compra.",
   },
   {
     q: "E se meu remédio não estiver no SUS?",
-    a: "O guia cobre tanto os programas do SUS quanto os PBMs dos laboratórios privados (Roche, Novo Nordisk, AstraZeneca, etc.) — que cobrem medicamentos que o SUS não fornece, incluindo os de alto custo.",
+    a: "O guia cobre tanto o SUS quanto os PBMs de laboratórios privados como Roche, Novo Nordisk e AstraZeneca — que atendem justamente os medicamentos de alto custo que o SUS não fornece.",
   },
   {
-    q: "Como recebo o e-book?",
-    a: "Após o pagamento (aprovação imediata para Pix e cartão), você recebe um link de download por e-mail em até 2 minutos. Arquivo PDF compatível com celular, tablet e computador.",
+    q: "Como recebo o e-book após a compra?",
+    a: "O acesso é imediato. Após a aprovação do pagamento (Pix ou cartão), você recebe o link de download no e-mail em até 2 minutos. PDF compatível com celular, tablet e computador.",
   },
   {
-    q: "E se eu não gostar?",
-    a: "Garantia total de 7 dias. Se por qualquer motivo você não ficar satisfeito, devolvemos 100% do seu dinheiro — sem burocracia, sem perguntas.",
+    q: "E se eu não ficar satisfeito?",
+    a: "Garantia incondicional de 7 dias. Se por qualquer motivo o material não atender às suas expectativas, devolvemos 100% do valor — sem burocracia e sem nenhuma pergunta.",
+  },
+  {
+    q: "Qual é a relação com o receitas.site?",
+    a: "Este e-book é uma publicação oficial em parceria com o receitas.site — plataforma de saúde digital com mais de 500 mil usuários mensais. Todo o conteúdo foi curado pela equipe editorial e revisado por profissionais de saúde.",
   },
 ];
 
@@ -337,7 +341,7 @@ const Ebook = () => {
                 >
                   <Eye className="w-3.5 h-3.5" style={{ color: "hsl(var(--emerald))" }} />
                   <span className="text-xs font-medium tracking-tight" style={{ color: "rgba(255,255,255,0.6)" }}>
-                    Informação que deveria ser pública — mas pode sair do ar.
+                    Publicação oficial receitas.site — conteúdo que pode sair do ar.
                   </span>
                 </div>
               </SR>
@@ -347,21 +351,21 @@ const Ebook = () => {
                   className="text-4xl sm:text-5xl lg:text-[3.2rem] font-extrabold tracking-tight leading-[1.08] mb-6"
                   style={{ color: "white" }}
                 >
-                  Você está pagando mais caro por remédios…{" "}
+                  Você paga mais caro por remédios do que deveria…{" "}
                   <span
                     className="bg-clip-text text-transparent"
                     style={{ backgroundImage: "linear-gradient(90deg, hsl(var(--emerald)), hsl(var(--emerald-glow)))" }}
                   >
-                    e não é por acaso.
+                    e o sistema conta com isso.
                   </span>
                 </h1>
               </SR>
 
               <SR delay={0.16}>
                 <p className="text-lg leading-relaxed mb-10" style={{ color: "rgba(255,255,255,0.55)", fontWeight: 300 }}>
-                  Existe um sistema invisível por trás do SUS, das PBMs e das farmácias que dita o seu gasto mensal.{" "}
+                  A equipe do receitas.site mapeou um sistema invisível por trás do SUS, das PBMs e das farmácias — e ele está ditando quanto você gasta todo mês.{" "}
                   <strong style={{ color: "rgba(255,255,255,0.85)", fontWeight: 500 }}>
-                    Descubra como ele funciona — e como hackear esse jogo a seu favor.
+                    Descubra como funciona e como virar esse jogo a seu favor.
                   </strong>
                 </p>
               </SR>
@@ -454,7 +458,7 @@ const Ebook = () => {
                 </span>
               </h2>
               <p style={{ color: "rgba(255,255,255,0.45)", fontWeight: 300 }}>
-                E o consumidor comum perde dinheiro sem perceber — todo mês.
+                A pesquisa do receitas.site revela: o brasileiro médio perde dinheiro sem perceber — todo mês.
               </p>
             </div>
           </SR>
@@ -514,15 +518,15 @@ const Ebook = () => {
           <SR>
             <div className="mb-16">
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3" style={{ color: "white" }}>
-                O que você vai descobrir{" "}
+                O que o receitas.site{" "}
                 <span
                   className="bg-clip-text text-transparent"
                   style={{ backgroundImage: "linear-gradient(90deg, hsl(var(--emerald)), hsl(var(--emerald-glow)))" }}
                 >
-                  nas próximas páginas:
+                  vai revelar para você:
                 </span>
               </h2>
-              <p style={{ color: "rgba(255,255,255,0.45)", fontWeight: 300 }}>Informação prática, sem jargão — só o que funciona.</p>
+              <p style={{ color: "rgba(255,255,255,0.45)", fontWeight: 300 }}>Informação apurada, sem jargão — só o que realmente funciona na prática.</p>
             </div>
           </SR>
 
@@ -589,12 +593,12 @@ const Ebook = () => {
                 </div>
                 <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-6" style={{ color: "white" }}>
                   Se você gasta R$ 200/mês na farmácia,<br />
-                  <span style={{ color: "hsl(var(--emerald))" }}>não saber essas regras te custa R$ 2.400 por ano.</span>
+                  <span style={{ color: "hsl(var(--emerald))" }}>desconhecer essas regras te custa R$ 2.400 por ano.</span>
                 </h2>
                 <p className="text-lg leading-relaxed mb-8" style={{ color: "rgba(255,255,255,0.5)", fontWeight: 300 }}>
-                  O acesso a esse conhecimento custa{" "}
-                  <strong style={{ color: "white", fontWeight: 600 }}>menos que um xarope.</strong>{" "}
-                  Um único desconto descoberto já paga o guia — e sobra troco.
+                  O receitas.site mapeou que um único desconto descoberto já paga o guia inteiro —{" "}
+                  <strong style={{ color: "white", fontWeight: 600 }}>e sobra muito troco.</strong>{" "}
+                  É um investimento menor que um xarope com retorno imediato.
                 </p>
                 <div className="grid sm:grid-cols-3 gap-4">
                   {[
@@ -640,12 +644,12 @@ const Ebook = () => {
 
           <SR>
             <h2 className="text-3xl font-extrabold tracking-tight mb-12" style={{ color: "white" }}>
-              Quem já aplicou o{" "}
+              O que leitores do receitas.site{" "}
               <span
                 className="bg-clip-text text-transparent"
                 style={{ backgroundImage: "linear-gradient(90deg, hsl(var(--emerald)), hsl(var(--emerald-glow)))" }}
               >
-                Código da Farmácia:
+                estão economizando:
               </span>
             </h2>
           </SR>
@@ -764,25 +768,25 @@ const Ebook = () => {
                     className="text-xs font-bold uppercase tracking-widest mb-3"
                     style={{ color: "hsl(var(--emerald))" }}
                   >
-                    Quem está revelando esses bastidores?
+                    A investigação por trás do receitas.site
                   </p>
                   <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-4" style={{ color: "white" }}>
-                    Médico. Especialista. Do seu lado.
+                    Médico. Investigador. Do seu lado.
                   </h2>
                   <p className="leading-relaxed mb-4 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
-                    Após anos de prática clínica, percebeu que a maioria dos pacientes paga valores abusivos por medicamentos que tem direito de acessar de graça — simplesmente por falta de informação.
+                    Após anos de prática clínica, ficou evidente que a maioria dos pacientes paga valores abusivos por medicamentos aos quais têm direito gratuito — simplesmente porque ninguém conta essa informação.
                   </p>
                   <p className="leading-relaxed mb-6 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
-                    Em parceria com a plataforma{" "}
+                    Em parceria com o{" "}
                     <strong style={{ color: "white", fontWeight: 500 }}>receitas.site</strong>
-                    , reuniu neste guia tudo o que os sistemas de saúde escondem de você.
+                    {" "}— plataforma de saúde digital com mais de 500 mil usuários mensais —, reuniu neste guia tudo o que farmácias, laboratórios e operadoras preferem que você não saiba.
                   </p>
                   <div
                     className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full"
                     style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.6)" }}
                   >
                     <BadgeCheck className="w-4 h-4" style={{ color: "hsl(var(--emerald))" }} />
-                    Conteúdo curado pelo receitas.site
+                    Publicação oficial · Parceria receitas.site
                   </div>
                 </div>
               </div>
@@ -825,8 +829,8 @@ const Ebook = () => {
               </span>
             </h2>
             <p className="text-lg leading-relaxed font-light max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.45)" }}>
-              Este guia vai te fazer economizar centenas de reais já na sua próxima ida à farmácia. É um investimento menor que um lanche, mas que{" "}
-              <strong style={{ color: "white", fontWeight: 500 }}>devolve o seu dinheiro.</strong>
+              A equipe do receitas.site compilou em poucas páginas o que pode te economizar centenas de reais já na próxima ida à farmácia. Menor que um lanche —{" "}
+              <strong style={{ color: "white", fontWeight: 500 }}>mas que devolve o seu dinheiro na primeira aplicação.</strong>
             </p>
           </SR>
 
@@ -983,7 +987,7 @@ const Ebook = () => {
             <h2 className="text-3xl font-extrabold tracking-tight mb-3" style={{ color: "white" }}>
               Perguntas Frequentes
             </h2>
-            <p className="mb-12 font-light" style={{ color: "rgba(255,255,255,0.4)" }}>Tire suas dúvidas antes de decidir.</p>
+            <p className="mb-12 font-light" style={{ color: "rgba(255,255,255,0.4)" }}>Respostas diretas sobre o guia e a parceria com o receitas.site.</p>
           </SR>
 
           <SR delay={0.1}>
