@@ -261,32 +261,34 @@ const testimonials = [
 
 const faqs = [
   {
-    q: "Isso é legal?",
-    a: "100%. O guia não ensina a burlar nenhum sistema — ensina a usar exatamente o que já existe e é regulamentado. Os programas do SUS, Farmácia Popular e PBMs seguem diretrizes do Ministério da Saúde e da Anvisa. Você simplesmente aprende a acessá-los corretamente.",
+    category: "Sobre o conteúdo",
+    q: "O conteúdo é baseado em fontes oficiais?",
+    a: "Sim. Tudo que está no guia é extraído de portarias do Ministério da Saúde, regulamentos da Anvisa e dos próprios sites dos laboratórios. Não há nada especulativo — são caminhos que existem, são públicos, mas que ninguém te ensina a usar.",
   },
   {
-    q: "Serve para quem compra pouco na farmácia?",
-    a: "Sim. Mesmo quem adquire apenas 1 medicamento por mês pode economizar entre R$ 20 e R$ 200 sabendo usar as ferramentas certas. O guia é útil para qualquer pessoa que pague algo na farmácia — sem exceção.",
+    category: "Sobre o conteúdo",
+    q: "Serve para qualquer tipo de medicamento?",
+    a: "O guia cobre desde medicamentos de uso contínuo (hipertensão, diabetes, colesterol) até os de alto custo fora da lista do SUS — incluindo programas de PBMs de laboratórios como Roche, Novo Nordisk e AstraZeneca. Se você paga algo na farmácia, há algo para você aqui.",
   },
   {
-    q: "A linguagem é acessível?",
-    a: "Foi escrito especialmente para quem não tem formação em saúde. Linguagem direta, exemplos reais e um checklist prático no final — para você usar já na próxima compra.",
+    category: "Sobre o conteúdo",
+    q: "Precisa ter formação em saúde para entender?",
+    a: "Não. O guia foi escrito com linguagem direta e exemplos práticos. Há um checklist ao final para você usar na próxima compra — sem precisar decifrar nada.",
   },
   {
-    q: "E se meu remédio não estiver no SUS?",
-    a: "O guia cobre tanto o SUS quanto os PBMs de laboratórios privados como Roche, Novo Nordisk e AstraZeneca — que atendem justamente os medicamentos de alto custo que o SUS não fornece.",
+    category: "Compra e acesso",
+    q: "Como recebo o e-book depois que comprar?",
+    a: "O acesso é imediato. Após a confirmação do pagamento — via Pix (aprovação em segundos) ou cartão — você recebe o link de download no e-mail em até 2 minutos. Formato PDF, compatível com celular, tablet e computador.",
   },
   {
-    q: "Como recebo o e-book após a compra?",
-    a: "O acesso é imediato. Após a aprovação do pagamento (Pix ou cartão), você recebe o link de download no e-mail em até 2 minutos. PDF compatível com celular, tablet e computador.",
-  },
-  {
+    category: "Compra e acesso",
     q: "E se eu não ficar satisfeito?",
-    a: "Garantia incondicional de 7 dias. Se por qualquer motivo o material não atender às suas expectativas, devolvemos 100% do valor — sem burocracia e sem nenhuma pergunta.",
+    a: "Garantia incondicional de 7 dias. Se por qualquer motivo o material não atender às suas expectativas, devolvemos 100% do valor pago — sem burocracia, sem perguntas, sem processo complicado.",
   },
   {
-    q: "Qual é a relação com o receitas.site?",
-    a: "Este e-book é uma publicação oficial em parceria com o receitas.site — plataforma de saúde digital com mais de 500 mil usuários mensais. Todo o conteúdo foi curado pela equipe editorial e revisado por profissionais de saúde.",
+    category: "Parceria",
+    q: "O que é o receitas.site e qual a relação com este e-book?",
+    a: "O receitas.site é uma plataforma de saúde digital com mais de 500 mil usuários mensais, especializada em renovação de receitas e acesso a serviços médicos online. Este e-book é uma publicação oficial em parceria com a plataforma — todo o conteúdo foi desenvolvido pela equipe editorial e revisado por profissionais de saúde cadastrados.",
   },
 ];
 
@@ -981,104 +983,129 @@ const Ebook = () => {
       </section>
 
       {/* ── 9. FAQ ───────────────────────────────────────────────────────── */}
-      <section className="py-20" style={{ background: "#0F1115" }}>
-        <div className="max-w-2xl mx-auto px-6">
+      <section className="py-24" style={{ background: "#0F1115" }}>
+        <div className="max-w-3xl mx-auto px-6">
           <SR>
-            <h2 className="text-3xl font-extrabold tracking-tight mb-3" style={{ color: "white" }}>
-              Perguntas Frequentes
-            </h2>
-            <p className="mb-12 font-light" style={{ color: "rgba(255,255,255,0.4)" }}>Respostas diretas sobre o guia e a parceria com o receitas.site.</p>
+            <div className="mb-14">
+              <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: "hsl(var(--emerald))" }}>Dúvidas</p>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight" style={{ color: "white" }}>
+                Perguntas frequentes
+              </h2>
+            </div>
           </SR>
 
           <SR delay={0.1}>
-            <Accordion type="single" collapsible className="space-y-3">
-              {faqs.map(({ q, a }, i) => (
-                <AccordionItem
-                  key={i}
-                  value={`faq-${i}`}
-                  className="rounded-2xl px-6"
-                  style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}
-                >
-                  <AccordionTrigger
-                    className="text-left font-semibold hover:no-underline tracking-tight"
-                    style={{ color: "rgba(255,255,255,0.85)" }}
-                  >
-                    {q}
-                  </AccordionTrigger>
-                  <AccordionContent
-                    className="leading-relaxed font-light"
-                    style={{ color: "rgba(255,255,255,0.45)" }}
-                  >
-                    {a}
-                  </AccordionContent>
-                </AccordionItem>
+            <div className="space-y-1">
+              {faqs.map(({ q, a, category }, i) => (
+                <div key={i}>
+                  {/* Category label — show only when changes */}
+                  {(i === 0 || faqs[i - 1].category !== category) && (
+                    <p className="text-[10px] uppercase tracking-widest font-semibold pt-6 pb-2 first:pt-0" style={{ color: "rgba(255,255,255,0.22)" }}>
+                      {category}
+                    </p>
+                  )}
+                  <Accordion type="single" collapsible>
+                    <AccordionItem
+                      value={`faq-${i}`}
+                      className="border-0"
+                      style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}
+                    >
+                      <AccordionTrigger
+                        className="text-left font-medium text-sm hover:no-underline py-5 gap-4"
+                        style={{ color: "rgba(255,255,255,0.80)" }}
+                      >
+                        {q}
+                      </AccordionTrigger>
+                      <AccordionContent
+                        className="text-sm leading-relaxed pb-5"
+                        style={{ color: "rgba(255,255,255,0.42)" }}
+                      >
+                        {a}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
               ))}
-            </Accordion>
+            </div>
           </SR>
 
           <SR delay={0.2}>
-            <div className="mt-12 text-center">
+            <div className="mt-14 flex flex-col sm:flex-row items-center gap-4">
               <a
                 href="#oferta"
-                className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-base font-bold transition-all duration-200 hover:-translate-y-1 active:scale-95"
+                className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
                 style={{
                   background: "hsl(var(--emerald))",
                   color: "white",
-                  boxShadow: "0 0 30px hsl(var(--emerald)/0.3)",
+                  boxShadow: "0 0 28px hsl(var(--emerald)/0.25)",
                 }}
               >
                 Quero o E-book Agora
                 <ArrowRight className="w-4 h-4" />
               </a>
+              <span className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
+                Garantia de 7 dias · Acesso imediato
+              </span>
             </div>
           </SR>
         </div>
       </section>
 
       {/* ── 10. FOOTER ───────────────────────────────────────────────────── */}
-      <footer className="py-14 px-6" style={{ background: "#070A0D", borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <p className="font-semibold tracking-tight" style={{ color: "white" }}>receitas.site</p>
-            <p className="text-xs mt-1" style={{ color: "rgba(255,255,255,0.3)" }}>O Código da Farmácia</p>
+      <footer className="py-12 px-6" style={{ background: "#070A0D", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="max-w-3xl mx-auto">
+
+          {/* Top row */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-8">
+            <div>
+              <p className="font-semibold text-sm tracking-tight" style={{ color: "rgba(255,255,255,0.85)" }}>receitas.site</p>
+              <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.25)" }}>O Código da Farmácia · Publicação oficial</p>
+            </div>
+            <div className="flex items-center gap-5">
+              {["Termos de Uso", "Privacidade", "Contato"].map((l) => (
+                <a
+                  key={l}
+                  href="#"
+                  className="text-xs hover:opacity-60 transition-opacity"
+                  style={{ color: "rgba(255,255,255,0.30)" }}
+                >
+                  {l}
+                </a>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
-            {["Termos de Uso", "Política de Privacidade", "Contato"].map((l) => (
-              <a
-                key={l}
-                href="#"
-                className="text-xs uppercase tracking-wider font-medium hover:opacity-80 transition-opacity"
-                style={{ color: "rgba(255,255,255,0.35)" }}
-              >
-                {l}
-              </a>
-            ))}
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
-            {["Visa", "Mastercard", "Pix", "Boleto"].map((p) => (
+
+          {/* Divider */}
+          <div style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }} className="mb-8" />
+
+          {/* Payment + security */}
+          <div className="flex flex-wrap items-center gap-2 mb-8">
+            {["Visa", "Mastercard", "Pix"].map((p) => (
               <span
                 key={p}
-                className="text-xs px-3 py-1 rounded-full"
-                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.35)" }}
+                className="text-[11px] px-2.5 py-1 rounded-md"
+                style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.30)" }}
               >
                 {p}
               </span>
             ))}
             <span
-              className="flex items-center gap-1 text-xs px-3 py-1 rounded-full"
-              style={{ background: "hsl(var(--emerald)/0.12)", border: "1px solid hsl(var(--emerald)/0.25)", color: "hsl(var(--emerald))" }}
+              className="flex items-center gap-1 text-[11px] px-2.5 py-1 rounded-md"
+              style={{ background: "hsl(var(--emerald)/0.08)", border: "1px solid hsl(var(--emerald)/0.18)", color: "hsl(var(--emerald))" }}
             >
-              <Lock className="w-3 h-3" /> SSL Seguro
+              <Lock className="w-2.5 h-2.5" /> Ambiente seguro · SSL
+            </span>
+            <span className="text-[11px] ml-auto" style={{ color: "rgba(255,255,255,0.18)" }}>
+              © 2026 receitas.site
             </span>
           </div>
-          <p className="text-center mb-4" style={{ color: "rgba(255,255,255,0.2)", fontSize: "13px" }}>
-            © 2026 receitas.site · Todos os direitos reservados.
-          </p>
+
+          {/* Disclaimer jurídico */}
           <p
-            className="text-center leading-relaxed max-w-2xl mx-auto"
-            style={{ color: "rgba(255,255,255,0.18)", fontSize: "11px" }}
+            className="leading-relaxed"
+            style={{ color: "rgba(255,255,255,0.15)", fontSize: "10.5px" }}
           >
-            Este produto não garante resultados financeiros específicos e não substitui orientação médica. O conteúdo é estritamente informativo e educativo. Nunca interrompa um tratamento ou substitua medicamentos sem avaliação do seu médico. O acesso aos programas descritos depende de critérios clínicos e disponibilidade em cada município.
+            <strong style={{ color: "rgba(255,255,255,0.22)", fontWeight: 600 }}>Aviso Legal:</strong> Este material tem finalidade exclusivamente informativa e educativa, nos termos do art. 5º, XIV da Constituição Federal. Não constitui prescrição médica, orientação terapêutica individualizada nem promessa de resultado financeiro. As informações sobre programas governamentais e benefícios de laboratórios são públicas e baseadas em regulamentações vigentes do Ministério da Saúde e da Anvisa. O acesso aos programas citados está sujeito a critérios clínicos e disponibilidade por município. <strong style={{ color: "rgba(255,255,255,0.22)", fontWeight: 600 }}>Nunca interrompa um tratamento ou substitua medicamentos sem avaliação do seu médico.</strong> Em caso de dúvida, consulte um profissional de saúde habilitado. O produto é protegido pela Lei nº 9.610/1998 (Lei de Direitos Autorais). Proibida reprodução total ou parcial sem autorização expressa. Compra sujeita ao Código de Defesa do Consumidor (Lei nº 8.078/1990) — direito de arrependimento em até 7 dias corridos.
           </p>
         </div>
       </footer>
