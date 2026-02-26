@@ -781,6 +781,63 @@ const Ebook = () => {
         </div>
       </section>
 
+      {/* ── CROSS-PROMOTION receitas.site ────────────────────────────────── */}
+      <section className="py-10 relative overflow-hidden" style={{ background: "#0E1117" }}>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ boxShadow: "inset 0 0 120px hsl(var(--emerald)/0.04)" }}
+        />
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+          <SR>
+            <div
+              className="flex flex-col sm:flex-row items-center justify-between gap-6 rounded-2xl px-8 py-7"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "0 0 60px hsl(var(--emerald)/0.06)",
+              }}
+            >
+              {/* Left zone */}
+              <div className="flex items-start gap-4">
+                <div
+                  className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
+                  style={{ background: "hsl(var(--emerald)/0.12)", border: "1px solid hsl(var(--emerald)/0.25)" }}
+                >
+                  <FileText className="w-5 h-5" style={{ color: "hsl(var(--emerald))" }} />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "hsl(var(--emerald))" }}>
+                    receitas.site
+                  </p>
+                  <p className="text-base font-bold text-white leading-snug">
+                    Precisa renovar uma receita médica?
+                  </p>
+                  <p className="text-sm mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>
+                    Teleconsulta em até 30 minutos. Receita digital válida em todo o Brasil.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right zone — CTA */}
+              <a
+                href="https://receitas.site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-shrink-0 inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+                style={{
+                  background: "hsl(var(--emerald)/0.15)",
+                  border: "1px solid hsl(var(--emerald)/0.4)",
+                  color: "hsl(var(--emerald))",
+                }}
+              >
+                Renovar minha Receita
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </SR>
+        </div>
+      </section>
+
       {/* ── 8. PITCH FINAL / OFERTA ──────────────────────────────────────── */}
       <section id="oferta" className="py-24 relative overflow-hidden" style={{ background: "#070A0D" }}>
         {/* Big glow bg */}
