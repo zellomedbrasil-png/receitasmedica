@@ -647,10 +647,10 @@ const Ebook = () => {
                     className="text-xs font-bold uppercase tracking-widest mb-3"
                     style={{ color: "hsl(var(--emerald))" }}
                   >
-                    A investigação por trás do receitas.site
+                    Médico · Fundador do receitas.site
                   </p>
                   <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight mb-4" style={{ color: "white" }}>
-                    Médico. Investigador. Do seu lado.
+                    Fui a fundo no sistema de saúde e descobri o que ninguém te conta.
                   </h2>
                   <p className="leading-relaxed mb-4 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
                     Após anos de prática clínica, ficou evidente que a maioria dos pacientes paga valores abusivos por medicamentos aos quais têm direito gratuito — simplesmente porque ninguém conta essa informação.
