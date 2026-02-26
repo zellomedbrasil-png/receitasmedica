@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ebookCover from "@/assets/capa-ebook.png";
+import ebookCover3D from "@/assets/capa-ebook-3d.png";
 import { motion } from "framer-motion";
 import {
   Eye,
@@ -794,8 +795,9 @@ const Ebook = () => {
           style={{ background: "radial-gradient(circle, hsl(var(--emerald)/0.08) 0%, transparent 60%)" }}
         />
 
-        <div className="max-w-2xl mx-auto px-6 text-center relative z-10">
-          <SR>
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+          {/* Section header — centered above grid */}
+          <SR className="text-center mb-16">
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-8"
               style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.10)" }}
@@ -818,101 +820,131 @@ const Ebook = () => {
                 tranquilidade financeira?
               </span>
             </h2>
-            <p className="text-lg leading-relaxed mb-12 font-light" style={{ color: "rgba(255,255,255,0.45)" }}>
+            <p className="text-lg leading-relaxed font-light max-w-2xl mx-auto" style={{ color: "rgba(255,255,255,0.45)" }}>
               Este guia vai te fazer economizar centenas de reais já na sua próxima ida à farmácia. É um investimento menor que um lanche, mas que{" "}
               <strong style={{ color: "white", fontWeight: 500 }}>devolve o seu dinheiro.</strong>
             </p>
           </SR>
 
-          {/* Price card */}
-          <SR delay={0.1}>
-            <div
-              className="rounded-3xl p-8 md:p-10 mb-6 relative overflow-hidden"
-              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
-            >
-              <div
-                className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"
-                style={{ background: "hsl(var(--emerald)/0.18)" }}
-              />
-              <div className="relative z-10">
-                <p className="text-xs uppercase tracking-widest font-medium mb-4" style={{ color: "rgba(255,255,255,0.4)" }}>
-                  Valor do investimento
-                </p>
-                <div className="flex items-center justify-center gap-5 mb-3">
-                  <span className="text-xl font-light line-through" style={{ color: "rgba(255,255,255,0.3)" }}>R$ 97,00</span>
-                  <span
-                    className="text-6xl font-extrabold tracking-tight"
-                    style={{ color: "hsl(var(--emerald))" }}
-                  >
-                    R$ 29
+          {/* 2-column grid: book 3D | price card */}
+          <div className="grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+            {/* Left — 3D book mockup */}
+            <SR delay={0.08} className="flex items-center justify-center">
+              <div className="relative">
+                {/* Radial glow */}
+                <div
+                  className="absolute inset-0 rounded-full blur-3xl scale-110 pointer-events-none"
+                  style={{ background: "hsl(var(--emerald)/0.18)" }}
+                />
+                <motion.div
+                  animate={{ y: [0, -14, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative"
+                  style={{ filter: "drop-shadow(0 40px 80px rgba(16,185,129,0.30)) drop-shadow(0 10px 30px rgba(0,0,0,0.8))" }}
+                >
+                  <img
+                    src={ebookCover3D}
+                    alt="Mockup 3D do E-book: O Código da Farmácia"
+                    className="w-64 md:w-80 lg:w-96 object-contain"
+                  />
+                </motion.div>
+              </div>
+            </SR>
+
+            {/* Right — price card + CTA */}
+            <div className="flex flex-col gap-5">
+              {/* Price card */}
+              <SR delay={0.14}>
+                <div
+                  className="rounded-3xl p-8 md:p-10 relative overflow-hidden"
+                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}
+                >
+                  <div
+                    className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"
+                    style={{ background: "hsl(var(--emerald)/0.18)" }}
+                  />
+                  <div className="relative z-10">
+                    <p className="text-xs uppercase tracking-widest font-medium mb-4" style={{ color: "rgba(255,255,255,0.4)" }}>
+                      Valor do investimento
+                    </p>
+                    <div className="flex items-center gap-5 mb-3">
+                      <span className="text-xl font-light line-through" style={{ color: "rgba(255,255,255,0.3)" }}>R$ 97,00</span>
+                      <span
+                        className="text-6xl font-extrabold tracking-tight"
+                        style={{ color: "hsl(var(--emerald))" }}
+                      >
+                        R$ 29
+                      </span>
+                    </div>
+                    <div
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-8"
+                      style={{ background: "hsl(var(--emerald)/0.15)", color: "hsl(var(--emerald))" }}
+                    >
+                      Você economiza R$ 68 agora
+                    </div>
+
+                    {/* Countdown */}
+                    <div
+                      className="pt-6 mt-2"
+                      style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
+                    >
+                      <CountdownTimer />
+                    </div>
+                  </div>
+                </div>
+              </SR>
+
+              {/* CTA button */}
+              <SR delay={0.20}>
+                <a
+                  href="#"
+                  className="flex items-center justify-center gap-3 w-full rounded-2xl py-5 text-lg font-bold transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:scale-[0.98]"
+                  style={{
+                    background: "hsl(var(--emerald))",
+                    color: "white",
+                    boxShadow: "0 0 50px hsl(var(--emerald)/0.4), 0 4px 24px rgba(0,0,0,0.4)",
+                  }}
+                >
+                  <BookOpen className="w-5 h-5 shrink-0" />
+                  Comprar o E-book por R$ 29 Agora
+                  <ArrowRight className="w-5 h-5 shrink-0" />
+                </a>
+              </SR>
+
+              <SR delay={0.24}>
+                <div
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm w-full justify-center"
+                  style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.5)" }}
+                >
+                  <ShieldCheck className="w-4 h-4 shrink-0" style={{ color: "hsl(var(--emerald))" }} />
+                  <span>
+                    Garantia Incondicional de{" "}
+                    <strong style={{ color: "white", fontWeight: 500 }}>7 Dias.</strong>{" "}
+                    Dinheiro de volta sem perguntas.
                   </span>
                 </div>
-                <div
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-8"
-                  style={{ background: "hsl(var(--emerald)/0.15)", color: "hsl(var(--emerald))" }}
-                >
-                  Você economiza R$ 68 agora
+
+                {/* Payment methods */}
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+                  {[
+                    { Icon: CreditCard, label: "Cartão de Crédito" },
+                    { Icon: Smartphone, label: "Pix" },
+                    { Icon: Lock, label: "SSL Seguro" },
+                  ].map(({ Icon, label }) => (
+                    <div
+                      key={label}
+                      className="flex items-center gap-2 px-4 py-2 rounded-full text-xs"
+                      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)" }}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                      {label}
+                    </div>
+                  ))}
                 </div>
-
-                {/* Countdown separado visualmente */}
-                <div
-                  className="pt-6 mt-2"
-                  style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
-                >
-                  <CountdownTimer />
-                </div>
-              </div>
+              </SR>
             </div>
-          </SR>
-
-          {/* CTA button */}
-          <SR delay={0.15}>
-            <a
-              href="#"
-              className="flex items-center justify-center gap-3 w-full rounded-2xl py-5 text-lg font-bold transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl active:scale-[0.98] mb-6"
-              style={{
-                background: "hsl(var(--emerald))",
-                color: "white",
-                boxShadow: "0 0 50px hsl(var(--emerald)/0.4), 0 4px 24px rgba(0,0,0,0.4)",
-              }}
-            >
-              <BookOpen className="w-5 h-5 shrink-0" />
-              Comprar o E-book por R$ 29 Agora
-              <ArrowRight className="w-5 h-5 shrink-0" />
-            </a>
-
-            <div
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", color: "rgba(255,255,255,0.5)" }}
-            >
-              <ShieldCheck className="w-4 h-4 shrink-0" style={{ color: "hsl(var(--emerald))" }} />
-              <span>
-                Garantia Incondicional de{" "}
-                <strong style={{ color: "white", fontWeight: 500 }}>7 Dias.</strong>{" "}
-                Dinheiro de volta sem perguntas.
-              </span>
-            </div>
-          </SR>
-
-          {/* Payment methods */}
-          <SR delay={0.2}>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              {[
-                { Icon: CreditCard, label: "Cartão de Crédito" },
-                { Icon: Smartphone, label: "Pix" },
-                { Icon: Lock, label: "SSL Seguro" },
-              ].map(({ Icon, label }) => (
-                <div
-                  key={label}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full text-xs"
-                  style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)" }}
-                >
-                  <Icon className="w-3.5 h-3.5" />
-                  {label}
-                </div>
-              ))}
-            </div>
-          </SR>
+          </div>
         </div>
       </section>
 
