@@ -1,35 +1,48 @@
 
-## Auditoria e Limpeza de Conteúdo — /ebook
+## Reorganização da Seção de Autoridade — Eyebrow + Título
 
-### Problemas identificados
+### Diagnóstico dos problemas
 
-**1. Depoimentos em excesso (6 → 3)**
-A seção 6 renderiza 6 cards em grade 3x2 via array `testimonials`. Manter apenas os 3 com maior impacto de resultado concreto: Maria Aparecida (R$ 45 na 1ª compra), João Ricardo (mãe caiu de R$ 380 → R$ 60) e Luciana (R$ 300 de economia no 1º mês). Os outros três repetem o mesmo argumento sem agregar novidade.
+**Eyebrow (linha 650):** `"A investigação por trás do receitas.site"`
+- Longo demais para um label de contexto
+- Mistura papel de eyebrow (quem é) com papel de título (o que fez)
+- O leitor não sabe se é sobre o autor ou sobre a empresa
 
-**2. Bloco "Compartilhar no WhatsApp" — remover**
-O banner de share logo após os depoimentos (linhas 676–706) interrompe o fluxo de conversão: o visitante que acabou de ler os depoimentos está pronto para descer até a oferta, não para sair da página. Esse bloco dilui o momentum de compra.
-
-**3. Seção 5 "Ancoragem de Valor" — remover**
-A seção inteira (linhas 577–626) com os 3 mini-cards de ROI (R$ 29 / R$ 120 / 413%) duplica diretamente o texto da seção de Oferta (seção 8), que já diz "menor que um lanche — mas que devolve o seu dinheiro na primeira aplicação". Duas seções de ancoragem de preço seguidas afastam em vez de convencer.
-
-**4. Trust bar: remover contagem "mais de 500 leitores"**
-O número já foi questionado antes pelo usuário e enfraquece a credibilidade. Deixar apenas "Conteúdo oficial em parceria com receitas.site" e a nota de disponibilidade limitada — mais limpo e honesto.
+**Título (linha 653):** `"Médico. Investigador. Do seu lado."`
+- Três fragmentos desconexos sem fio narrativo
+- "Do seu lado" parece genérico de marketing
+- Não responde a pergunta natural do leitor: *"quem é essa pessoa e por que devo confiar nela?"*
 
 ---
 
-### Mudanças técnicas
+### Proposta de reorganização
 
-| Arquivo | Ação |
-|---|---|
-| `src/pages/Ebook.tsx` | Reduzir array `testimonials` para 3 itens (MA, JR, LS) |
-| `src/pages/Ebook.tsx` | Remover bloco Share trigger (linhas 676–706) |
-| `src/pages/Ebook.tsx` | Remover seção "Ancoragem de Valor" inteira (linhas 577–626) |
-| `src/pages/Ebook.tsx` | Remover o trecho `· mais de 500 leitores` da trust bar (linha 316–317) |
+**Eyebrow** — papel: identificar quem fala, de onde vem a autoridade:
+```
+Médico · Fundador do receitas.site
+```
+Curto, factual, estabelece credencial de forma imediata.
 
 ---
 
-### Resultado esperado
+**Título** — papel: criar conexão emocional e intriga, não apenas listar atributos:
+```
+Fui a fundo no sistema de saúde e descobri o que ninguém te conta.
+```
+- Tom de primeira pessoa humaniza o autor
+- "Fui a fundo" ecoa a narrativa investigativa da página
+- "o que ninguém te conta" retoma a promessa central do e-book
+- Flui naturalmente para os dois parágrafos que já existem abaixo
 
-- Página mais enxuta e focada
-- Fluxo: Dor → Revelação → Prova social (3 depoimentos objetivos) → Autoridade → Cross-promo → Oferta → FAQ → Footer
-- Sem desvios de atenção entre a prova social e o botão de compra
+---
+
+### Mudança técnica
+
+**Arquivo:** `src/pages/Ebook.tsx`
+
+| Elemento | Antes | Depois |
+|---|---|---|
+| Eyebrow (linha 650) | `A investigação por trás do receitas.site` | `Médico · Fundador do receitas.site` |
+| Título h2 (linha 653) | `Médico. Investigador. Do seu lado.` | `Fui a fundo no sistema de saúde e descobri o que ninguém te conta.` |
+
+Apenas duas linhas de texto. Nenhum layout, estilo ou componente alterado.
