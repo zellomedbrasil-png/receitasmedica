@@ -1013,25 +1013,6 @@ const Ebook = () => {
             </div>
           </SR>
 
-          <SR delay={0.2}>
-            <div className="mt-14 flex flex-col sm:flex-row items-center gap-4">
-              <a
-                href="#oferta"
-                className="inline-flex items-center gap-2 rounded-2xl px-8 py-4 text-sm font-bold transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
-                style={{
-                  background: "hsl(var(--emerald))",
-                  color: "white",
-                  boxShadow: "0 0 28px hsl(var(--emerald)/0.25)",
-                }}
-              >
-                Quero o E-book Agora
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <span className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>
-                Garantia de 7 dias · Acesso imediato
-              </span>
-            </div>
-          </SR>
         </div>
       </section>
 
