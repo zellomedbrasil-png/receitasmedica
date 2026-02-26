@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ebookCover from "@/assets/capa-ebook.png";
+import ebookHeroVideo from "@/assets/ebook-hero.mp4";
 import ebookCover3D from "@/assets/capa-ebook-3d.png";
 import { motion } from "framer-motion";
 import {
@@ -414,9 +415,12 @@ const Ebook = () => {
                   className="relative"
                   style={{ filter: "drop-shadow(0 30px 60px rgba(16,185,129,0.25)) drop-shadow(0 8px 24px rgba(0,0,0,0.7))" }}
                 >
-                  <img
-                    src={ebookCover}
-                    alt="Capa do E-book: O Código da Farmácia"
+                  <video
+                    src={ebookHeroVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     className="w-52 md:w-72 rounded-2xl object-cover"
                     style={{ border: "1px solid rgba(255,255,255,0.10)" }}
                   />
