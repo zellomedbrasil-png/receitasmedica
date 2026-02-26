@@ -1,39 +1,35 @@
 
-## Adicionar bloco de cross-promotion para o receitas.site
+## Auditoria e Limpeza de Conteúdo — /ebook
 
-### Objetivo
-Inserir um destaque visual na página `/ebook` que converta leitores em potenciais clientes do serviço de renovação de receitas do `receitas.site`, com uma mensagem natural e contextual.
+### Problemas identificados
 
----
+**1. Depoimentos em excesso (6 → 3)**
+A seção 6 renderiza 6 cards em grade 3x2 via array `testimonials`. Manter apenas os 3 com maior impacto de resultado concreto: Maria Aparecida (R$ 45 na 1ª compra), João Ricardo (mãe caiu de R$ 380 → R$ 60) e Luciana (R$ 300 de economia no 1º mês). Os outros três repetem o mesmo argumento sem agregar novidade.
 
-### Onde posicionar
+**2. Bloco "Compartilhar no WhatsApp" — remover**
+O banner de share logo após os depoimentos (linhas 676–706) interrompe o fluxo de conversão: o visitante que acabou de ler os depoimentos está pronto para descer até a oferta, não para sair da página. Esse bloco dilui o momentum de compra.
 
-**Entre a seção de Autoridade (seção 7) e o Pitch Final/Oferta (seção 8)** — linha ~782, após `</section>` da Autoridade.
+**3. Seção 5 "Ancoragem de Valor" — remover**
+A seção inteira (linhas 577–626) com os 3 mini-cards de ROI (R$ 29 / R$ 120 / 413%) duplica diretamente o texto da seção de Oferta (seção 8), que já diz "menor que um lanche — mas que devolve o seu dinheiro na primeira aplicação". Duas seções de ancoragem de preço seguidas afastam em vez de convencer.
 
-Este é o momento ideal: o leitor já foi exposto à narrativa investigativa, conhece o receitas.site como parceiro confiável, e ainda não chegou na oferta do e-book. É o ponto de maior abertura para uma mensagem de serviço.
-
----
-
-### Design do bloco
-
-Um banner horizontal com duas zonas:
-
-**Esquerda:** Ícone de receita médica + texto com gancho direto:
-- Eyebrow: `receitas.site`
-- Título: "Precisa renovar uma receita médica?"
-- Subtítulo: "Teleconsulta em até 30 minutos. Receita digital válida em todo o Brasil."
-
-**Direita:** Botão CTA verde esmeralda com seta → `"Renovar minha Receita"` apontando para `https://receitas.site` (abre em nova aba).
-
-**Visual:** Fundo levemente distinto (`#0E1117`) com borda e um sutil glow esmeralda no canto — consistente com o tema dark da página. Não deve competir com o CTA de compra do e-book.
+**4. Trust bar: remover contagem "mais de 500 leitores"**
+O número já foi questionado antes pelo usuário e enfraquece a credibilidade. Deixar apenas "Conteúdo oficial em parceria com receitas.site" e a nota de disponibilidade limitada — mais limpo e honesto.
 
 ---
 
-### Detalhe técnico
+### Mudanças técnicas
 
-- Arquivo: `src/pages/Ebook.tsx`
-- Inserir nova `<section>` entre linha 782 e 784
-- Usar o componente `SR` (ScrollReveal com framer-motion) já existente
-- Reaproveitar ícone `FileText` e `ArrowRight` já importados
-- Link `href="https://receitas.site"` com `target="_blank" rel="noopener noreferrer"`
-- Estilo inline consistente com o restante da página (sem adicionar novas classes Tailwind customizadas)
+| Arquivo | Ação |
+|---|---|
+| `src/pages/Ebook.tsx` | Reduzir array `testimonials` para 3 itens (MA, JR, LS) |
+| `src/pages/Ebook.tsx` | Remover bloco Share trigger (linhas 676–706) |
+| `src/pages/Ebook.tsx` | Remover seção "Ancoragem de Valor" inteira (linhas 577–626) |
+| `src/pages/Ebook.tsx` | Remover o trecho `· mais de 500 leitores` da trust bar (linha 316–317) |
+
+---
+
+### Resultado esperado
+
+- Página mais enxuta e focada
+- Fluxo: Dor → Revelação → Prova social (3 depoimentos objetivos) → Autoridade → Cross-promo → Oferta → FAQ → Footer
+- Sem desvios de atenção entre a prova social e o botão de compra
