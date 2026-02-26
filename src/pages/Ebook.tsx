@@ -95,7 +95,7 @@ function AnimatedNumber({
   );
 }
 
-/* ─── Countdown Timer — deadline fixo de 24h ────────────────────────────── */
+/* ─── Countdown Timer — deadline fixo de 10min ──────────────────────────── */
 function CountdownTimer() {
   const KEY = "ebook_offer_deadline_v3";
   const getDeadline = () => {
@@ -104,8 +104,8 @@ function CountdownTimer() {
       const d = parseInt(s, 10);
       if (d > Date.now()) return d;
     }
-    // Deadline fixo: 23h59m59s (1 dia completo — comportamento honesto)
-    const d = Date.now() + 24 * 60 * 60 * 1000 - 1000;
+    // Deadline fixo: 10 minutos
+    const d = Date.now() + 10 * 60 * 1000;
     localStorage.setItem(KEY, d.toString());
     return d;
   };
