@@ -309,9 +309,9 @@ const Ebook = () => {
           <strong style={{ color: "white" }}>4.9</strong> de 5 · mais de 500 leitores
         </span>
         <span style={{ color: "rgba(255,255,255,0.25)" }}>·</span>
-        <span className="flex items-center gap-1" style={{ color: "rgba(255,255,255,0.55)" }}>
-          <ShieldCheck className="w-3.5 h-3.5" style={{ color: "hsl(var(--emerald))" }} />
-          Garantia de 7 dias
+        <span className="flex items-center gap-1 font-medium" style={{ color: "rgba(255, 200, 100, 0.80)" }}>
+          <AlertTriangle className="w-3 h-3 shrink-0" />
+          Disponibilidade limitada — pode ser removido a qualquer momento
         </span>
       </div>
 
@@ -336,7 +336,7 @@ const Ebook = () => {
                 >
                   <Eye className="w-3.5 h-3.5" style={{ color: "hsl(var(--emerald))" }} />
                   <span className="text-xs font-medium tracking-tight" style={{ color: "rgba(255,255,255,0.6)" }}>
-                    Informação que deveria ser pública.
+                    Informação que deveria ser pública — mas pode sair do ar.
                   </span>
                 </div>
               </SR>
@@ -878,10 +878,22 @@ const Ebook = () => {
                       </span>
                     </div>
                     <div
-                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-8"
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold mb-5"
                       style={{ background: "hsl(var(--emerald)/0.15)", color: "hsl(var(--emerald))" }}
                     >
                       Você economiza R$ 68 agora
+                    </div>
+
+                    {/* Aviso de disponibilidade */}
+                    <div
+                      className="flex items-start gap-2.5 rounded-2xl px-4 py-3 mb-6 text-left"
+                      style={{ background: "rgba(255, 180, 50, 0.07)", border: "1px solid rgba(255, 180, 50, 0.18)" }}
+                    >
+                      <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "rgba(255, 200, 100, 0.85)" }} />
+                      <p className="text-xs leading-relaxed" style={{ color: "rgba(255, 200, 100, 0.75)" }}>
+                        <strong style={{ color: "rgba(255, 210, 120, 0.95)", fontWeight: 600 }}>Não sabemos até quando este material ficará disponível.</strong>{" "}
+                        Farmácias e operadoras de saúde exercem pressão para que informações como essas não circulem livremente.
+                      </p>
                     </div>
 
                     {/* Countdown */}
