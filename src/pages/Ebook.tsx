@@ -628,22 +628,6 @@ const Ebook = () => {
       {/* ── 6. SOCIAL PROOF ──────────────────────────────────────────────── */}
       <section className="py-24" style={{ background: "#0F1115" }}>
         <div className="max-w-5xl mx-auto px-6">
-          {/* Stats */}
-          <div className="grid sm:grid-cols-3 gap-8 mb-20">
-            {[
-              { value: 500, label: "Leitores satisfeitos", prefix: "+", suffix: "" },
-              { value: 120, label: "Economia média por mês", prefix: "R$ ", suffix: "" },
-              { value: 4, label: "Avaliação média", prefix: "", suffix: ".9 ★" },
-            ].map((s, i) => (
-              <SR key={s.label} delay={i * 0.1}>
-                <div className="text-center">
-                  <AnimatedNumber value={s.value} prefix={s.prefix} suffix={s.suffix} />
-                  <p className="text-sm font-medium mt-2" style={{ color: "rgba(255,255,255,0.4)" }}>{s.label}</p>
-                </div>
-              </SR>
-            ))}
-          </div>
-
           <SR>
             <h2 className="text-3xl font-extrabold tracking-tight mb-12" style={{ color: "white" }}>
               O que leitores do receitas.site{" "}
@@ -778,10 +762,10 @@ const Ebook = () => {
                   <p className="leading-relaxed mb-4 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
                     Após anos de prática clínica, ficou evidente que a maioria dos pacientes paga valores abusivos por medicamentos aos quais têm direito gratuito — simplesmente porque ninguém conta essa informação.
                   </p>
-                  <p className="leading-relaxed mb-6 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
+                   <p className="leading-relaxed mb-6 font-light" style={{ color: "rgba(255,255,255,0.5)" }}>
                     Em parceria com o{" "}
                     <strong style={{ color: "white", fontWeight: 500 }}>receitas.site</strong>
-                    {" "}— plataforma de saúde digital com mais de 500 mil usuários mensais —, reuniu neste guia tudo o que farmácias, laboratórios e operadoras preferem que você não saiba.
+                    {" "}— plataforma de saúde digital especializada em acesso a serviços médicos online —, reuniu neste guia tudo o que farmácias, laboratórios e operadoras preferem que você não saiba.
                   </p>
                   <div
                     className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full"
