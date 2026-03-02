@@ -542,40 +542,41 @@ export default function IndexV2() {
             </SR>
 
             <SR delay={0.22}>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <a
-                  href={WA_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-bold transition-all hover:-translate-y-1"
-                  style={{
-                    background: EMERALD,
-                    color: "#0F1115",
-                    boxShadow: "0 8px 36px rgba(16,185,129,0.35)",
-                  }}
-                  aria-label="Renovar receita médica agora pelo WhatsApp"
-                >
-                  <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                  Quero renovar minha receita
-                </a>
-              </div>
-
               <a
                 href="#como-funciona"
-                className="inline-flex items-center gap-1.5 text-sm font-medium mt-2 group transition-colors"
-                style={{ color: TEXT_MUTED }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("como-funciona")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 mb-12"
+                style={{
+                  border: `1.5px solid rgba(16,185,129,0.45)`,
+                  color: EMERALD,
+                  background: "rgba(16,185,129,0.06)",
+                  boxShadow: "0 0 0 0 rgba(16,185,129,0)",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 24px rgba(16,185,129,0.18)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.7)";
+                  (e.currentTarget as HTMLElement).style.background = "rgba(16,185,129,0.10)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 0 0 0 rgba(16,185,129,0)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.45)";
+                  (e.currentTarget as HTMLElement).style.background = "rgba(16,185,129,0.06)";
+                }}
                 aria-label="Ver como funciona em 3 passos"
               >
+                <span className="text-xs font-bold uppercase tracking-widest opacity-60">do celular à farmácia</span>
+                <span className="w-px h-4 opacity-30" style={{ background: EMERALD }} />
+                <span>Receita renovada em 3 passos</span>
                 <motion.span
-                  animate={{ y: [0, 4, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                  style={{ color: EMERALD }}
+                  animate={{ y: [0, 5, 0] }}
+                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                  className="text-base leading-none"
                 >
                   ↓
                 </motion.span>
-                <span className="group-hover:text-white transition-colors">
-                  Ver como funciona em 3 passos
-                </span>
               </a>
             </SR>
 
@@ -628,90 +629,139 @@ export default function IndexV2() {
                   style={{ color: EMERALD }}
                   aria-hidden="true"
                 >
-                  Processo
+                  Do celular à farmácia
                 </p>
                 <h2
                   id="como-funciona-heading"
                   className="text-3xl md:text-4xl font-extrabold tracking-tighter"
                   style={{ color: "white" }}
                 >
-                  Como funciona em 3 passos.
+                  Simples assim.
                 </h2>
                 <p
                   className="mt-3 text-base max-w-xl"
                   style={{ color: TEXT_MUTED }}
                 >
-                  Processo simples e seguro, projetado para o conforto de
-                  pacientes crônicos.
+                  Sem filas, sem deslocamento. Do preenchimento à receita na palma da mão.
                 </p>
               </div>
             </SR>
 
-            <div className="grid md:grid-cols-3 gap-5">
-              {steps.map((s, i) => (
-                <SR key={s.num} delay={i * 0.12}>
-                  <article
-                    className="relative rounded-3xl p-8 h-full overflow-hidden transition-all hover:-translate-y-1"
-                    style={{
-                      background: CARD_BG,
-                      border: `1px solid ${CARD_BORDER}`,
-                    }}
-                  >
-                    {i === 2 && (
-                      <div
-                        className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl pointer-events-none"
-                        style={{ background: "rgba(16,185,129,0.14)" }}
-                        aria-hidden="true"
-                      />
-                    )}
-                    <p
-                      className="text-xs font-bold tracking-widest mb-6"
-                      style={{ color: EMERALD }}
-                      aria-hidden="true"
-                    >
-                      {s.num}
-                    </p>
-                    <div
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+            {/* Desktop: timeline com linha conectora */}
+            <div className="relative">
+              {/* Linha conectora horizontal — desktop */}
+              <div className="hidden md:block absolute top-[52px] left-[calc(16.67%+24px)] right-[calc(16.67%+24px)] h-px pointer-events-none" aria-hidden="true">
+                <div className="w-full h-full" style={{
+                  background: `linear-gradient(90deg, transparent 0%, ${EMERALD} 20%, ${EMERALD} 80%, transparent 100%)`,
+                  opacity: 0.25,
+                }} />
+              </div>
+
+              {/* Linha conectora vertical — mobile */}
+              <div className="md:hidden absolute left-[27px] top-[64px] bottom-[64px] w-0.5 pointer-events-none" aria-hidden="true"
+                style={{ background: `linear-gradient(180deg, transparent 0%, ${EMERALD} 15%, ${EMERALD} 85%, transparent 100%)`, opacity: 0.25 }}
+              />
+
+              <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+                {steps.map((s, i) => (
+                  <SR key={s.num} delay={i * 0.14}>
+                    <motion.article
+                      whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                      className="group relative rounded-3xl p-8 h-full overflow-hidden cursor-default"
                       style={{
-                        background: "rgba(16,185,129,0.12)",
-                        border: "1px solid rgba(16,185,129,0.22)",
+                        background: i === 2 ? "rgba(16,185,129,0.07)" : CARD_BG,
+                        border: `1px solid ${i === 2 ? "rgba(16,185,129,0.25)" : CARD_BORDER}`,
+                        transition: "box-shadow 0.3s ease, border-color 0.3s ease",
                       }}
-                      aria-hidden="true"
+                      onHoverStart={(e) => {
+                        (e.target as HTMLElement).closest("article")!.style.boxShadow = "0 0 40px rgba(16,185,129,0.15)";
+                        (e.target as HTMLElement).closest("article")!.style.borderColor = "rgba(16,185,129,0.45)";
+                      }}
+                      onHoverEnd={(e) => {
+                        const el = (e.target as HTMLElement).closest("article")!;
+                        el.style.boxShadow = "none";
+                        el.style.borderColor = i === 2 ? "rgba(16,185,129,0.25)" : CARD_BORDER;
+                      }}
                     >
-                      <s.Icon
-                        className="w-5 h-5"
-                        style={{ color: EMERALD }}
-                      />
-                    </div>
-                    <h3
-                      className="text-lg font-bold mb-3 tracking-tight"
-                      style={{ color: "white" }}
-                    >
-                      {s.title}
-                    </h3>
-                    <p
-                      className="text-sm leading-relaxed"
-                      style={{ color: TEXT_MUTED }}
-                    >
-                      {s.desc}
-                    </p>
-                    {i === 2 && (
-                      <div
-                        className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
-                        style={{ color: EMERALD }}
+                      {/* Watermark numérico */}
+                      <span
+                        className="absolute -bottom-2 -right-3 text-[120px] font-black leading-none select-none pointer-events-none"
+                        style={{ color: "white", opacity: 0.03 }}
+                        aria-hidden="true"
                       >
-                        <span
-                          className="w-2 h-2 rounded-full animate-pulse"
-                          style={{ background: EMERALD }}
+                        {s.num}
+                      </span>
+
+                      {/* Glow de fundo — card 03 */}
+                      {i === 2 && (
+                        <div
+                          className="absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl pointer-events-none"
+                          style={{ background: "rgba(16,185,129,0.18)" }}
                           aria-hidden="true"
                         />
-                        Entrega imediata
+                      )}
+
+                      {/* Número indicador com dot conectado */}
+                      <div className="flex items-center gap-3 mb-6 relative z-10">
+                        <div
+                          className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
+                          style={{
+                            background: "rgba(16,185,129,0.12)",
+                            border: "1px solid rgba(16,185,129,0.30)",
+                          }}
+                        >
+                          <span
+                            className="text-sm font-black tracking-tight"
+                            style={{ color: EMERALD }}
+                          >
+                            {s.num}
+                          </span>
+                        </div>
                       </div>
-                    )}
-                  </article>
-                </SR>
-              ))}
+
+                      {/* Ícone */}
+                      <motion.div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center mb-5 relative z-10"
+                        style={{
+                          background: "rgba(16,185,129,0.10)",
+                          border: "1px solid rgba(16,185,129,0.18)",
+                        }}
+                        whileHover={i === 2 ? { rotate: [0, -12, 12, 0], transition: { duration: 0.5 } } : {}}
+                        aria-hidden="true"
+                      >
+                        <s.Icon className="w-4 h-4" style={{ color: EMERALD }} />
+                      </motion.div>
+
+                      <h3
+                        className="text-lg font-bold mb-3 tracking-tight relative z-10"
+                        style={{ color: "white" }}
+                      >
+                        {s.title}
+                      </h3>
+                      <p
+                        className="text-sm leading-relaxed relative z-10"
+                        style={{ color: TEXT_MUTED }}
+                      >
+                        {s.desc}
+                      </p>
+
+                      {i === 2 && (
+                        <div
+                          className="mt-6 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider relative z-10"
+                          style={{ color: EMERALD }}
+                        >
+                          <span
+                            className="w-2 h-2 rounded-full animate-pulse"
+                            style={{ background: EMERALD }}
+                            aria-hidden="true"
+                          />
+                          Entrega imediata
+                        </div>
+                      )}
+                    </motion.article>
+                  </SR>
+                ))}
+              </div>
             </div>
           </div>
         </section>
