@@ -1,77 +1,46 @@
 
-## Redesign "Como Funciona" — Visual Moderno e Intuitivo
 
-### Diagnóstico do problema atual
+## Redesign "Como Funciona" — Estilo Card V1 adaptado ao Dark Mode V2
 
-O layout atual tem problemas de clareza visual:
-- Três cards genéricos com bordas quase invisíveis sobre fundo escuro
-- O número "01/02/03" e o ícone ficam empilhados dentro do card sem hierarquia clara
-- A linha conectora horizontal está no `top-[52px]` mas visualmente não "conecta" nada perceptível
-- Para idosos e usuários menos técnicos, o fluxo de leitura não é óbvio
-- O watermark numérico (opacity 0.03) é invisível — não cumpre função visual
+### O que muda
 
-### Novo conceito: "Step Explainer" com progressão visual clara
+Remover os circulos numerados separados (feios segundo feedback) e voltar ao estilo da versao anterior (ComoFunciona.tsx original): **cards autonomos com numero + icone watermark gigante** no canto inferior direito, adaptados para o tema dark da V2. Melhorar os textos e adicionar mais detalhes visuais.
 
-Substituir os cards genéricos por um **layout de três etapas com foco em clareza total**:
+### Novo layout (desktop: grid 3 colunas)
 
-**Estrutura de cada etapa (desktop — horizontal):**
-```text
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                   │
-│  [ Círculo numerado grande ]  ──── linha ────  [ Círculo ]  ...  │
-│        ①                                           ②             │
-│   ┌──────────────┐                          ┌──────────────┐     │
-│   │  Ícone       │                          │  Ícone       │     │
-│   │  grande      │                          │  grande      │     │
-│   │  centralizado│                          │  centralizado│     │
-│   │              │                          │              │     │
-│   │  Triagem     │                          │  Teleconsulta│     │
-│   │  Digital     │                          │  Médica      │     │
-│   │              │                          │              │     │
-│   │  desc...     │                          │  desc...     │     │
-│   └──────────────┘                          └──────────────┘     │
-└─────────────────────────────────────────────────────────────────┘
-```
+Cada card sera autocontido com:
 
-### Design detalhado
+1. **Numero no canto superior** dentro de um badge quadrado arredondado com fundo esmeralda translucido (nao circulo solto)
+2. **Icone do passo** ao lado do numero em um container esmeralda
+3. **Titulo + descricao** com textos mais ricos e humanos
+4. **Icone watermark gigante** (140px, opacity 5%) no canto inferior direito, rotacionado -15deg — igual ao V1 original
+5. **Card 03 destacado**: fundo esmeralda escuro diferenciado + glow blur + badge "Entrega imediata" pulsando
+6. **Hover**: card sobe com `translateY(-6px)`, borda fica esmeralda, shadow glow aparece
 
-**Cada etapa tem 2 partes separadas:**
-1. **Topo visual (acima do card):** Círculo grande (64px) numerado, com fundo esmeralda sólido, conectado pela linha. Visualmente domina e torna a progressão 1→2→3 imediatamente legível
-2. **Card de conteúdo (abaixo):** Card branco-translúcido com ícone destacado no topo, título e descrição. Sem número no card (o número já está no círculo acima — sem duplicação)
+### Textos melhorados
 
-**Linha conectora revisada:**
-- Linha pontilhada (`border-dashed`) esmeralda de 2px que parte do centro do círculo 01 até o centro do 03
-- Visível e óbvia (não opacity 0.25 invisível)
-- Nos extremos (antes do 01 e depois do 03) a linha some com `opacity-0`
+| Passo | Titulo | Nova descricao |
+|---|---|---|
+| 01 | Triagem Digital | Preencha um breve formulario e envie a foto da sua receita ou laudo anterior. Sem burocracia, tudo pelo celular. |
+| 02 | Teleconsulta Medica | Videochamada curta com medico registrado no CRM para avaliar a continuidade do seu tratamento. |
+| 03 | Receita no WhatsApp | Receita digital com assinatura ICP-Brasil e QR Code enviada direto no seu celular. Valida em qualquer farmacia do Brasil. |
 
-**Visual dos cards:**
-- Fundo: `rgba(255,255,255,0.06)` com `backdrop-blur-sm`
-- Borda mais visível: `rgba(255,255,255,0.14)`  
-- Ícone centralizado no topo com círculo esmeralda maior (48px) e mais opacidade
-- Hover: card sobe 8px + glow esmeralda + borda esmeralda — mais dramático
-- Card 03 (Receita): tem badge "Receita imediata" + fundo levemente esmeralda diferenciado
+### Detalhes visuais extras
 
-**Mobile — layout vertical aprimorado:**
-- Cada step vira um "row" horizontal: `[Círculo numerado] → [Card]` lado a lado
-- Linha vertical à esquerda conectando os círculos, visível (2px esmeralda, opacity 0.5)
-- Mais legível que empilhamento puro
+- Manter o header atual (eyebrow "Do celular a farmacia", H2 "Simples assim.", pill de tempo)
+- Remover toda a estrutura de circulos + linha conectora (desktop e mobile)
+- Cards com `rounded-3xl`, `backdrop-blur-sm`, fundo translucido
+- Adicionar uma **linha superior colorida** em cada card: um `div` de 3px de altura com gradiente esmeralda no topo do card (detalhe sutil de modernidade)
+- Numero exibido como `font-mono font-bold` dentro do card, nao separado
 
-**Copy melhorado nos steps:**
-- Step 01: adicionar emoji de documento como auxílio visual de contexto
-- Descrições mais curtas e diretas para acessibilidade (pacientes idosos)
-
-**Cabeçalho da seção — pequena melhoria:**
-- Manter "Do celular à farmácia" e "Simples assim."
-- Adicionar abaixo do subtexto um indicador de tempo total: `"Processo completo em menos de 1 hora"` com ícone de relógio, em formato de pill esmeralda
-
-### Resumo técnico
+### Resumo tecnico
 
 **Arquivo:** `src/pages/IndexV2.tsx`
 
-| Área | Linhas | Mudança |
+| Area | Linhas | Mudanca |
 |---|---|---|
-| steps data | 121–140 | Encurtar `desc` para no máximo 2 linhas (acessibilidade) |
-| Header "Como Funciona" | 625–647 | Adicionar pill de "menos de 1h" abaixo do subtexto |
-| Layout dos steps | 650–765 | Redesenho completo: círculo numerado separado + card de conteúdo + linha conectora visível |
+| steps data | 122-140 | Atualizar `desc` com textos mais longos e detalhados |
+| Como Funciona layout | 663-855 | Remover circulos + linha conectora. Substituir por grid de 3 cards autocontidos com watermark icon, hover glow, e linha superior esmeralda |
 
-Sem novos imports — tudo com `motion`, ícones já importados (`ClipboardCheck`, `Video`, `MessageCircle`, `Clock`) e Tailwind/inline styles existentes.
+Sem novos imports — reutiliza `motion`, icones existentes e Tailwind inline styles.
+
