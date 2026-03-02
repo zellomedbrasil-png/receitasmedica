@@ -1,69 +1,93 @@
 
-## Ajustes na Página /v2 — 5 Mudanças Cirúrgicas
+## Avaliação Geral da /v2 + Ajustes no Hero
 
-### O que será alterado
+### Diagnóstico completo da página
 
----
+**Pontos fortes (manter):**
+- Trust bar com pulse verde e frases de credencial — funciona bem
+- Estrutura semântica H1 → H2 → H3 com schema JSON-LD
+- Cards de "Como Funciona" com step numbers e ícones
+- Seção de Segurança & LGPD com 6 blocos — forte sinal de confiança
+- Critérios "Renovamos / Não renovamos" — reduz suporte e ansiedade do usuário
+- FAQ accordion com conteúdo jurídico detalhado
+- Sticky CTA mobile após scroll
 
-### 1. Remover 2 features da Assinatura (linhas 203–204)
+**Problemas identificados:**
 
-Remover as duas linhas do array `subscriptionFeatures`:
-- `"Histórico digital completo de receitas"` (linha 203)
-- `"Relatório mensal de saúde preventiva"` (linha 204)
-
-Os ícones `HistoryIcon` e `HeartPulse` também serão removidos dos imports (linhas 13–14) pois ficam sem uso.
-
----
-
-### 2. Remover bloco de Stats (linhas 144–148)
-
-Remover o array `stats` e a seção inteira de contadores animados que exibe:
-- +15.000 Receitas Renovadas
-- 98% Taxa de Aprovação
-- 7min Tempo Médio
-
-Será necessário também remover a renderização desses stats na página (a seção `<section>` de "Prova Social" que itera sobre esse array).
-
----
-
-### 3. Remover bloco de Diretor Técnico + Endereço no rodapé (linhas 1590–1602)
-
-Remover apenas as duas tags `<p>` com os placeholders:
-- `Diretor Técnico: Dr. [Nome Completo] · CRM [UF] [Número]...`
-- `Endereço: [Rua, Número, Complemento...]`
-
-Manter os avisos de conformidade CFM e LGPD que estão nas linhas seguintes — esses são obrigatórios e não foram pedidos para remover.
+| Área | Problema | Impacto |
+|---|---|---|
+| Hero — CTA secundário | "Assinar por R$ 29/mês" como segunda ação imediata afasta quem ainda não conhece o serviço | Alto |
+| Hero — CTA primário | "Renovar minha Receita Agora" com ícone MessageCircle é bom, mas pode ser mais específico | Médio |
+| Hero — badge CFM | Eyebrow longo (`Telemedicina regulamentada pelo CFM · Res. 2.314/2022`) — texto técnico demais para o topo | Médio |
+| Depoimentos | Apenas 3 depoimentos sem foto ou identificação visual — pouca força | Médio |
+| Seção Preços | Card "Assinatura" não tem nenhum destaque visual de ancoragem de valor (ex: "equivale a R$ 9,67/semana") | Baixo-Médio |
+| Footer | Sem aviso de horário de atendimento visível | Baixo |
 
 ---
 
-### 4. Novos CTAs do Hero — mais conectivos e humanos
+### Mudança 1 — CTAs do Hero (principal pedido)
 
-**Antes:**
-- `"Solicitar Renovação — R$ 39"` (primário)
-- `"Ver Plano Mensal — R$ 29/mês"` (secundário)
+**Problema:** O segundo botão "Assinar por R$ 29/mês" empurra uma decisão de assinatura antes do usuário entender o serviço. Quem chega pelo Google com "renovar receita" não está pronto para assinar — quer resolver o problema hoje.
 
-**Depois (proposta):**
-- **Primário:** `"Renovar minha Receita Agora"` + ícone de WhatsApp — direto, pessoal, no mesmo tom que o usuário usaria
-- **Secundário:** `"Assinar por R$ 29/mês"` + ícone de seta — claro sobre o que está sendo clicado, sem ruído de preço duplicado no botão primário
+**Proposta para os 2 CTAs:**
 
-O preço R$ 39 sai do label do botão e fica visível nos próprios cards de preço logo abaixo — evita poluição visual no Hero e deixa o CTA mais limpo e humano.
+**Primário (mantém WhatsApp, muda o ângulo):**
+```
+"Quero renovar minha receita"
+```
+Tom de primeira pessoa + intenção clara. Sem "Agora" forçado. O ícone de MessageCircle fica.
 
-Os mesmos textos de CTA nas outras ocorrências (header mobile linha ~481, seção FAQ linha ~1444, CTA final linha ~1677) são atualizados de forma consistente para `"Renovar minha Receita"`.
+**Secundário (substitui "Assinar por R$ 29/mês"):**
+```
+"Ver como funciona  ↓"
+```
+Ancora para `#como-funciona`. Convida à descoberta, não força uma decisão de compra. Usuários que ainda não confiam no serviço descem, leem, e convertem melhor nos CTAs das seções de preço e FAQ.
 
----
-
-### Arquivos modificados
-
-| Arquivo | Ação |
-|---|---|
-| `src/pages/IndexV2.tsx` | 5 edições cirúrgicas — sem layout alterado |
+Esta é a mudança de maior impacto — remove fricção no topo sem tirar o plano de assinatura da página (ele continua na seção `#precos`).
 
 ---
 
-### Resumo técnico
+### Mudança 2 — Badge do Hero (melhoria de UX)
 
-- Remover 2 itens do array `subscriptionFeatures`
-- Remover o array `stats` + a `<section>` de stats animados
-- Remover 2 `<p>` com placeholders no rodapé
-- Atualizar texto dos 2 CTAs do Hero + ocorrências consistentes no header e seções de reforço
-- Remover imports de ícones que ficam sem uso (`HistoryIcon`, `HeartPulse`)
+**Antes:** `"Telemedicina regulamentada pelo CFM · Res. 2.314/2022"` — jargão técnico-jurídico que intimida ao invés de acolher.
+
+**Depois:** `"Médicos disponíveis agora · Receita em até 30 min"` — emocional + prático, ecoa a trust bar acima com informação complementar de tempo.
+
+---
+
+### Mudança 3 — Depoimentos: adicionar 2 novos + melhorar apresentação
+
+Adicionar mais 2 depoimentos (total 5, exibidos em grade 2 colunas no tablet e 3 no desktop) com contexto de condição tratada para reforçar identificação:
+
+- **Depoimento 4:** paciente com diabetes, cidade no Nordeste
+- **Depoimento 5:** paciente mais idoso com hipertensão
+
+Adicionar uma linha de "condição tratada" abaixo do nome em cada card, tornando os depoimentos mais específicos e identificáveis.
+
+---
+
+### Mudança 4 — Ancoragem de valor na Assinatura
+
+Abaixo do preço `R$ 29/mês` no card de assinatura, adicionar:
+
+```
+Equivale a menos de R$ 1 por dia
+Economize R$ 120 comparado ao avulso
+```
+
+Texto pequeno, em verde muted. Ancoragem de valor clássica que elimina a percepção de preço sem usar a palavra "desconto" (proibida pelo tom CFM).
+
+---
+
+### Resumo das alterações técnicas
+
+**Arquivo:** `src/pages/IndexV2.tsx`
+
+| Linha aprox. | Elemento | Mudança |
+|---|---|---|
+| ~511 | Badge hero eyebrow | Texto mais acolhedor e prático |
+| ~555–557 | CTA primário hero | Texto: "Quero renovar minha receita" |
+| ~558–573 | CTA secundário hero | Substituir link externo por âncora `#como-funciona`, texto "Ver como funciona" + ChevronDown |
+| ~143–162 | Array `testimonials` | Adicionar 2 novos depoimentos com campo `condition` |
+| ~723–785 | Render dos testimonials | Exibir `condition` como badge abaixo do nome |
+| ~930–1000 (aprox) | Card Assinatura preço | Adicionar linha de ancoragem de valor |
