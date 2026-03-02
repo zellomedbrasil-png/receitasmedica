@@ -162,20 +162,6 @@ const testimonials = [
     text: "Assino o plano mensal há seis meses. Não me preocupo mais com o vencimento da receita do tratamento contínuo.",
     rating: 5,
   },
-  {
-    name: "José Raimundo F.",
-    city: "Fortaleza, CE",
-    condition: "Diabetes tipo 2",
-    text: "Nunca imaginei que renovar a receita de insulina seria tão fácil. Em 15 minutos tudo estava resolvido pelo celular.",
-    rating: 5,
-  },
-  {
-    name: "Antônio Carlos B.",
-    city: "Recife, PE",
-    condition: "Hipertensão arterial",
-    text: "Com 71 anos, achei que seria complicado. Minha neta me ajudou na primeira vez, agora faço sozinho sem dificuldade.",
-    rating: 5,
-  },
 ];
 
 const renovamos = [
@@ -526,7 +512,7 @@ export default function IndexV2() {
                 }}
               >
                 <BadgeCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                Médicos disponíveis agora · Receita em até 30 min
+                Médicos disponíveis agora · Receita em minutos
               </div>
             </SR>
 
@@ -572,21 +558,25 @@ export default function IndexV2() {
                   <MessageCircle className="w-4 h-4" aria-hidden="true" />
                   Quero renovar minha receita
                 </a>
-                <a
-                  href="#como-funciona"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold transition-all hover:-translate-y-1"
-                  style={{
-                    background: CARD_BG,
-                    border: `1px solid ${CARD_BORDER}`,
-                    color: "white",
-                    backdropFilter: "blur(12px)",
-                  }}
-                  aria-label="Ver como funciona o serviço"
-                >
-                  Ver como funciona
-                  <ChevronUp className="w-4 h-4 rotate-180" aria-hidden="true" />
-                </a>
               </div>
+
+              <a
+                href="#como-funciona"
+                className="inline-flex items-center gap-1.5 text-sm font-medium mt-2 group transition-colors"
+                style={{ color: TEXT_MUTED }}
+                aria-label="Ver como funciona em 3 passos"
+              >
+                <motion.span
+                  animate={{ y: [0, 4, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ color: EMERALD }}
+                >
+                  ↓
+                </motion.span>
+                <span className="group-hover:text-white transition-colors">
+                  Ver como funciona em 3 passos
+                </span>
+              </a>
             </SR>
 
             <SR delay={0.28}>
@@ -733,8 +723,29 @@ export default function IndexV2() {
           aria-label="Resultados e depoimentos de pacientes"
         >
           <div className="max-w-5xl mx-auto">
-            {/* Testimonials */}
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+            {/* Testimonials Header */}
+            <SR>
+              <div className="text-center mb-14">
+                <p
+                  className="text-xs font-bold uppercase tracking-widest mb-3"
+                  style={{ color: EMERALD }}
+                  aria-hidden="true"
+                >
+                  O que dizem nossos pacientes
+                </p>
+                <h2
+                  className="text-3xl md:text-4xl font-extrabold tracking-tighter"
+                  style={{ color: "white" }}
+                >
+                  Receita resolvida.{" "}
+                  <span style={{ color: EMERALD }}>Tratamento mantido.</span>
+                </h2>
+                <p className="mt-3 text-base max-w-lg mx-auto" style={{ color: TEXT_MUTED }}>
+                  Relatos verificados de pacientes que utilizaram o serviço para continuidade de tratamentos de uso contínuo.
+                </p>
+              </div>
+            </SR>
+            <div className="grid md:grid-cols-3 gap-5">
               {testimonials.map((t, i) => (
                 <SR key={t.name} delay={i * 0.1}>
                   <article
@@ -1242,7 +1253,7 @@ export default function IndexV2() {
                         color: EMERALD,
                       }}
                     >
-                      Economia de R$&nbsp;120/ano em relação à consulta avulsa
+                      Equivalente a menos de R$&nbsp;1 por dia
                     </div>
 
                     <ul className="space-y-4 mb-8" role="list">
@@ -1325,8 +1336,7 @@ export default function IndexV2() {
                   <strong style={{ color: "white" }}>
                     Reembolso integral
                   </strong>{" "}
-                  garantido caso o médico não possa renovar sua receita. Sem
-                  perguntas.
+                  caso o médico não possa renovar sua receita. Sem burocracia.
                 </span>
               </div>
             </SR>
@@ -1340,7 +1350,7 @@ export default function IndexV2() {
           style={{ borderTop: `1px solid ${CARD_BORDER}` }}
           aria-labelledby="faq-heading"
         >
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             <SR>
               <div className="text-center mb-14">
                 <p
@@ -1357,44 +1367,63 @@ export default function IndexV2() {
                 >
                   Perguntas Frequentes
                 </h2>
-                <p
-                  className="mt-3 text-base"
-                  style={{ color: TEXT_MUTED }}
-                >
+                <p className="mt-3 text-base" style={{ color: TEXT_MUTED }}>
                   Informações claras e transparentes sobre o serviço.
                 </p>
               </div>
             </SR>
-            <SR delay={0.1}>
-              <Accordion type="single" collapsible className="space-y-3">
-                {faqs.map((faq, i) => (
-                  <AccordionItem
-                    key={i}
-                    value={`faq-${i}`}
-                    style={{
-                      background: CARD_BG,
-                      border: `1px solid ${CARD_BORDER}`,
-                      borderRadius: "1rem",
-                      overflow: "hidden",
-                    }}
-                    className="border-none"
-                  >
-                    <AccordionTrigger
-                      className="px-6 py-5 text-sm md:text-base font-semibold text-left hover:no-underline hover:bg-white/5 transition-colors"
-                      style={{ color: "white" }}
-                    >
-                      {faq.q}
-                    </AccordionTrigger>
-                    <AccordionContent
-                      className="px-6 pb-5 text-sm md:text-base leading-relaxed"
-                      style={{ color: TEXT_MUTED }}
-                    >
-                      {faq.a}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </SR>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {[faqs.slice(0, 4), faqs.slice(4)].map((col, ci) => (
+                <SR key={ci} delay={ci * 0.1}>
+                  <Accordion type="single" collapsible className="space-y-3">
+                    {col.map((faq, i) => {
+                      const idx = (ci * 4 + i + 1).toString().padStart(2, "0");
+                      return (
+                        <AccordionItem
+                          key={i}
+                          value={`faq-${ci}-${i}`}
+                          className="border-none group"
+                          style={{
+                            background: CARD_BG,
+                            border: `1px solid ${CARD_BORDER}`,
+                            borderRadius: "1rem",
+                            overflow: "hidden",
+                          }}
+                        >
+                          <AccordionTrigger
+                            className="px-5 py-4 text-sm font-semibold text-left hover:no-underline transition-colors [&[data-state=open]]:bg-white/5"
+                            style={{ color: "white" }}
+                          >
+                            <span className="flex items-start gap-3">
+                              <span
+                                className="shrink-0 text-xs font-extrabold tracking-widest mt-0.5"
+                                style={{ color: EMERALD }}
+                                aria-hidden="true"
+                              >
+                                {idx}
+                              </span>
+                              {faq.q}
+                            </span>
+                          </AccordionTrigger>
+                          <AccordionContent
+                            className="text-sm leading-relaxed pb-5"
+                            style={{ color: TEXT_MUTED }}
+                          >
+                            <div
+                              className="pl-5 pr-5 border-l-2 ml-5"
+                              style={{ borderColor: "rgba(16,185,129,0.35)" }}
+                            >
+                              {faq.a}
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      );
+                    })}
+                  </Accordion>
+                </SR>
+              ))}
+            </div>
           </div>
         </section>
 
