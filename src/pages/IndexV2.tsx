@@ -10,8 +10,6 @@ import {
   MessageCircle,
   Bell,
   BookOpen,
-  HistoryIcon,
-  HeartPulse,
   Crown,
   BadgeCheck,
   Lock,
@@ -141,11 +139,6 @@ const steps = [
   },
 ];
 
-const stats = [
-  { value: 15000, label: "Receitas Renovadas", prefix: "+", suffix: "" },
-  { value: 98, label: "Taxa de Aprovação", prefix: "", suffix: "%" },
-  { value: 7, label: "Tempo Médio (min)", prefix: "", suffix: "min" },
-];
 
 const testimonials = [
   {
@@ -200,8 +193,6 @@ const assinaturaItems = [
   { icon: CalendarClock, text: "Renovações mensais de receitas incluídas" },
   { icon: Bell, text: "Alertas automáticos de vencimento de receita" },
   { icon: Pill, text: "Atualizações sobre interações e novas medicações" },
-  { icon: HistoryIcon, text: "Histórico digital completo de receitas" },
-  { icon: HeartPulse, text: "Relatório mensal de saúde preventiva" },
   { icon: BookOpen, text: "E-book gratuito 'O Código da Farmácia'" },
   { icon: Phone, text: "Suporte prioritário via WhatsApp" },
   { icon: FileText, text: "Sem taxa de adesão · Cancele quando quiser" },
@@ -425,7 +416,7 @@ export default function IndexV2() {
                 className="hidden md:inline-flex items-center gap-2 text-sm font-bold px-5 py-2.5 rounded-xl transition-all hover:-translate-y-0.5 hover:opacity-90"
                 style={{ background: EMERALD, color: "#0F1115" }}
               >
-                Solicitar Renovação
+                Renovar minha Receita
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </a>
               {/* Mobile hamburger */}
@@ -478,7 +469,7 @@ export default function IndexV2() {
                     style={{ background: EMERALD, color: "#0F1115" }}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    Solicitar Renovação
+                    Renovar minha Receita
                     <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </a>
                 </nav>
@@ -559,10 +550,10 @@ export default function IndexV2() {
                     color: "#0F1115",
                     boxShadow: "0 8px 36px rgba(16,185,129,0.35)",
                   }}
-                  aria-label="Solicitar renovação de receita — consulta avulsa por R$ 39"
+                  aria-label="Renovar receita médica agora pelo WhatsApp"
                 >
-                  Solicitar Renovação — R$&nbsp;39
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                  Renovar minha Receita Agora
                 </a>
                 <a
                   href={WA_PLAN}
@@ -575,9 +566,10 @@ export default function IndexV2() {
                     color: "white",
                     backdropFilter: "blur(12px)",
                   }}
-                  aria-label="Ver plano de assinatura mensal por R$ 29"
+                  aria-label="Assinar plano mensal de renovação"
                 >
-                  Ver Plano Mensal — R$&nbsp;29/mês
+                  Assinar por R$&nbsp;29/mês
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
             </SR>
@@ -726,27 +718,6 @@ export default function IndexV2() {
           aria-label="Resultados e depoimentos de pacientes"
         >
           <div className="max-w-5xl mx-auto">
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 mb-20 text-center">
-              {stats.map((s, i) => (
-                <SR key={s.label} delay={i * 0.1}>
-                  <div>
-                    <AnimatedNumber
-                      value={s.value}
-                      prefix={s.prefix}
-                      suffix={s.suffix}
-                    />
-                    <p
-                      className="text-sm mt-2 font-medium"
-                      style={{ color: TEXT_MUTED }}
-                    >
-                      {s.label}
-                    </p>
-                  </div>
-                </SR>
-              ))}
-            </div>
-
             {/* Testimonials */}
             <div className="grid md:grid-cols-3 gap-5">
               {testimonials.map((t, i) => (
@@ -1441,7 +1412,7 @@ export default function IndexV2() {
                     boxShadow: "0 8px 32px rgba(16,185,129,0.35)",
                   }}
                 >
-                  Solicitar Renovação — R$&nbsp;39
+                  Renovar minha Receita
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </a>
                 <a
@@ -1588,19 +1559,6 @@ export default function IndexV2() {
                 aria-label="Informações de conformidade médica e regulatória"
               >
                 <p>
-                  <strong style={{ color: "rgba(255,255,255,0.45)" }}>
-                    Diretor Técnico:
-                  </strong>{" "}
-                  Dr. [Nome Completo] · CRM [UF] [Número] · RQE [Número] ·
-                  Especialidade: Clínica Médica / Telemedicina
-                </p>
-                <p>
-                  <strong style={{ color: "rgba(255,255,255,0.45)" }}>
-                    Endereço:
-                  </strong>{" "}
-                  [Rua, Número, Complemento — Bairro, Cidade/UF, CEP]
-                </p>
-                <p>
                   Atendimento regulamentado pela{" "}
                   <strong style={{ color: "rgba(255,255,255,0.40)" }}>
                     Resolução CFM nº 2.314/2022
@@ -1674,7 +1632,7 @@ export default function IndexV2() {
                   boxShadow: "0 8px 32px rgba(16,185,129,0.40)",
                 }}
               >
-                Solicitar Renovação — R$&nbsp;39
+                Renovar minha Receita
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </a>
             </motion.div>
