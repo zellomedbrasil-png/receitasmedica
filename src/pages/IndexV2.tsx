@@ -144,19 +144,36 @@ const testimonials = [
   {
     name: "Maria Aparecida S.",
     city: "São Paulo, SP",
+    condition: "Hipertensão arterial",
     text: "Renovei a receita de pressão em menos de 20 minutos. Processo simples, seguro e a receita chegou pelo WhatsApp.",
     rating: 5,
   },
   {
     name: "Carlos Eduardo M.",
     city: "Belo Horizonte, MG",
+    condition: "Colesterol elevado",
     text: "O médico foi atencioso e explicou tudo. A teleconsulta foi rápida e a receita já veio com QR Code de verificação.",
     rating: 5,
   },
   {
     name: "Ana Paula R.",
     city: "Curitiba, PR",
+    condition: "Anticoncepcional oral",
     text: "Assino o plano mensal há seis meses. Não me preocupo mais com o vencimento da receita do tratamento contínuo.",
+    rating: 5,
+  },
+  {
+    name: "José Raimundo F.",
+    city: "Fortaleza, CE",
+    condition: "Diabetes tipo 2",
+    text: "Nunca imaginei que renovar a receita de insulina seria tão fácil. Em 15 minutos tudo estava resolvido pelo celular.",
+    rating: 5,
+  },
+  {
+    name: "Antônio Carlos B.",
+    city: "Recife, PE",
+    condition: "Hipertensão arterial",
+    text: "Com 71 anos, achei que seria complicado. Minha neta me ajudou na primeira vez, agora faço sozinho sem dificuldade.",
     rating: 5,
   },
 ];
@@ -509,7 +526,7 @@ export default function IndexV2() {
                 }}
               >
                 <BadgeCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                Telemedicina regulamentada pelo CFM · Res. 2.314/2022
+                Médicos disponíveis agora · Receita em até 30 min
               </div>
             </SR>
 
@@ -553,12 +570,10 @@ export default function IndexV2() {
                   aria-label="Renovar receita médica agora pelo WhatsApp"
                 >
                   <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                  Renovar minha Receita Agora
+                  Quero renovar minha receita
                 </a>
                 <a
-                  href={WA_PLAN}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#como-funciona"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold transition-all hover:-translate-y-1"
                   style={{
                     background: CARD_BG,
@@ -566,10 +581,10 @@ export default function IndexV2() {
                     color: "white",
                     backdropFilter: "blur(12px)",
                   }}
-                  aria-label="Assinar plano mensal de renovação"
+                  aria-label="Ver como funciona o serviço"
                 >
-                  Assinar por R$&nbsp;29/mês
-                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  Ver como funciona
+                  <ChevronUp className="w-4 h-4 rotate-180" aria-hidden="true" />
                 </a>
               </div>
             </SR>
@@ -719,7 +734,7 @@ export default function IndexV2() {
         >
           <div className="max-w-5xl mx-auto">
             {/* Testimonials */}
-            <div className="grid md:grid-cols-3 gap-5">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
               {testimonials.map((t, i) => (
                 <SR key={t.name} delay={i * 0.1}>
                   <article
@@ -761,6 +776,18 @@ export default function IndexV2() {
                       <p className="text-xs mt-0.5" style={{ color: TEXT_DIM }}>
                         {t.city}
                       </p>
+                      {t.condition && (
+                        <span
+                          className="inline-block mt-2 text-xs font-semibold px-2.5 py-1 rounded-full"
+                          style={{
+                            background: "rgba(16,185,129,0.10)",
+                            color: EMERALD,
+                            border: "1px solid rgba(16,185,129,0.20)",
+                          }}
+                        >
+                          {t.condition}
+                        </span>
+                      )}
                     </footer>
                   </article>
                 </SR>
