@@ -124,19 +124,19 @@ const steps = [
     num: "01",
     Icon: ClipboardCheck,
     title: "Triagem Digital",
-    desc: "Envie foto da receita anterior ou laudo. Tudo pelo celular.",
+    desc: "Preencha um breve formulário e envie a foto da sua receita ou laudo anterior. Sem burocracia, tudo pelo celular.",
   },
   {
     num: "02",
     Icon: Video,
     title: "Teleconsulta Médica",
-    desc: "Videochamada rápida com médico CRM ativo.",
+    desc: "Videochamada curta com médico registrado no CRM para avaliar a continuidade do seu tratamento.",
   },
   {
     num: "03",
     Icon: MessageCircle,
     title: "Receita no WhatsApp",
-    desc: "Receita digital com QR Code direto no celular.",
+    desc: "Receita digital com assinatura ICP-Brasil e QR Code enviada direto no seu celular. Válida em qualquer farmácia do Brasil.",
   },
 ];
 
@@ -660,95 +660,70 @@ export default function IndexV2() {
               </div>
             </SR>
 
-            {/* ── Desktop: Step Explainer horizontal ── */}
-            <div className="hidden md:block">
-              {/* Numbered circles + connector line */}
-              <div className="relative flex items-center justify-between mb-8 px-[calc(16.67%-12px)]">
-                {/* Connector line behind circles */}
-                <div
-                  className="absolute top-1/2 left-[calc(16.67%+20px)] right-[calc(16.67%+20px)] h-0.5 -translate-y-1/2 pointer-events-none"
-                  aria-hidden="true"
-                  style={{
-                    borderTop: `2px dashed rgba(16,185,129,0.4)`,
-                  }}
-                />
-                {steps.map((s, i) => (
-                  <SR key={s.num} delay={i * 0.12}>
-                    <motion.div
-                      className="relative z-10 w-16 h-16 rounded-full flex items-center justify-center text-lg font-black"
+            {/* ── Cards grid (desktop 3 cols, mobile stack) ── */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {steps.map((s, i) => (
+                <SR key={s.num} delay={i * 0.15}>
+                  <motion.article
+                    whileHover={{ y: -6, transition: { duration: 0.25 } }}
+                    className="group relative rounded-3xl overflow-hidden cursor-default backdrop-blur-sm h-full"
+                    style={{
+                      background: i === 2 ? "rgba(16,185,129,0.08)" : "rgba(255,255,255,0.06)",
+                      border: `1px solid ${i === 2 ? "rgba(16,185,129,0.30)" : "rgba(255,255,255,0.14)"}`,
+                      transition: "box-shadow 0.3s ease, border-color 0.3s ease",
+                    }}
+                    onHoverStart={(e) => {
+                      const el = (e.target as HTMLElement).closest("article")!;
+                      el.style.boxShadow = "0 8px 40px rgba(16,185,129,0.18)";
+                      el.style.borderColor = "rgba(16,185,129,0.50)";
+                    }}
+                    onHoverEnd={(e) => {
+                      const el = (e.target as HTMLElement).closest("article")!;
+                      el.style.boxShadow = "none";
+                      el.style.borderColor = i === 2 ? "rgba(16,185,129,0.30)" : "rgba(255,255,255,0.14)";
+                    }}
+                  >
+                    {/* Top emerald gradient line */}
+                    <div
+                      className="h-[3px] w-full"
                       style={{
-                        background: EMERALD,
-                        color: "#0F1115",
-                        boxShadow: "0 0 24px rgba(16,185,129,0.35)",
+                        background: `linear-gradient(90deg, ${EMERALD}, rgba(16,185,129,0.3))`,
                       }}
-                      whileHover={{ scale: 1.12, transition: { duration: 0.2 } }}
-                    >
-                      {s.num}
-                    </motion.div>
-                  </SR>
-                ))}
-              </div>
+                      aria-hidden="true"
+                    />
 
-              {/* Cards below */}
-              <div className="grid grid-cols-3 gap-6">
-                {steps.map((s, i) => (
-                  <SR key={s.num} delay={i * 0.14 + 0.1}>
-                    <motion.article
-                      whileHover={{ y: -8, transition: { duration: 0.25 } }}
-                      className="group relative rounded-3xl p-8 h-full overflow-hidden cursor-default backdrop-blur-sm"
-                      style={{
-                        background: i === 2 ? "rgba(16,185,129,0.08)" : "rgba(255,255,255,0.06)",
-                        border: `1px solid ${i === 2 ? "rgba(16,185,129,0.30)" : "rgba(255,255,255,0.14)"}`,
-                        transition: "box-shadow 0.3s ease, border-color 0.3s ease",
-                      }}
-                      onHoverStart={(e) => {
-                        const el = (e.target as HTMLElement).closest("article")!;
-                        el.style.boxShadow = "0 8px 40px rgba(16,185,129,0.18)";
-                        el.style.borderColor = "rgba(16,185,129,0.50)";
-                      }}
-                      onHoverEnd={(e) => {
-                        const el = (e.target as HTMLElement).closest("article")!;
-                        el.style.boxShadow = "none";
-                        el.style.borderColor = i === 2 ? "rgba(16,185,129,0.30)" : "rgba(255,255,255,0.14)";
-                      }}
-                    >
-                      {/* Glow — card 03 */}
-                      {i === 2 && (
+                    <div className="p-8 relative z-10">
+                      {/* Number badge + Icon */}
+                      <div className="flex items-center gap-3 mb-6">
                         <div
-                          className="absolute top-0 right-0 w-56 h-56 rounded-full blur-3xl pointer-events-none"
-                          style={{ background: "rgba(16,185,129,0.15)" }}
-                          aria-hidden="true"
-                        />
-                      )}
+                          className="w-10 h-10 rounded-xl flex items-center justify-center font-mono font-bold text-sm"
+                          style={{
+                            background: "rgba(16,185,129,0.15)",
+                            color: EMERALD,
+                          }}
+                        >
+                          {s.num}
+                        </div>
+                        <div
+                          className="w-10 h-10 rounded-xl flex items-center justify-center"
+                          style={{
+                            background: "rgba(16,185,129,0.12)",
+                            border: "1px solid rgba(16,185,129,0.25)",
+                          }}
+                        >
+                          <s.Icon className="w-5 h-5" style={{ color: EMERALD }} />
+                        </div>
+                      </div>
 
-                      {/* Ícone centralizado */}
-                      <motion.div
-                        className="w-12 h-12 rounded-2xl flex items-center justify-center mb-6 mx-auto relative z-10"
-                        style={{
-                          background: "rgba(16,185,129,0.12)",
-                          border: "1px solid rgba(16,185,129,0.25)",
-                        }}
-                        whileHover={i === 2 ? { rotate: [0, -15, 15, 0], transition: { duration: 0.5 } } : {}}
-                        aria-hidden="true"
-                      >
-                        <s.Icon className="w-5 h-5" style={{ color: EMERALD }} />
-                      </motion.div>
-
-                      <h3
-                        className="text-lg font-bold mb-2 tracking-tight relative z-10 text-center"
-                        style={{ color: "white" }}
-                      >
+                      <h3 className="text-xl font-semibold mb-2 tracking-tight" style={{ color: "white" }}>
                         {s.title}
                       </h3>
-                      <p
-                        className="text-sm leading-relaxed relative z-10 text-center"
-                        style={{ color: TEXT_MUTED }}
-                      >
+                      <p className="text-sm leading-relaxed" style={{ color: TEXT_MUTED }}>
                         {s.desc}
                       </p>
 
                       {i === 2 && (
-                        <div className="mt-6 flex justify-center relative z-10">
+                        <div className="mt-6">
                           <span
                             className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
                             style={{ color: EMERALD }}
@@ -758,103 +733,31 @@ export default function IndexV2() {
                               style={{ background: EMERALD }}
                               aria-hidden="true"
                             />
-                            Receita imediata
+                            Entrega imediata
                           </span>
                         </div>
                       )}
-                    </motion.article>
-                  </SR>
-                ))}
-              </div>
-            </div>
-
-            {/* ── Mobile: vertical timeline ── */}
-            <div className="md:hidden relative">
-              {/* Vertical connector line */}
-              <div
-                className="absolute left-[31px] top-8 bottom-8 w-0.5 pointer-events-none"
-                aria-hidden="true"
-                style={{
-                  background: `linear-gradient(180deg, transparent 0%, rgba(16,185,129,0.5) 15%, rgba(16,185,129,0.5) 85%, transparent 100%)`,
-                }}
-              />
-
-              <div className="space-y-6">
-                {steps.map((s, i) => (
-                  <SR key={s.num} delay={i * 0.12}>
-                    <div className="flex gap-5 items-start">
-                      {/* Numbered circle */}
-                      <div
-                        className="w-16 h-16 rounded-full flex items-center justify-center text-sm font-black flex-shrink-0 relative z-10"
-                        style={{
-                          background: EMERALD,
-                          color: "#0F1115",
-                          boxShadow: "0 0 20px rgba(16,185,129,0.30)",
-                        }}
-                      >
-                        {s.num}
-                      </div>
-
-                      {/* Card */}
-                      <div
-                        className="flex-1 rounded-2xl p-5 relative overflow-hidden backdrop-blur-sm"
-                        style={{
-                          background: i === 2 ? "rgba(16,185,129,0.08)" : "rgba(255,255,255,0.06)",
-                          border: `1px solid ${i === 2 ? "rgba(16,185,129,0.30)" : "rgba(255,255,255,0.14)"}`,
-                        }}
-                      >
-                        {i === 2 && (
-                          <div
-                            className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl pointer-events-none"
-                            style={{ background: "rgba(16,185,129,0.15)" }}
-                            aria-hidden="true"
-                          />
-                        )}
-
-                        <div className="flex items-center gap-3 mb-3 relative z-10">
-                          <div
-                            className="w-10 h-10 rounded-xl flex items-center justify-center"
-                            style={{
-                              background: "rgba(16,185,129,0.12)",
-                              border: "1px solid rgba(16,185,129,0.25)",
-                            }}
-                          >
-                            <s.Icon className="w-4 h-4" style={{ color: EMERALD }} />
-                          </div>
-                          <h3
-                            className="text-base font-bold tracking-tight"
-                            style={{ color: "white" }}
-                          >
-                            {s.title}
-                          </h3>
-                        </div>
-                        <p
-                          className="text-sm leading-relaxed relative z-10"
-                          style={{ color: TEXT_MUTED }}
-                        >
-                          {s.desc}
-                        </p>
-
-                        {i === 2 && (
-                          <div className="mt-4 relative z-10">
-                            <span
-                              className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider"
-                              style={{ color: EMERALD }}
-                            >
-                              <span
-                                className="w-2 h-2 rounded-full animate-pulse"
-                                style={{ background: EMERALD }}
-                                aria-hidden="true"
-                              />
-                              Receita imediata
-                            </span>
-                          </div>
-                        )}
-                      </div>
                     </div>
-                  </SR>
-                ))}
-              </div>
+
+                    {/* Glow blur — card 03 */}
+                    {i === 2 && (
+                      <div
+                        className="absolute top-0 right-0 w-56 h-56 rounded-full blur-3xl pointer-events-none"
+                        style={{ background: "rgba(16,185,129,0.15)" }}
+                        aria-hidden="true"
+                      />
+                    )}
+
+                    {/* Watermark icon */}
+                    <s.Icon
+                      className="absolute -bottom-4 -right-4 w-[140px] h-[140px] -rotate-[15deg] pointer-events-none"
+                      style={{ color: "rgba(255,255,255,0.05)" }}
+                      strokeWidth={0.5}
+                      aria-hidden="true"
+                    />
+                  </motion.article>
+                </SR>
+              ))}
             </div>
           </div>
         </section>
