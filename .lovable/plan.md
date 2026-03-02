@@ -1,68 +1,77 @@
 
-## Hero: 1 CTA unificado + "Como Funciona" redesenhado
+## Redesign "Como Funciona" — Visual Moderno e Intuitivo
 
-### Diagnóstico atual
+### Diagnóstico do problema atual
 
-O Hero tem dois elementos de ação competindo: o botão principal "Quero renovar minha receita" (CTA) + o anchor "↓ Ver como funciona em 3 passos". O usuário quer consolidar tudo em **1 único elemento de ação** — um CTA que seja ao mesmo tempo a proposta de valor resumida e um convite ao scroll. A seção "Como Funciona" atual tem cards básicos com hover simples e pouca personalidade visual.
+O layout atual tem problemas de clareza visual:
+- Três cards genéricos com bordas quase invisíveis sobre fundo escuro
+- O número "01/02/03" e o ícone ficam empilhados dentro do card sem hierarquia clara
+- A linha conectora horizontal está no `top-[52px]` mas visualmente não "conecta" nada perceptível
+- Para idosos e usuários menos técnicos, o fluxo de leitura não é óbvio
+- O watermark numérico (opacity 0.03) é invisível — não cumpre função visual
 
----
+### Novo conceito: "Step Explainer" com progressão visual clara
 
-### Mudança 1 — Hero: 1 único CTA que resume e ancora
+Substituir os cards genéricos por um **layout de três etapas com foco em clareza total**:
 
-Remover o botão do WhatsApp e o anchor separados. Substituir por um **único elemento visual** que faz tudo:
-
-**Conceito:** Um botão-âncora central com micro-copy de proposta de valor + ícone de seta animada para baixo. Ao clicar, faz scroll suave para `#como-funciona`. Sem WhatsApp no hero — a conversão principal acontece nos CTAs das seções abaixo (preços, FAQ, rodapé), onde o usuário já está aquecido.
-
-**Texto do CTA único:**
-```
-Receita renovada em 3 passos simples  ↓
-```
-
-Estilo: botão outline esmeralda sutil (não filled, para não competir com os CTAs de conversão abaixo), com a seta animada em bounce. Passa a mensagem de "o que fazemos" + convida ao scroll sem pressionar a compra imediata.
-
-Alternativamente, formato de pill/badge animado clicável em vez de botão — ainda mais sutil:
-```
-[ ↓  Veja como funciona em 3 passos ]
-```
-Com borda esmeralda pulsando levemente via keyframe, sem fill.
-
----
-
-### Mudança 2 — "Como Funciona" redesenhado: layout horizontal com linha de progresso
-
-**Layout atual:** 3 cards empilhados em grid 3 colunas simples com hover `-translate-y-1`.
-
-**Layout novo — Timeline visual horizontal:**
-
+**Estrutura de cada etapa (desktop — horizontal):**
 ```text
-[  01 ]──────────[  02 ]──────────[  03 ]
-Triagem         Teleconsulta      Receita
-Digital          Médica          WhatsApp
-[ícone]          [ícone]          [ícone]
-desc...          desc...          desc...
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                   │
+│  [ Círculo numerado grande ]  ──── linha ────  [ Círculo ]  ...  │
+│        ①                                           ②             │
+│   ┌──────────────┐                          ┌──────────────┐     │
+│   │  Ícone       │                          │  Ícone       │     │
+│   │  grande      │                          │  grande      │     │
+│   │  centralizado│                          │  centralizado│     │
+│   │              │                          │              │     │
+│   │  Triagem     │                          │  Teleconsulta│     │
+│   │  Digital     │                          │  Médica      │     │
+│   │              │                          │              │     │
+│   │  desc...     │                          │  desc...     │     │
+│   └──────────────┘                          └──────────────┘     │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
-- Uma **linha conectora** entre os 3 passos no desktop (hr esmeralda com gradiente fade nas pontas)
-- Cada card tem um **número grande** no canto superior como watermark (`text-8xl opacity-5`) sombreando o fundo do card para textura
-- **Estado hover melhorado:** o card ativo eleva-se + emite uma glow esmeralda sutil (`box-shadow`) + a borda fica esmeralda
-- **Card 03 destacado:** mantém o glow de fundo + badge "Entrega imediata" pulsando, mas também ganha uma micro-animação no ícone (rotate no `MessageCircle` ao hover)
-- **Eyebrow da seção:** mais criativo — de "Processo" para `"Do celular à farmácia"` (descreve a jornada do usuário)
-- **H2 da seção:** de "Como funciona em 3 passos." para `"Simples assim."` — mais impactante, confiante
+### Design detalhado
 
-Em mobile: empilha verticalmente com uma linha vertical conectora à esquerda (border-left esmeralda de 2px conectando os 3 números).
+**Cada etapa tem 2 partes separadas:**
+1. **Topo visual (acima do card):** Círculo grande (64px) numerado, com fundo esmeralda sólido, conectado pela linha. Visualmente domina e torna a progressão 1→2→3 imediatamente legível
+2. **Card de conteúdo (abaixo):** Card branco-translúcido com ícone destacado no topo, título e descrição. Sem número no card (o número já está no círculo acima — sem duplicação)
 
----
+**Linha conectora revisada:**
+- Linha pontilhada (`border-dashed`) esmeralda de 2px que parte do centro do círculo 01 até o centro do 03
+- Visível e óbvia (não opacity 0.25 invisível)
+- Nos extremos (antes do 01 e depois do 03) a linha some com `opacity-0`
+
+**Visual dos cards:**
+- Fundo: `rgba(255,255,255,0.06)` com `backdrop-blur-sm`
+- Borda mais visível: `rgba(255,255,255,0.14)`  
+- Ícone centralizado no topo com círculo esmeralda maior (48px) e mais opacidade
+- Hover: card sobe 8px + glow esmeralda + borda esmeralda — mais dramático
+- Card 03 (Receita): tem badge "Receita imediata" + fundo levemente esmeralda diferenciado
+
+**Mobile — layout vertical aprimorado:**
+- Cada step vira um "row" horizontal: `[Círculo numerado] → [Card]` lado a lado
+- Linha vertical à esquerda conectando os círculos, visível (2px esmeralda, opacity 0.5)
+- Mais legível que empilhamento puro
+
+**Copy melhorado nos steps:**
+- Step 01: adicionar emoji de documento como auxílio visual de contexto
+- Descrições mais curtas e diretas para acessibilidade (pacientes idosos)
+
+**Cabeçalho da seção — pequena melhoria:**
+- Manter "Do celular à farmácia" e "Simples assim."
+- Adicionar abaixo do subtexto um indicador de tempo total: `"Processo completo em menos de 1 hora"` com ícone de relógio, em formato de pill esmeralda
 
 ### Resumo técnico
 
 **Arquivo:** `src/pages/IndexV2.tsx`
 
-| Área | Linhas aprox. | Mudança |
+| Área | Linhas | Mudança |
 |---|---|---|
-| Hero — bloco de CTAs | 544–580 | Substituir botão WA + anchor por 1 único CTA-âncora outline animado |
-| Como Funciona — eyebrow | 627–631 | "Processo" → "Do celular à farmácia" |
-| Como Funciona — H2 | 633–639 | "Como funciona em 3 passos." → "Simples assim." |
-| Como Funciona — grid | 650–715 | Adicionar linha conectora + número watermark + glow hover nos cards |
-| steps data | 121–140 | Enriquecer `desc` de cada passo com detalhe mais humano |
+| steps data | 121–140 | Encurtar `desc` para no máximo 2 linhas (acessibilidade) |
+| Header "Como Funciona" | 625–647 | Adicionar pill de "menos de 1h" abaixo do subtexto |
+| Layout dos steps | 650–765 | Redesenho completo: círculo numerado separado + card de conteúdo + linha conectora visível |
 
-Nenhum componente novo importado — reutiliza `motion` (já importado) para as animações dos cards e da seta.
+Sem novos imports — tudo com `motion`, ícones já importados (`ClipboardCheck`, `Video`, `MessageCircle`, `Clock`) e Tailwind/inline styles existentes.
