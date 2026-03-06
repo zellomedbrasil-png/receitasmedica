@@ -177,7 +177,6 @@ const renovamos = [
 ];
 
 const naoRenovamos = [
-  "Receitas de uso único ou tratamento pontual",
   "Substâncias de controle especial (Portaria 344/98)",
   "Receitas amarelas (A) e azuis (B)",
   "Primeira consulta sem diagnóstico prévio",
