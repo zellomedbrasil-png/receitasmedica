@@ -1501,7 +1501,7 @@ export default function IndexV2() {
                 Médico disponível para avaliação agora. Receita digital emitida
                 em minutos e aceita em qualquer farmácia do Brasil.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex justify-center">
                 <a
                   href={WA_LINK}
                   target="_blank"
@@ -1513,21 +1513,8 @@ export default function IndexV2() {
                     boxShadow: "0 8px 32px rgba(16,185,129,0.35)",
                   }}
                 >
-                  Renovar minha Receita
+                  Quero minha Receita agora
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                </a>
-                <a
-                  href={WA_PLAN}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-base font-semibold transition-all hover:-translate-y-1"
-                  style={{
-                    background: CARD_BG,
-                    border: `1px solid ${CARD_BORDER}`,
-                    color: "white",
-                  }}
-                >
-                  Assinar por R$&nbsp;29/mês
                 </a>
               </div>
             </SR>
