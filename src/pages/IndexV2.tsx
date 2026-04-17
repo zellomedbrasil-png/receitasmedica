@@ -198,6 +198,7 @@ const assinaturaItems = [
   { icon: Pill, text: "Atualizações sobre interações e novas medicações" },
   { icon: BookOpen, text: "E-book gratuito 'O Código da Farmácia'" },
   { icon: Phone, text: "Suporte prioritário via WhatsApp" },
+  { icon: FileText, text: "Sem taxa de adesão · Cancele quando quiser" },
 ];
 
 const securityItems = [
