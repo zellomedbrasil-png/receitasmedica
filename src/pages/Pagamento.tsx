@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import logoReceitas from "@/assets/logo-receitas.png";
 
 const PIX_KEY = "contato@receitas.site";
 const CHECKOUT_URL = "https://pay.infinitepay.io/zellomed/VC1DLTItSQ-2Z2zPWDEXL-29,00";
