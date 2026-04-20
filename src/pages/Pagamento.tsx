@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import logoReceitas from "@/assets/logo-receitas.png";
 
 const PIX_KEY = "contato@receitas.site";
 const CHECKOUT_URL = "https://pay.infinitepay.io/zellomed/VC1DLTItSQ-2Z2zPWDEXL-29,00";
@@ -43,10 +44,7 @@ const Pagamento = () => {
             Voltar
           </Link>
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
-              <span className="text-white font-bold text-sm">R</span>
-            </div>
-            <span className="font-semibold tracking-tight">Receitas.site</span>
+            <img src={logoReceitas} alt="Receitas.site" className="h-7 w-auto" />
           </Link>
           <div className="flex items-center gap-1.5 text-xs text-emerald-400">
             <Lock className="w-3.5 h-3.5" />
