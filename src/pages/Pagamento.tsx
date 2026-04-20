@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
 const PIX_KEY = "contato@receitas.site";
-const CHECKOUT_URL = "https://wa.me/5585991275429?text=Gostaria%20de%20renovar%20minha%20receita%20m%C3%A9dica.";
+const CHECKOUT_URL = "https://pay.infinitepay.io/zellomed/VC1DLTItSQ-2Z2zPWDEXL-29,00";
 
 const Pagamento = () => {
   const [tab, setTab] = useState<"pix" | "cartao">("pix");
