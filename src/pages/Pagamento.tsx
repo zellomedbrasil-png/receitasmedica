@@ -39,14 +39,14 @@ const Pagamento = () => {
       {/* Header */}
       <header className="relative z-10 border-b border-white/5 backdrop-blur-xl bg-[#0F1115]/70">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <Link to="/" className="flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors w-20">
             <ArrowLeft className="w-4 h-4" />
-            Voltar
+            <span className="hidden sm:inline">Voltar</span>
           </Link>
-          <Link to="/" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center justify-center flex-1">
             <img src={logoReceitas} alt="Receitas.site" className="h-7 w-auto" />
           </Link>
-          <div className="flex items-center gap-1.5 text-xs text-emerald-400">
+          <div className="flex items-center justify-end gap-1.5 text-xs text-emerald-400 w-20">
             <Lock className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Seguro</span>
           </div>
