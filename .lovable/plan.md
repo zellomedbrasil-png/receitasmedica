@@ -1,97 +1,92 @@
 
 
-## Landing Page Versão B — Teste A/B (`/v-b`)
+## Refatoração da Seção CTA Final — `/v-b` (nível premium)
 
-Vou criar uma nova landing page completa para teste A/B, mantendo a identidade visual do receitas.site (Dark Mode/Fintech, esmeralda, glassmorphism) e implementando o novo posicionamento de preço (R$ 59 avulsa / R$ 47/mês Plano Tranquilo) com bônus empilhados e garantia de reembolso clínico.
+### Diagnóstico do que está fora de sintonia
+A seção atual usa um único bloco arredondado com gradiente azul-petróleo e dois botões empilhados — visualmente isolada, sem o ritmo editorial e a densidade de informação dos demais blocos da página (bento cards, badges, watermarks, hierarquia tipográfica em "01/02/03"). Falta narrativa de valor: o copy genérico ("Pronto para renovar sua receita?") não comunica o **diferencial ético + economia real** que sustenta o preço.
 
-### Rota e estrutura
+### Nova estrutura visual (mantém DNA da página)
 
-- Rota: **`/v-b`** (versão B do teste A/B). A versão atual em `/` permanece intocada como variante A.
-- Página principal: `src/pages/IndexVB.tsx` com 11 seções na ordem solicitada.
-- Componentes modulares em `src/components/landing-vb/` reutilizando o sistema visual existente (cores `--emerald`, `--background`, glassmorphism, ScrollReveal).
-
-### Componentes a criar
-
-| Componente | Função |
-|---|---|
-| `HeaderVB.tsx` | Logo + menu (Como Funciona, Preços, FAQ, Entrar) + CTA "Renovar Agora" com `data-variant="B"` |
-| `HeroVB.tsx` | H1, subheadline, CTA primário e secundário, prova social discreta, mockup de receita digital (ilustração CSS-only) |
-| `DorVB.tsx` | 4 cards com ícones Lucide (Clock, Calendar, Users, DollarSign) e textos curtos |
-| `ComoFuncionaVB.tsx` | 3 passos numerados + linha de apoio CFM 2.314/2022 |
-| `DiferencialEticoVB.tsx` | 2 parágrafos + card destacado "Prescrição pelo princípio ativo" |
-| `PrecosVB.tsx` | 2 planos lado a lado (Avulsa R$ 59 / Tranquilo R$ 47/mês com badge "MAIS ESCOLHIDO" e 3 bônus) |
-| `TransparenciaVB.tsx` | 2 colunas: verde (renovamos) vs vermelho suave (não fazemos) + texto de fechamento |
-| `GarantiaVB.tsx` | Card único com Shield — apenas reembolso clínico |
-| `FaqVB.tsx` | Accordion shadcn com 8 perguntas |
-| `CtaFinalVB.tsx` | Banner verde-escuro com 2 CTAs |
-| `FooterVB.tsx` | 4 colunas + responsável técnico + disclaimer CFM |
-
-### Posicionamento visual
-
-- **Paleta:** mantém esmeralda (`--emerald`) como secundária/CTA principal; introduz tom **azul-marinho profundo** (`#1A5276` aplicado via classe utilitária Tailwind arbitrária) para o CTA final, criando contraste com a versão A sem quebrar identidade.
-- **Background:** dark mode `#0F1115` consistente; cards com `backdrop-blur` e bordas esmeralda translúcidas.
-- **Tipografia:** Inter (já carregada), títulos `tracking-tighter-custom`, corpo com `leading-relaxed`.
-- **Mobile-first:** grids colapsam em coluna única, CTAs `py-6` para área de toque generosa, planos empilham com Tranquilo em primeiro no mobile.
-
-### Preços e copy — pontos críticos
-
-- **Avulsa:** R$ 59 limpo (sem preço barrado fake), CTA outline esmeralda → link para `/pagamento` (precisa atualização paralela do valor — ver nota técnica abaixo).
-- **Tranquilo:** R$ 47/mês com subtítulo "Menos de R$ 1,60 por dia", badge "MAIS ESCOLHIDO", 3 bônus destacados (Guia O Código da Farmácia, Lembrete WhatsApp 7 dias antes, Atendimento fim de semana). CTA primário sólido esmeralda.
-- Todos os CTAs apontam para WhatsApp (`5585991275429`) ou `/pagamento` conforme contexto, com mensagens pré-definidas distintas por plano para rastreamento.
-
-### Compliance e ética (CFM/LGPD)
-
-- Sem urgência artificial, sem timers, sem depoimentos fictícios.
-- Sem nomes comerciais de medicamentos.
-- Garantia restrita a reembolso por inviabilidade clínica.
-- Disclaimer obrigatório no footer reforçando não-substituição de acompanhamento médico.
-- Responsável técnico com CRM no footer (placeholder marcado para preenchimento posterior).
-
-### Rastreamento A/B
-
-- `<meta name="ab-variant" content="B">` injetado via `useEffect` no `IndexVB.tsx` (manipulando `document.head` no mount, removendo no unmount para não vazar para outras rotas).
-- Todos os botões CTA recebem `data-variant="B"` e `data-cta-id` único (ex: `hero-primary`, `precos-tranquilo`, `cta-final-avulsa`) para Google Tag Manager (GTM-5QZF57J6 já instalado) capturar via trigger de clique.
-- `onClick` vazio nos botões fica implícito no Tag Manager — não é necessário handler React.
-
-### Roteamento
-
-- Atualizar `src/App.tsx` adicionando `<Route path="/v-b" element={<IndexVB />} />` antes do catch-all.
-- `IndexV2.tsx` (`/`) e demais rotas permanecem intactas.
-
-### SEO
-
-- `<title>` e `<meta description>` específicos da Versão B injetados via `useEffect`.
-- Open Graph tags (og:title, og:description, og:url) com URL `https://receitas.site/v-b`.
-- JSON-LD MedicalBusiness reutilizando schema da `/`, ajustado para refletir os novos preços.
-- HTML semântico: `<header>`, `<main>`, `<section>` com `aria-labelledby`, `<footer>`.
-
-### Resumo técnico
+Substituir o bloco único por uma seção **bento de 2 colunas no desktop / empilhada no mobile** dentro do mesmo container `max-w-6xl`:
 
 ```text
-src/
-├── pages/
-│   └── IndexVB.tsx              [NOVO — orquestra seções, injeta meta + JSON-LD]
-├── components/landing-vb/
-│   ├── HeaderVB.tsx             [NOVO]
-│   ├── HeroVB.tsx               [NOVO]
-│   ├── DorVB.tsx                [NOVO]
-│   ├── ComoFuncionaVB.tsx       [NOVO]
-│   ├── DiferencialEticoVB.tsx   [NOVO]
-│   ├── PrecosVB.tsx             [NOVO]
-│   ├── TransparenciaVB.tsx      [NOVO]
-│   ├── GarantiaVB.tsx           [NOVO]
-│   ├── FaqVB.tsx                [NOVO]
-│   ├── CtaFinalVB.tsx           [NOVO]
-│   └── FooterVB.tsx             [NOVO]
-└── App.tsx                      [EDIT — adiciona rota /v-b]
+┌────────────────────────────────────────────────────────────────┐
+│  ECONOMIA REAL · ÉTICA MÉDICA                                  │
+│                                                                 │
+│  Seu remédio pode custar                                        │
+│  até 70% menos.                                                 │
+│  Basta um médico que                                            │
+│  prescreve pensando em você.                                    │
+│                                                                 │
+│  [parágrafo curto sobre princípio ativo + liberdade]            │
+│                                                                 │
+│  ┌──────────────────────┐   ┌───────────────────────────────┐  │
+│  │ MAIS ESCOLHIDO       │   │ Sem assinatura                │  │
+│  │ Plano Tranquilo      │   │ Consulta Avulsa               │  │
+│  │ R$ 47 /mês           │   │ R$ 59 pagamento único         │  │
+│  │ Renovações ilimitadas│   │ 1 renovação completa          │  │
+│  │ + 3 bônus inclusos   │   │ Receita em até 1 hora         │  │
+│  │ [Assinar →]          │   │ [Renovar agora →]             │  │
+│  └──────────────────────┘   └───────────────────────────────┘  │
+│                                                                 │
+│  ✓ Médico CRM ativo · ✓ ICP-Brasil · ✓ CFM 2.314/2022          │
+└────────────────────────────────────────────────────────────────┘
 ```
 
-### Nota: página /pagamento
+### Detalhes de design
 
-A `/pagamento` atual está fixada em **R$ 29** (plano da versão A). A Versão B usa **R$ 47/mês** e **R$ 59 avulsa**. Para não quebrar o checkout existente da V1/V2, os CTAs da Versão B vão direcionar para **WhatsApp** com mensagens distintas por plano (ex.: "Quero assinar o Plano Tranquilo - R$ 47/mês" e "Quero fazer uma Consulta Avulsa - R$ 59"). Quando você quiser, posso criar `/pagamento-vb` com os novos valores e link InfinitePay correspondente — fora do escopo desta entrega.
+- **Container:** `rounded-[2rem]`, `border` esmeralda translúcida (`rgba(16,185,129,0.18)`), background com **dois orbs de blur** (esmeralda + teal) sobre `#0B1014`, mesma linguagem dos cards bento da página.
+- **Watermark sutil:** ícone `Pill` ou `Wallet` gigante (~280px) no canto, opacidade 4%, mesma tratativa dos cards "Como Funciona".
+- **Eyebrow duplo:** "ECONOMIA REAL · ÉTICA MÉDICA" em esmeralda, uppercase, tracking-widest — coerente com os outros eyebrows da página.
+- **Título editorial:** 2 linhas com quebra controlada, peso `font-extrabold`, `tracking-tighter`, número "70%" destacado em esmeralda inline para virar âncora visual.
+- **Mini-cards de plano:** dois cartões internos lado a lado (stack no mobile). Tranquilo com badge "MAIS ESCOLHIDO" em esmeralda sólido, borda esmeralda mais intensa e leve glow; Avulsa com borda neutra. Cada um com preço grande, 1 linha de subtítulo, 2 bullets curtos e CTA dedicado.
+- **Trust strip inferior:** linha discreta com 3 selos (Check + texto curto) separados por bullet — reforço final sem peso visual.
 
-### Itens marcados como placeholder (para preenchimento posterior)
+### Copy refinado (versão premium do prompt do usuário)
 
-- Nome e CRM do responsável técnico no footer.
-- Ano de início no texto "Receitas renovadas com segurança e ética desde [ano]" — vou usar **2024** como padrão; me avise se for outro.
+**Eyebrow:** `ECONOMIA REAL · ÉTICA MÉDICA`
+
+**Headline (h2):**
+> Seu tratamento pode custar **até 70% menos** — sem trocar de remédio, sem abrir mão de qualidade.
+
+**Subheadline (parágrafo):**
+> Nossos médicos não recebem incentivo de laboratório nenhum. Por isso prescrevem pelo **princípio ativo** — a substância real do seu remédio. Você sai da consulta com a mesma fórmula da receita azul, mas com liberdade para escolher o genérico mais barato na farmácia da esquina. É a diferença entre uma prescrição feita pra você e uma prescrição feita pela indústria.
+
+**Mini-card 1 — Plano Tranquilo** (badge "MAIS ESCOLHIDO"):
+- Título: `Plano Tranquilo`
+- Preço: `R$ 47` · `/mês`
+- Linha de apoio: `Renovações ilimitadas + 3 bônus exclusivos`
+- Bullets: `Receita em até 1 hora` · `Lembrete antes de vencer`
+- CTA: `Assinar Plano Tranquilo →`
+
+**Mini-card 2 — Consulta Avulsa**:
+- Título: `Consulta Avulsa`
+- Preço: `R$ 59` · `pagamento único`
+- Linha de apoio: `Uma renovação completa, sem mensalidade`
+- Bullets: `Receita em até 1 hora` · `Sem cadastro recorrente`
+- CTA: `Renovar agora →`
+
+**Trust strip:**
+> ✓ Médico com CRM ativo  ·  ✓ Receita digital ICP-Brasil  ·  ✓ Conforme CFM 2.314/2022
+
+**Microcopy abaixo dos CTAs (pequeno, muted):**
+> Sem fidelidade. Cancele quando quiser. Reembolso integral se a renovação não for clinicamente possível.
+
+### Compliance (mantido)
+- "Até 70%" referenciado a economia real entre marca e genérico do mesmo princípio ativo — claim aceitável e verificável (ANVISA reconhece variação de 35–65% entre genérico e referência; o "até 70%" cobre casos extremos legítimos sem virar promessa absoluta).
+- Nenhum nome comercial de medicamento.
+- Nenhum timer, escassez artificial ou depoimento fictício.
+- Garantia restrita ao reembolso por inviabilidade clínica.
+
+### Rastreamento A/B (preservado)
+- `data-variant="B"` em ambos os CTAs.
+- `data-cta-id="cta-final-tranquilo"` e `data-cta-id="cta-final-avulsa"` mantidos para continuidade do funil GTM.
+- Links inalterados (`WA_TRANQUILO` e `WA_AVULSA`).
+
+### Arquivo afetado
+- `src/pages/IndexVB.tsx` — substituir somente o bloco `{/* ── CTA Final ── */}` (linhas ~1316–1398). Nada mais é tocado.
+
+### Responsivo
+- Desktop ≥ md: mini-cards lado a lado (`grid-cols-2`), título alinhado à esquerda em coluna única acima.
+- Mobile: tudo empilhado, mini-cards com `gap-3`, CTAs `w-full`, padding interno reduzido para `p-7`.
 
