@@ -479,8 +479,7 @@ export default function IndexVB() {
                 className="text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
                 style={{ color: TEXT_MUTED }}
               >
-                Médicos com CRM ativo, prescrição pelo princípio ativo e receita digital com
-                assinatura ICP-Brasil. Aceita em qualquer farmácia do Brasil.
+                Médico com CRM ativo prescreve pelo <span className="font-semibold" style={{ color: "white" }}>princípio ativo</span> — você sai com a mesma fórmula, mas livre para comprar o genérico <span className="font-semibold" style={{ color: "white" }}>até 70% mais barato</span> na farmácia. Receita digital ICP-Brasil, válida em todo o Brasil.
               </p>
             </SR>
 
