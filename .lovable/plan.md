@@ -1,92 +1,50 @@
 
 
-## Refatoração da Seção CTA Final — `/v-b` (nível premium)
+## Refinar Hero da `/v-b` — gatilho de economia no primeiro bloco
 
-### Diagnóstico do que está fora de sintonia
-A seção atual usa um único bloco arredondado com gradiente azul-petróleo e dois botões empilhados — visualmente isolada, sem o ritmo editorial e a densidade de informação dos demais blocos da página (bento cards, badges, watermarks, hierarquia tipográfica em "01/02/03"). Falta narrativa de valor: o copy genérico ("Pronto para renovar sua receita?") não comunica o **diferencial ético + economia real** que sustenta o preço.
+### Objetivo
+Fazer o visitante entender, em 3 segundos no primeiro bloco, que renovar aqui **economiza dinheiro** (não só tempo). Hoje o Hero vende conveniência. Vamos somar **economia real** como segundo eixo de valor — sem inflar o headline e sem quebrar a estética minimalista atual.
 
-### Nova estrutura visual (mantém DNA da página)
+### O que muda (cirúrgico — só o Hero)
 
-Substituir o bloco único por uma seção **bento de 2 colunas no desktop / empilhada no mobile** dentro do mesmo container `max-w-6xl`:
+**1. Headline (mantém, refinado)**
+Mantém a linha atual "Renove sua receita médica sem sair de casa." — já é forte e está alinhada com a versão A. Não mexer.
 
-```text
-┌────────────────────────────────────────────────────────────────┐
-│  ECONOMIA REAL · ÉTICA MÉDICA                                  │
-│                                                                 │
-│  Seu remédio pode custar                                        │
-│  até 70% menos.                                                 │
-│  Basta um médico que                                            │
-│  prescreve pensando em você.                                    │
-│                                                                 │
-│  [parágrafo curto sobre princípio ativo + liberdade]            │
-│                                                                 │
-│  ┌──────────────────────┐   ┌───────────────────────────────┐  │
-│  │ MAIS ESCOLHIDO       │   │ Sem assinatura                │  │
-│  │ Plano Tranquilo      │   │ Consulta Avulsa               │  │
-│  │ R$ 47 /mês           │   │ R$ 59 pagamento único         │  │
-│  │ Renovações ilimitadas│   │ 1 renovação completa          │  │
-│  │ + 3 bônus inclusos   │   │ Receita em até 1 hora         │  │
-│  │ [Assinar →]          │   │ [Renovar agora →]             │  │
-│  └──────────────────────┘   └───────────────────────────────┘  │
-│                                                                 │
-│  ✓ Médico CRM ativo · ✓ ICP-Brasil · ✓ CFM 2.314/2022          │
-└────────────────────────────────────────────────────────────────┘
+**2. Subheadline (reescrito — aqui mora o no-brainer)**
+Substituir o parágrafo genérico atual por uma frase que ancora **economia + ética** já no primeiro bloco:
+
+> Médico com CRM ativo prescreve pelo **princípio ativo** — você sai com a mesma fórmula, mas livre para comprar o genérico **até 70% mais barato** na farmácia. Receita digital ICP-Brasil, válida em todo o Brasil.
+
+Por que funciona: entrega benefício tangível (70% mais barato), justifica com mecanismo crível (princípio ativo), e mantém os selos de credibilidade (CRM, ICP-Brasil) na mesma frase. Sem promessa absoluta — "até 70%" é claim defensável.
+
+**3. Strip de valor abaixo do CTA (NOVO — antes do "desde 2024")**
+Adicionar uma linha enxuta de 3 micro-benefícios em pílulas finas, separadas por bullet, em esmeralda muted. Isso cria o efeito "no-brainer" sem peso visual:
+
+```
+✓ Receita em até 1h   ·   ✓ Economia de até 70% no remédio   ·   ✓ Sem trocar de farmácia
 ```
 
-### Detalhes de design
+Estilo: texto pequeno (`text-xs`), ícone Check em esmeralda, espaçamento generoso, alinhado ao centro, abaixo do par de CTAs e acima do "Receitas renovadas com segurança e ética desde 2024".
 
-- **Container:** `rounded-[2rem]`, `border` esmeralda translúcida (`rgba(16,185,129,0.18)`), background com **dois orbs de blur** (esmeralda + teal) sobre `#0B1014`, mesma linguagem dos cards bento da página.
-- **Watermark sutil:** ícone `Pill` ou `Wallet` gigante (~280px) no canto, opacidade 4%, mesma tratativa dos cards "Como Funciona".
-- **Eyebrow duplo:** "ECONOMIA REAL · ÉTICA MÉDICA" em esmeralda, uppercase, tracking-widest — coerente com os outros eyebrows da página.
-- **Título editorial:** 2 linhas com quebra controlada, peso `font-extrabold`, `tracking-tighter`, número "70%" destacado em esmeralda inline para virar âncora visual.
-- **Mini-cards de plano:** dois cartões internos lado a lado (stack no mobile). Tranquilo com badge "MAIS ESCOLHIDO" em esmeralda sólido, borda esmeralda mais intensa e leve glow; Avulsa com borda neutra. Cada um com preço grande, 1 linha de subtítulo, 2 bullets curtos e CTA dedicado.
-- **Trust strip inferior:** linha discreta com 3 selos (Check + texto curto) separados por bullet — reforço final sem peso visual.
+**4. O resto do Hero permanece intocado**
+- Badge superior ("Receita digital em até 1 hora · CFM 2.314/2022") — mantém
+- Par de CTAs (Renovar Minha Receita / Ver como funciona) — mantém
+- Linha "Receitas renovadas com segurança e ética desde 2024." — mantém
+- Pílulas de selos (ICP-Brasil, CRM Ativo, LGPD, etc) — mantém
 
-### Copy refinado (versão premium do prompt do usuário)
+### Compliance (revisado)
+- "Até 70% mais barato" → claim defensável, ANVISA reconhece variação de 35–65% entre referência e genérico do mesmo princípio ativo; o "até" cobre o teto sem virar promessa absoluta.
+- Sem nome comercial de medicamento.
+- Sem promessa de resultado clínico, sem urgência artificial.
+- Mantém a coerência com o bloco CTA Final (que também usa "até 70%") — narrativa consistente do topo ao fundo.
 
-**Eyebrow:** `ECONOMIA REAL · ÉTICA MÉDICA`
-
-**Headline (h2):**
-> Seu tratamento pode custar **até 70% menos** — sem trocar de remédio, sem abrir mão de qualidade.
-
-**Subheadline (parágrafo):**
-> Nossos médicos não recebem incentivo de laboratório nenhum. Por isso prescrevem pelo **princípio ativo** — a substância real do seu remédio. Você sai da consulta com a mesma fórmula da receita azul, mas com liberdade para escolher o genérico mais barato na farmácia da esquina. É a diferença entre uma prescrição feita pra você e uma prescrição feita pela indústria.
-
-**Mini-card 1 — Plano Tranquilo** (badge "MAIS ESCOLHIDO"):
-- Título: `Plano Tranquilo`
-- Preço: `R$ 47` · `/mês`
-- Linha de apoio: `Renovações ilimitadas + 3 bônus exclusivos`
-- Bullets: `Receita em até 1 hora` · `Lembrete antes de vencer`
-- CTA: `Assinar Plano Tranquilo →`
-
-**Mini-card 2 — Consulta Avulsa**:
-- Título: `Consulta Avulsa`
-- Preço: `R$ 59` · `pagamento único`
-- Linha de apoio: `Uma renovação completa, sem mensalidade`
-- Bullets: `Receita em até 1 hora` · `Sem cadastro recorrente`
-- CTA: `Renovar agora →`
-
-**Trust strip:**
-> ✓ Médico com CRM ativo  ·  ✓ Receita digital ICP-Brasil  ·  ✓ Conforme CFM 2.314/2022
-
-**Microcopy abaixo dos CTAs (pequeno, muted):**
-> Sem fidelidade. Cancele quando quiser. Reembolso integral se a renovação não for clinicamente possível.
-
-### Compliance (mantido)
-- "Até 70%" referenciado a economia real entre marca e genérico do mesmo princípio ativo — claim aceitável e verificável (ANVISA reconhece variação de 35–65% entre genérico e referência; o "até 70%" cobre casos extremos legítimos sem virar promessa absoluta).
-- Nenhum nome comercial de medicamento.
-- Nenhum timer, escassez artificial ou depoimento fictício.
-- Garantia restrita ao reembolso por inviabilidade clínica.
-
-### Rastreamento A/B (preservado)
-- `data-variant="B"` em ambos os CTAs.
-- `data-cta-id="cta-final-tranquilo"` e `data-cta-id="cta-final-avulsa"` mantidos para continuidade do funil GTM.
-- Links inalterados (`WA_TRANQUILO` e `WA_AVULSA`).
+### Rastreamento
+- Nada muda: `data-variant="B"` e `data-cta-id="hero-primary"` / `hero-secondary` permanecem.
 
 ### Arquivo afetado
-- `src/pages/IndexVB.tsx` — substituir somente o bloco `{/* ── CTA Final ── */}` (linhas ~1316–1398). Nada mais é tocado.
+- `src/pages/IndexVB.tsx` — substituir apenas o `<p>` do subheadline (linhas ~478–484) e inserir o novo strip de valor entre o bloco de CTAs (linha ~522) e o `<p>` "Receitas renovadas..." (linha ~525). Nada mais é tocado.
 
 ### Responsivo
-- Desktop ≥ md: mini-cards lado a lado (`grid-cols-2`), título alinhado à esquerda em coluna única acima.
-- Mobile: tudo empilhado, mini-cards com `gap-3`, CTAs `w-full`, padding interno reduzido para `p-7`.
+- Strip de valor: `flex flex-wrap justify-center gap-x-4 gap-y-2` — desktop em linha única com bullets, mobile quebra em 2–3 linhas mantendo legibilidade.
+- Subheadline: largura `max-w-2xl` mantida, `leading-relaxed` mantido, "70%" em **bold branco** dentro do parágrafo muted para virar âncora visual sem precisar de cor extra.
 
