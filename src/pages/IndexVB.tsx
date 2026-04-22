@@ -1315,293 +1315,92 @@ export default function IndexVB() {
 
         {/* ── CTA Final ───────────────────────────────────────────── */}
         <section
-          className="py-24 px-5 md:px-8"
+          className="py-20 px-5 md:px-8"
           style={{ borderTop: `1px solid ${CARD_BORDER}` }}
           aria-labelledby="cta-final-title"
         >
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl mx-auto">
             <SR>
               <div
-                className="relative rounded-[2rem] p-7 md:p-14 overflow-hidden"
+                className="relative rounded-[1.75rem] p-8 md:p-12 overflow-hidden"
                 style={{
-                  background:
-                    "linear-gradient(140deg, #0B1014 0%, #0E1A1A 55%, #0B1014 100%)",
-                  border: "1px solid rgba(16,185,129,0.18)",
+                  background: "#0B1014",
+                  border: "1px solid rgba(16,185,129,0.20)",
                 }}
               >
-                {/* Orbs */}
                 <div
-                  className="absolute -top-32 -left-24 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none"
-                  style={{ background: "rgba(16,185,129,0.22)" }}
-                  aria-hidden="true"
-                />
-                <div
-                  className="absolute -bottom-32 -right-24 w-[420px] h-[420px] rounded-full blur-[120px] pointer-events-none"
-                  style={{ background: "rgba(20,184,166,0.16)" }}
-                  aria-hidden="true"
-                />
-                {/* Watermark */}
-                <Wallet
-                  className="absolute -right-10 -bottom-10 pointer-events-none"
-                  style={{ color: EMERALD, opacity: 0.04 }}
-                  width={280}
-                  height={280}
+                  className="absolute -top-24 -right-20 w-72 h-72 rounded-full blur-[110px] pointer-events-none"
+                  style={{ background: "rgba(16,185,129,0.18)" }}
                   aria-hidden="true"
                 />
 
                 <div className="relative">
-                  {/* Eyebrow */}
                   <p
-                    className="text-[11px] md:text-xs font-bold uppercase tracking-[0.22em] mb-5"
+                    className="text-[11px] font-bold uppercase tracking-[0.22em] mb-4"
                     style={{ color: EMERALD }}
                   >
                     Economia real · Ética médica
                   </p>
 
-                  {/* Headline + subheadline */}
-                  <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 mb-10 md:mb-12">
-                    <h2
-                      id="cta-final-title"
-                      className="lg:col-span-7 text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.25rem] font-extrabold tracking-tighter leading-[1.05]"
-                      style={{ color: "white" }}
-                    >
-                      Seu tratamento pode custar{" "}
-                      <span style={{ color: EMERALD }}>até 70% menos</span> —
-                      sem trocar de remédio, sem abrir mão de qualidade.
-                    </h2>
-                    <div className="lg:col-span-5 lg:pt-2">
-                      <p
-                        className="text-base md:text-[1.05rem] leading-relaxed"
-                        style={{ color: "rgba(255,255,255,0.78)" }}
-                      >
-                        Nossos médicos não recebem incentivo de laboratório
-                        nenhum. Por isso prescrevem pelo{" "}
-                        <span className="font-semibold" style={{ color: "white" }}>
-                          princípio ativo
-                        </span>{" "}
-                        — a substância real do seu remédio. Você sai da consulta
-                        com a mesma fórmula da receita azul, mas com liberdade
-                        para escolher o genérico mais barato na farmácia da
-                        esquina.
-                      </p>
-                      <p
-                        className="text-sm md:text-[0.95rem] leading-relaxed mt-3"
-                        style={{ color: TEXT_MUTED }}
-                      >
-                        É a diferença entre uma prescrição feita pra você e uma
-                        prescrição feita pela indústria.
-                      </p>
-                    </div>
-                  </div>
+                  <h2
+                    id="cta-final-title"
+                    className="text-2xl md:text-[2rem] font-extrabold tracking-tighter leading-[1.15] mb-4"
+                    style={{ color: "white" }}
+                  >
+                    Seu tratamento pode custar{" "}
+                    <span style={{ color: EMERALD }}>até 70% menos</span>.
+                  </h2>
 
-                  {/* Mini-cards */}
-                  <div className="grid md:grid-cols-2 gap-3 md:gap-5">
-                    {/* Plano Tranquilo */}
-                    <div
-                      className="relative rounded-[1.5rem] p-7 md:p-8 flex flex-col"
-                      style={{
-                        background: "rgba(16,185,129,0.06)",
-                        border: "1px solid rgba(16,185,129,0.45)",
-                        boxShadow: "0 24px 60px -30px rgba(16,185,129,0.55)",
-                      }}
-                    >
-                      <span
-                        className="absolute -top-3 left-7 inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest"
-                        style={{ background: EMERALD, color: "#0F1115" }}
-                      >
-                        <Sparkles className="w-3 h-3" aria-hidden="true" />
-                        Mais escolhido
-                      </span>
-
-                      <p
-                        className="text-xs font-semibold uppercase tracking-[0.18em] mb-2 mt-1"
-                        style={{ color: EMERALD }}
-                      >
-                        Assinatura mensal
-                      </p>
-                      <h3
-                        className="text-2xl font-extrabold tracking-tight mb-3"
-                        style={{ color: "white" }}
-                      >
-                        Plano Tranquilo
-                      </h3>
-                      <div className="flex items-baseline gap-2 mb-1">
-                        <span
-                          className="text-5xl font-extrabold tracking-tighter"
-                          style={{ color: "white" }}
-                        >
-                          R$ 47
-                        </span>
-                        <span className="text-sm" style={{ color: TEXT_MUTED }}>
-                          /mês
-                        </span>
-                      </div>
-                      <p
-                        className="text-sm mb-5"
-                        style={{ color: "rgba(255,255,255,0.72)" }}
-                      >
-                        Renovações ilimitadas + 3 bônus exclusivos
-                      </p>
-
-                      <ul className="space-y-2.5 mb-7">
-                        {[
-                          "Receita em até 1 hora",
-                          "Lembrete antes de vencer",
-                        ].map((b) => (
-                          <li
-                            key={b}
-                            className="flex items-start gap-2.5 text-sm"
-                            style={{ color: "rgba(255,255,255,0.85)" }}
-                          >
-                            <Check
-                              className="w-4 h-4 mt-0.5 shrink-0"
-                              style={{ color: EMERALD }}
-                              aria-hidden="true"
-                            />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <a
-                        href={WA_TRANQUILO}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-variant="B"
-                        data-cta-id="cta-final-tranquilo"
-                        className="mt-auto inline-flex items-center justify-center gap-2 w-full px-6 py-4 rounded-full text-base font-bold transition-all hover:-translate-y-0.5"
-                        style={{
-                          background: EMERALD,
-                          color: "#0F1115",
-                          boxShadow: "0 14px 40px -12px rgba(16,185,129,0.6)",
-                        }}
-                      >
-                        Assinar Plano Tranquilo
-                        <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </div>
-
-                    {/* Consulta Avulsa */}
-                    <div
-                      className="relative rounded-[1.5rem] p-7 md:p-8 flex flex-col"
-                      style={{
-                        background: "rgba(255,255,255,0.03)",
-                        border: "1px solid rgba(255,255,255,0.12)",
-                      }}
-                    >
-                      <p
-                        className="text-xs font-semibold uppercase tracking-[0.18em] mb-2 mt-1"
-                        style={{ color: TEXT_MUTED }}
-                      >
-                        Sem assinatura
-                      </p>
-                      <h3
-                        className="text-2xl font-extrabold tracking-tight mb-3"
-                        style={{ color: "white" }}
-                      >
-                        Consulta Avulsa
-                      </h3>
-                      <div className="flex items-baseline gap-2 mb-1">
-                        <span
-                          className="text-5xl font-extrabold tracking-tighter"
-                          style={{ color: "white" }}
-                        >
-                          R$ 59
-                        </span>
-                        <span className="text-sm" style={{ color: TEXT_MUTED }}>
-                          pagamento único
-                        </span>
-                      </div>
-                      <p
-                        className="text-sm mb-5"
-                        style={{ color: "rgba(255,255,255,0.72)" }}
-                      >
-                        Uma renovação completa, sem mensalidade
-                      </p>
-
-                      <ul className="space-y-2.5 mb-7">
-                        {[
-                          "Receita em até 1 hora",
-                          "Sem cadastro recorrente",
-                        ].map((b) => (
-                          <li
-                            key={b}
-                            className="flex items-start gap-2.5 text-sm"
-                            style={{ color: "rgba(255,255,255,0.85)" }}
-                          >
-                            <Check
-                              className="w-4 h-4 mt-0.5 shrink-0"
-                              style={{ color: EMERALD }}
-                              aria-hidden="true"
-                            />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <a
-                        href={WA_AVULSA}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-variant="B"
-                        data-cta-id="cta-final-avulsa"
-                        className="mt-auto inline-flex items-center justify-center gap-2 w-full px-6 py-4 rounded-full text-base font-bold transition-all hover:-translate-y-0.5"
-                        style={{
-                          background: "rgba(255,255,255,0.06)",
-                          border: "1px solid rgba(255,255,255,0.22)",
-                          color: "white",
-                        }}
-                      >
-                        Renovar agora
-                        <ArrowRight className="w-4 h-4" />
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* Microcopy */}
                   <p
-                    className="text-xs md:text-[0.8rem] text-center mt-6"
+                    className="text-sm md:text-[0.95rem] leading-relaxed mb-7 max-w-xl"
                     style={{ color: TEXT_MUTED }}
                   >
-                    Sem fidelidade. Cancele quando quiser. Reembolso integral se
-                    a renovação não for clinicamente possível.
+                    Nossos médicos prescrevem pelo princípio ativo — sem
+                    incentivo de laboratório. Você sai com a mesma fórmula da
+                    receita azul, livre para escolher o genérico mais barato.
                   </p>
 
-                  {/* Trust strip */}
-                  <div
-                    className="mt-8 pt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs md:text-sm"
-                    style={{
-                      borderTop: "1px solid rgba(255,255,255,0.08)",
-                      color: "rgba(255,255,255,0.7)",
-                    }}
-                  >
-                    {[
-                      "Médico com CRM ativo",
-                      "Receita digital ICP-Brasil",
-                      "Conforme CFM 2.314/2022",
-                    ].map((item, i) => (
-                      <span
-                        key={item}
-                        className="inline-flex items-center gap-2"
-                      >
-                        <Check
-                          className="w-4 h-4"
-                          style={{ color: EMERALD }}
-                          aria-hidden="true"
-                        />
-                        <span>{item}</span>
-                        {i < 2 && (
-                          <span
-                            className="hidden md:inline"
-                            style={{ color: "rgba(255,255,255,0.25)" }}
-                            aria-hidden="true"
-                          >
-                            ·
-                          </span>
-                        )}
-                      </span>
-                    ))}
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a
+                      href={WA_TRANQUILO}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-variant="B"
+                      data-cta-id="cta-final-tranquilo"
+                      className="inline-flex items-center justify-center gap-2 flex-1 px-6 py-3.5 rounded-full text-sm md:text-base font-bold transition-all hover:-translate-y-0.5"
+                      style={{
+                        background: EMERALD,
+                        color: "#0F1115",
+                        boxShadow: "0 12px 32px -12px rgba(16,185,129,0.55)",
+                      }}
+                    >
+                      Plano Tranquilo · R$ 47/mês
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
+                    <a
+                      href={WA_AVULSA}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-variant="B"
+                      data-cta-id="cta-final-avulsa"
+                      className="inline-flex items-center justify-center gap-2 flex-1 px-6 py-3.5 rounded-full text-sm md:text-base font-semibold transition-all hover:-translate-y-0.5"
+                      style={{
+                        background: "transparent",
+                        border: "1px solid rgba(255,255,255,0.22)",
+                        color: "white",
+                      }}
+                    >
+                      Avulsa · R$ 59
+                    </a>
                   </div>
+
+                  <p
+                    className="text-[11px] md:text-xs mt-5"
+                    style={{ color: "rgba(255,255,255,0.45)" }}
+                  >
+                    CRM ativo · ICP-Brasil · CFM 2.314/2022 · Reembolso se
+                    inviável clinicamente
+                  </p>
                 </div>
               </div>
             </SR>
