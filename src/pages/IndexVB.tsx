@@ -479,8 +479,7 @@ export default function IndexVB() {
                 className="text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
                 style={{ color: TEXT_MUTED }}
               >
-                Médicos com CRM ativo, prescrição pelo princípio ativo e receita digital com
-                assinatura ICP-Brasil. Aceita em qualquer farmácia do Brasil.
+                Médico com CRM ativo prescreve pelo <span className="font-semibold" style={{ color: "white" }}>princípio ativo</span> — você sai com a mesma fórmula, mas livre para comprar o genérico <span className="font-semibold" style={{ color: "white" }}>até 70% mais barato</span> na farmácia. Receita digital ICP-Brasil, válida em todo o Brasil.
               </p>
             </SR>
 
@@ -519,6 +518,25 @@ export default function IndexVB() {
                   </motion.span>
                 </a>
               </div>
+            </SR>
+
+            <SR delay={0.26}>
+              <ul
+                className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mb-5 text-xs"
+                style={{ color: TEXT_MUTED }}
+                aria-label="Principais benefícios"
+              >
+                {[
+                  "Receita em até 1h",
+                  "Economia de até 70% no remédio",
+                  "Sem trocar de farmácia",
+                ].map((b) => (
+                  <li key={b} className="inline-flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5" style={{ color: EMERALD }} aria-hidden="true" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
             </SR>
 
             <SR delay={0.28}>
