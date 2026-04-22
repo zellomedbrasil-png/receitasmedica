@@ -520,6 +520,25 @@ export default function IndexVB() {
               </div>
             </SR>
 
+            <SR delay={0.26}>
+              <ul
+                className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 mb-5 text-xs"
+                style={{ color: TEXT_MUTED }}
+                aria-label="Principais benefícios"
+              >
+                {[
+                  "Receita em até 1h",
+                  "Economia de até 70% no remédio",
+                  "Sem trocar de farmácia",
+                ].map((b) => (
+                  <li key={b} className="inline-flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5" style={{ color: EMERALD }} aria-hidden="true" />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            </SR>
+
             <SR delay={0.28}>
               <p className="text-xs mb-6" style={{ color: TEXT_DIM }}>
                 Receitas renovadas com segurança e ética desde 2024.
