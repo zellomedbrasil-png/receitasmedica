@@ -622,22 +622,34 @@ const QuantoCusta = () => (
   </section>
 );
 
-// ───────────────── Calculadora de tamanho da fralda
+// ───────────────── Calculadora de tamanho da fralda (por peso)
 type SizeKey = "P" | "M" | "G" | "XG";
 const SIZE_TABLE: { key: SizeKey; label: string; range: string; min: number; max: number; desc: string }[] = [
-  { key: "P", label: "Pequeno (P)", range: "40 – 80 cm", min: 40, max: 80, desc: "Pessoas magras ou de baixa estatura." },
-  { key: "M", label: "Médio (M)", range: "80 – 115 cm", min: 80, max: 115, desc: "Tamanho mais comum entre adultos." },
-  { key: "G", label: "Grande (G)", range: "100 – 150 cm", min: 100, max: 150, desc: "Adultos de porte maior." },
-  { key: "XG", label: "Extra Grande (XG)", range: "120 – 165 cm", min: 120, max: 165, desc: "Pessoas obesas ou de quadril largo." },
+  { key: "P", label: "Pequeno (P)", range: "40 – 60 kg", min: 40, max: 60, desc: "Pessoas magras ou de baixa estatura." },
+  { key: "M", label: "Médio (M)", range: "55 – 80 kg", min: 55, max: 80, desc: "Faixa de peso mais comum entre adultos." },
+  { key: "G", label: "Grande (G)", range: "75 – 100 kg", min: 75, max: 100, desc: "Adultos de porte maior." },
+  { key: "XG", label: "Extra Grande (XG)", range: "95 – 130 kg", min: 95, max: 130, desc: "Pessoas obesas ou de quadril largo." },
 ];
 
+// Quando o peso cai em sobreposição entre faixas, escolhe aquela cuja média está mais próxima.
+const pickSize = (kg: number) => {
+  const matches = SIZE_TABLE.filter((s) => kg >= s.min && kg <= s.max);
+  if (matches.length === 0) {
+    if (kg < SIZE_TABLE[0].min) return SIZE_TABLE[0];
+    return SIZE_TABLE[SIZE_TABLE.length - 1];
+  }
+  return matches.reduce((best, cur) => {
+    const bMid = (best.min + best.max) / 2;
+    const cMid = (cur.min + cur.max) / 2;
+    return Math.abs(cMid - kg) < Math.abs(bMid - kg) ? cur : best;
+  });
+};
+
 const Calculadora = () => {
-  const [cm, setCm] = useState<string>("");
-  const value = parseInt(cm, 10);
+  const [kg, setKg] = useState<string>("");
+  const value = parseInt(kg, 10);
   const valid = !isNaN(value) && value >= 30 && value <= 200;
-  const recommended = valid
-    ? SIZE_TABLE.find((s) => value >= s.min && value <= s.max) ?? SIZE_TABLE[SIZE_TABLE.length - 1]
-    : null;
+  const recommended = valid ? pickSize(value) : null;
 
   return (
     <section id="calculadora" className="py-24 border-b border-white/[0.06]">
@@ -651,7 +663,7 @@ const Calculadora = () => {
               Descubra o tamanho certo da fralda
             </h2>
             <p className="text-white/60 font-light">
-              Meça o quadril do seu familiar com uma fita métrica, na parte mais larga, e veja qual tamanho retirar na farmácia.
+              Informe o peso aproximado do seu familiar para receber uma indicação média do tamanho ideal — útil antes de retirar na Farmácia Popular.
             </p>
           </div>
         </ScrollReveal>
@@ -660,29 +672,29 @@ const Calculadora = () => {
           <div className={`rounded-3xl ${SURFACE} p-6 sm:p-8 grid md:grid-cols-2 gap-8`}>
             {/* Input */}
             <div>
-              <label htmlFor="cintura" className="block text-sm font-medium text-white/80 mb-3">
-                Medida do quadril
+              <label htmlFor="peso" className="block text-sm font-medium text-white/80 mb-3">
+                Peso aproximado
               </label>
               <div className="relative">
                 <input
-                  id="cintura"
+                  id="peso"
                   type="number"
                   inputMode="numeric"
                   min={30}
                   max={200}
-                  placeholder="Ex: 95"
-                  value={cm}
-                  onChange={(e) => setCm(e.target.value)}
+                  placeholder="Ex: 70"
+                  value={kg}
+                  onChange={(e) => setKg(e.target.value)}
                   className="w-full bg-white/[0.04] border border-white/[0.10] rounded-2xl px-5 py-4 pr-16 text-2xl font-semibold text-white placeholder:text-white/25 focus:outline-none focus:border-sky-400/50 focus:bg-white/[0.06] transition-all"
                 />
                 <span className="absolute right-5 top-1/2 -translate-y-1/2 text-sm font-medium text-white/40">
-                  cm
+                  kg
                 </span>
               </div>
               <div className="mt-4 flex items-start gap-2 text-xs text-white/50 leading-relaxed">
                 <Check className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
                 <span>
-                  Use uma fita métrica comum. Meça o ponto mais largo entre cintura e quadril, sobre roupa fina.
+                  Se houver muita oscilação de peso ou quadril largo desproporcional, escolha o tamanho imediatamente acima.
                 </span>
               </div>
             </div>
@@ -695,7 +707,7 @@ const Calculadora = () => {
                     <Sparkles className="w-5 h-5 text-white/40" strokeWidth={1.75} />
                   </div>
                   <p className="text-sm text-white/50">
-                    Digite a medida em centímetros para ver o tamanho recomendado.
+                    Digite o peso em quilos para ver o tamanho recomendado.
                   </p>
                 </div>
               ) : (
@@ -740,9 +752,54 @@ const Calculadora = () => {
 
         <ScrollReveal delay={0.3}>
           <p className="mt-6 text-[11px] text-white/40 text-center max-w-2xl mx-auto leading-relaxed">
-            Estimativa orientativa baseada em medidas usuais de fabricantes. O tamanho final dispensado pela Farmácia Popular pode variar conforme estoque e marca disponível na unidade.
+            Estimativa orientativa baseada na média entre fabricantes (Bigfral, Tena, Plenitud). O tamanho final dispensado pela Farmácia Popular pode variar conforme estoque e marca disponível na unidade.
           </p>
         </ScrollReveal>
+      </div>
+    </section>
+  );
+};
+
+// ───────────────── O que você recebe
+const OQueRecebe = () => {
+  const items = [
+    { Icon: FileSignature, title: "Laudo médico em PDF", desc: "Assinado digitalmente em ICP-Brasil, com validade jurídica." },
+    { Icon: PackageCheck, title: "Modelo aceito pela Farmácia Popular", desc: "Documento no formato exigido pelo programa, pronto para retirada." },
+    { Icon: RefreshCw, title: "Reemissão gratuita", desc: "Se a unidade pedir ajuste pontual, refazemos sem cobrança extra." },
+    { Icon: HeadphonesIcon, title: "Orientação por WhatsApp", desc: "Equipe explica passo a passo como retirar a fralda na sua cidade." },
+    { Icon: BellRing, title: "Lembrete de renovação", desc: "Avisamos antes do laudo vencer, para não interromper o benefício." },
+    { Icon: ShieldCheck, title: "Conformidade CFM", desc: "Atendimento conduzido por médico com CRM ativo (Res. 2.314/2022)." },
+  ];
+  return (
+    <section className="py-24 border-b border-white/[0.06]">
+      <div className="max-w-6xl mx-auto px-6">
+        <ScrollReveal>
+          <div className="mb-14 max-w-2xl">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-3">
+              O que você recebe
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
+              Tudo que está incluso nos R$ 49
+            </h2>
+            <p className="text-white/60 mt-3 font-light">
+              Nada de letras miúdas. Veja exatamente o que entregamos.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {items.map((it, i) => (
+            <ScrollReveal key={it.title} delay={i * 0.07}>
+              <div className={`rounded-3xl ${SURFACE} ${SURFACE_HOVER} p-6 h-full transition-all`}>
+                <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-4">
+                  <it.Icon className="w-5 h-5 text-sky-400" strokeWidth={1.75} />
+                </div>
+                <h3 className="text-base font-semibold text-white mb-1.5 tracking-tight">{it.title}</h3>
+                <p className="text-sm text-white/55 leading-relaxed">{it.desc}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
     </section>
   );
