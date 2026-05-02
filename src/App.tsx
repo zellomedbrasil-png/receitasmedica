@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Ebook from "./pages/Ebook";
 import IndexV2 from "./pages/IndexV2";
 import IndexVB from "./pages/IndexVB";
+import Fralda from "./pages/Fralda";
 import Membros from "./pages/Membros";
 import Pagamento from "./pages/Pagamento";
 
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<IndexV2 />} />
           <Route path="/v-b" element={<IndexVB />} />
+          <Route path="/fralda" element={<Fralda />} />
           <Route path="/ebook" element={<Ebook />} />
           <Route path="/membros" element={<Membros />} />
           <Route path="/pagamento" element={<Pagamento />} />
