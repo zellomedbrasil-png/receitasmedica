@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   ShieldCheck,
+  Shield,
+  Plus,
   Lock,
   BadgeCheck,
   FileText,
@@ -12,9 +14,13 @@ import {
   ScrollText,
   ChevronDown,
   Check,
-  Leaf,
   ArrowRight,
   Sparkles,
+  PackageCheck,
+  RefreshCw,
+  BellRing,
+  FileSignature,
+  HeadphonesIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/landing/ScrollReveal";
