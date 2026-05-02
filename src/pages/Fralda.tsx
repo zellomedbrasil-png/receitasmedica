@@ -7,7 +7,6 @@ import {
   MessageCircle,
   ClipboardCheck,
   Video,
-  Stethoscope,
   HeartHandshake,
   Accessibility,
   ScrollText,
@@ -30,7 +29,6 @@ const WHATSAPP =
   "https://wa.me/5585991275429?text=Quero%20laudo%20m%C3%A9dico%20para%20fralda%20gratuita%20pela%20Farm%C3%A1cia%20Popular";
 const MEDICO_NOME = "[PREENCHER: NOME DO MÉDICO RESPONSÁVEL]";
 const MEDICO_CRM = "[PREENCHER: CRM/UF 000000]";
-const MEDICO_ESPECIALIDADE = "[PREENCHER: ESPECIALIDADE]";
 const PRECO = "[PREENCHER: R$ XX]";
 const CNPJ = "[PREENCHER: 00.000.000/0001-00]";
 const ENDERECO = "[PREENCHER: ENDEREÇO COMPLETO]";
@@ -599,36 +597,131 @@ const QuantoCusta = () => (
   </section>
 );
 
-// ───────────────── Médico
-const Medico = () => (
-  <section className="py-24 border-b border-white/[0.06]">
-    <div className="max-w-4xl mx-auto px-6">
-      <ScrollReveal>
-        <div className={`rounded-3xl ${SURFACE} p-8 sm:p-10 flex flex-col sm:flex-row gap-8 items-start`}>
-          <div className="w-28 h-28 rounded-3xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center shrink-0">
-            <Stethoscope className="w-10 h-10 text-sky-400" strokeWidth={1.5} />
-          </div>
-          <div className="flex-1">
-            <p className="text-[10px] uppercase tracking-widest text-sky-400 font-semibold mb-2">
-              Médico responsável
+// ───────────────── Calculadora de tamanho da fralda
+type SizeKey = "P" | "M" | "G" | "XG";
+const SIZE_TABLE: { key: SizeKey; label: string; range: string; min: number; max: number; desc: string }[] = [
+  { key: "P", label: "Pequeno (P)", range: "40 – 80 cm", min: 40, max: 80, desc: "Pessoas magras ou de baixa estatura." },
+  { key: "M", label: "Médio (M)", range: "80 – 115 cm", min: 80, max: 115, desc: "Tamanho mais comum entre adultos." },
+  { key: "G", label: "Grande (G)", range: "100 – 150 cm", min: 100, max: 150, desc: "Adultos de porte maior." },
+  { key: "XG", label: "Extra Grande (XG)", range: "120 – 165 cm", min: 120, max: 165, desc: "Pessoas obesas ou de quadril largo." },
+];
+
+const Calculadora = () => {
+  const [cm, setCm] = useState<string>("");
+  const value = parseInt(cm, 10);
+  const valid = !isNaN(value) && value >= 30 && value <= 200;
+  const recommended = valid
+    ? SIZE_TABLE.find((s) => value >= s.min && value <= s.max) ?? SIZE_TABLE[SIZE_TABLE.length - 1]
+    : null;
+
+  return (
+    <section id="calculadora" className="py-24 border-b border-white/[0.06]">
+      <div className="max-w-4xl mx-auto px-6">
+        <ScrollReveal>
+          <div className="mb-10 max-w-2xl">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-3">
+              Ferramenta gratuita
             </p>
-            <h2 className="text-2xl font-semibold text-white tracking-tighter-custom mb-1">
-              {MEDICO_NOME}
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom mb-3">
+              Descubra o tamanho certo da fralda
             </h2>
-            <p className="text-sm text-white/50 mb-5">
-              {MEDICO_ESPECIALIDADE} · {MEDICO_CRM}
-            </p>
-            <p className="text-sm sm:text-base text-white/70 leading-relaxed">
-              [PREENCHER: frase pessoal do médico — por que decidiu dedicar
-              parte da prática a ajudar famílias a acessarem esse direito.
-              Linguagem sóbria, sem promessa de resultado.]
+            <p className="text-white/60 font-light">
+              Meça o quadril do seu familiar com uma fita métrica, na parte mais larga, e veja qual tamanho retirar na farmácia.
             </p>
           </div>
-        </div>
-      </ScrollReveal>
-    </div>
-  </section>
-);
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.1}>
+          <div className={`rounded-3xl ${SURFACE} p-6 sm:p-8 grid md:grid-cols-2 gap-8`}>
+            {/* Input */}
+            <div>
+              <label htmlFor="cintura" className="block text-sm font-medium text-white/80 mb-3">
+                Medida do quadril
+              </label>
+              <div className="relative">
+                <input
+                  id="cintura"
+                  type="number"
+                  inputMode="numeric"
+                  min={30}
+                  max={200}
+                  placeholder="Ex: 95"
+                  value={cm}
+                  onChange={(e) => setCm(e.target.value)}
+                  className="w-full bg-white/[0.04] border border-white/[0.10] rounded-2xl px-5 py-4 pr-16 text-2xl font-semibold text-white placeholder:text-white/25 focus:outline-none focus:border-sky-400/50 focus:bg-white/[0.06] transition-all"
+                />
+                <span className="absolute right-5 top-1/2 -translate-y-1/2 text-sm font-medium text-white/40">
+                  cm
+                </span>
+              </div>
+              <div className="mt-4 flex items-start gap-2 text-xs text-white/50 leading-relaxed">
+                <Check className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
+                <span>
+                  Use uma fita métrica comum. Meça o ponto mais largo entre cintura e quadril, sobre roupa fina.
+                </span>
+              </div>
+            </div>
+
+            {/* Resultado */}
+            <div className="md:border-l md:border-white/[0.06] md:pl-8">
+              {!valid ? (
+                <div className="h-full flex flex-col justify-center text-center md:text-left">
+                  <div className="w-12 h-12 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mb-4 mx-auto md:mx-0">
+                    <Sparkles className="w-5 h-5 text-white/40" strokeWidth={1.75} />
+                  </div>
+                  <p className="text-sm text-white/50">
+                    Digite a medida em centímetros para ver o tamanho recomendado.
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-2">
+                    Tamanho recomendado
+                  </p>
+                  <p className="text-5xl font-semibold text-white tracking-tighter-custom mb-1">
+                    {recommended!.key}
+                  </p>
+                  <p className="text-sm text-white/70 mb-4">{recommended!.label} · {recommended!.range}</p>
+                  <p className="text-sm text-white/55 leading-relaxed">{recommended!.desc}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Tabela de referência */}
+        <ScrollReveal delay={0.2}>
+          <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2">
+            {SIZE_TABLE.map((s) => {
+              const isActive = recommended?.key === s.key;
+              return (
+                <div
+                  key={s.key}
+                  className={`rounded-2xl p-4 border transition-all ${
+                    isActive
+                      ? "border-sky-400/40 bg-sky-500/[0.08]"
+                      : "border-white/[0.07] bg-white/[0.02]"
+                  }`}
+                >
+                  <p className={`text-xs font-semibold mb-1 ${isActive ? "text-sky-300" : "text-white/50"}`}>
+                    {s.key}
+                  </p>
+                  <p className="text-sm text-white/80">{s.range}</p>
+                </div>
+              );
+            })}
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.3}>
+          <p className="mt-6 text-[11px] text-white/40 text-center max-w-2xl mx-auto leading-relaxed">
+            Estimativa orientativa baseada em medidas usuais de fabricantes. O tamanho final dispensado pela Farmácia Popular pode variar conforme estoque e marca disponível na unidade.
+          </p>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+};
 
 // ───────────────── FAQ
 const FAQ = () => {
@@ -790,7 +883,7 @@ const Fralda = () => {
         <ComoFunciona />
         <ParaQuem />
         <QuantoCusta />
-        <Medico />
+        <Calculadora />
         <FAQ />
         <CtaFinal />
       </main>
