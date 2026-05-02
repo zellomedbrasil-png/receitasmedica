@@ -7,7 +7,6 @@ import {
   MessageCircle,
   ClipboardCheck,
   Video,
-  Stethoscope,
   HeartHandshake,
   Accessibility,
   ScrollText,
@@ -30,7 +29,6 @@ const WHATSAPP =
   "https://wa.me/5585991275429?text=Quero%20laudo%20m%C3%A9dico%20para%20fralda%20gratuita%20pela%20Farm%C3%A1cia%20Popular";
 const MEDICO_NOME = "[PREENCHER: NOME DO MÉDICO RESPONSÁVEL]";
 const MEDICO_CRM = "[PREENCHER: CRM/UF 000000]";
-const MEDICO_ESPECIALIDADE = "[PREENCHER: ESPECIALIDADE]";
 const PRECO = "[PREENCHER: R$ XX]";
 const CNPJ = "[PREENCHER: 00.000.000/0001-00]";
 const ENDERECO = "[PREENCHER: ENDEREÇO COMPLETO]";
