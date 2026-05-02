@@ -531,10 +531,10 @@ const QuantoCusta = () => (
             Transparência
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom mb-3">
-            A fralda é grátis. <span className="text-white/50 font-light">Você paga só o ato médico.</span>
+            A fralda é grátis. <span className="text-white/50 font-light">Você paga só a consulta.</span>
           </h2>
           <p className="text-white/60 font-light max-w-xl mx-auto">
-            Exigência legal para emissão do laudo conforme Resolução CFM 2.314/2022.
+            A lei só permite que um médico com CRM emita o laudo. Pagamento único, sem mensalidade, sem pegadinha.
           </p>
         </div>
       </ScrollReveal>
