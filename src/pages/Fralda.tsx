@@ -562,14 +562,19 @@ const QuantoCusta = () => (
           <div className="absolute -top-32 -right-32 w-72 h-72 bg-sky-500/15 rounded-full blur-3xl" />
           <div className="relative z-10">
             <p className="text-[10px] uppercase tracking-widest text-white/50 font-semibold mb-3">
-              Teleconsulta + laudo digital
+              Teleconsulta + emissão do laudo
             </p>
-            <div className="flex items-baseline gap-3 mb-8">
-              <span className="text-5xl sm:text-6xl font-semibold text-white tracking-tighter-custom">
-                {PRECO}
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-2xl font-medium text-white/70">R$</span>
+              <span className="text-6xl sm:text-7xl font-semibold text-white tracking-tighter-custom leading-none">
+                49
               </span>
-              <span className="text-sm text-white/50">pagamento único</span>
+              <span className="text-xl text-white/50">,00</span>
+              <span className="text-sm text-white/50 ml-2 self-end mb-1.5">· pagamento único</span>
             </div>
+            <p className="text-sm text-white/55 mb-8 leading-relaxed">
+              Você paga só pela emissão do laudo médico. <span className="text-white">A fralda continua 100% gratuita pelo SUS.</span>
+            </p>
 
             <div className="grid sm:grid-cols-2 gap-3 mb-8">
               <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
