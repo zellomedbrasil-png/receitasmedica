@@ -33,15 +33,13 @@ import {
 // ───────────────── Constantes [PREENCHER]
 const WHATSAPP =
   "https://wa.me/5585991275429?text=Quero%20laudo%20m%C3%A9dico%20para%20fralda%20gratuita%20pela%20Farm%C3%A1cia%20Popular";
-const MEDICO_NOME = "[PREENCHER: NOME DO MÉDICO RESPONSÁVEL]";
-const MEDICO_CRM = "[PREENCHER: CRM/UF 000000]";
-const PRECO = "[PREENCHER: R$ XX]";
+const PRECO = "R$ 49";
 const CNPJ = "[PREENCHER: 00.000.000/0001-00]";
 const ENDERECO = "[PREENCHER: ENDEREÇO COMPLETO]";
 
-const PAGE_TITLE = "Fralda Geriátrica Gratuita pelo SUS | Laudo Médico Online";
+const PAGE_TITLE = "Fralda Geriátrica Gratuita pelo SUS | Laudo Médico Online por R$ 49";
 const PAGE_DESC =
-  "Idosos 60+ e PCDs têm direito a fralda geriátrica gratuita pela Farmácia Popular. Emitimos o laudo médico online em horas. Fale com o médico no WhatsApp.";
+  "Idosos 60+ e PCDs têm direito a fralda geriátrica gratuita pela Farmácia Popular. Emitimos o laudo médico online em até 24h por R$ 49. Fale no WhatsApp.";
 const CANONICAL = "https://receitas.site/fralda";
 const OG_IMAGE = "https://receitas.site/og-fralda.jpg";
 
