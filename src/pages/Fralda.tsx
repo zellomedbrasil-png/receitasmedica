@@ -145,7 +145,7 @@ const useSeo = () => {
 const faqItems = [
   {
     q: "Isso é golpe? Por que preciso pagar para receber algo gratuito?",
-    a: "Não é golpe. A fralda continua 100% gratuita pela Farmácia Popular do SUS. O que você paga é o ato médico — a teleconsulta e a emissão do laudo, que por lei (Resolução CFM 2.314/2022) só pode ser feito por médico com CRM ativo. O laudo é o documento que a farmácia exige para liberar a retirada.",
+    a: "Não é golpe. A fralda continua 100% gratuita pela Farmácia Popular do SUS. Você paga R$ 49 pelo ato médico — a teleconsulta e a emissão do laudo, que por lei (Resolução CFM 2.314/2022) só pode ser feito por médico com CRM ativo. O laudo é o documento que a farmácia exige para liberar a retirada.",
   },
   {
     q: "Qual a base legal desse direito?",
