@@ -961,6 +961,7 @@ const Fralda = () => {
         <ComoFunciona />
         <ParaQuem />
         <QuantoCusta />
+        <OQueRecebe />
         <Calculadora />
         <FAQ />
         <CtaFinal />
