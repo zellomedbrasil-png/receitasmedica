@@ -243,19 +243,16 @@ const Hero = () => (
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-tighter-custom mb-6 leading-[1.05]">
             Fralda geriátrica{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-500">
-              gratuita pelo SUS
+              de graça pelo SUS.
             </span>
             <br className="hidden sm:block" />
-            <span className="text-white/80 font-light"> — sem fila, com laudo médico online.</span>
+            <span className="text-white/80 font-light">A gente emite o laudo médico online.</span>
           </h1>
         </ScrollReveal>
 
         <ScrollReveal delay={0.2}>
-          <p className="text-lg text-white/60 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
-            Idosos com 60+ e pessoas com deficiência têm direito à fralda{" "}
-            <span className="font-semibold text-white">gratuita</span> pela
-            Farmácia Popular (Portaria GM/MS nº 3.073/2024). Emitimos o laudo
-            digital exigido pela farmácia em <span className="font-semibold text-white">poucas horas</span>, sem o seu familiar precisar sair de casa.
+          <p className="text-lg text-white/65 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
+            Se o seu familiar tem <span className="font-semibold text-white">60 anos ou mais</span> ou é <span className="font-semibold text-white">PCD</span>, ele tem direito por lei a retirar fralda <span className="font-semibold text-white">grátis</span> na Farmácia Popular — basta apresentar um laudo médico. A gente emite esse laudo <span className="font-semibold text-white">100% online, no mesmo dia</span>.
           </p>
         </ScrollReveal>
 
