@@ -14,6 +14,8 @@ import {
   ChevronDown,
   Check,
   Leaf,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/landing/ScrollReveal";
@@ -33,14 +35,26 @@ const PRECO = "[PREENCHER: R$ XX]";
 const CNPJ = "[PREENCHER: 00.000.000/0001-00]";
 const ENDERECO = "[PREENCHER: ENDEREÇO COMPLETO]";
 
-const PAGE_TITLE =
-  "Fralda Geriátrica Gratuita pelo SUS | Laudo Médico Online";
+const PAGE_TITLE = "Fralda Geriátrica Gratuita pelo SUS | Laudo Médico Online";
 const PAGE_DESC =
   "Idosos 60+ e PCDs têm direito a fralda geriátrica gratuita pela Farmácia Popular. Emitimos o laudo médico online em horas. Fale com o médico no WhatsApp.";
 const CANONICAL = "https://receitas.site/fralda";
-const OG_IMAGE = "https://receitas.site/og-fralda.jpg"; // [PREENCHER: imagem OG]
+const OG_IMAGE = "https://receitas.site/og-fralda.jpg";
 
-// ───────────────── SEO injection
+// ───────────────── Design tokens (dark premium — local à página)
+// Não polui o tema global. Coerente com a estética de IndexVB.
+const BG = "bg-[#0A0D0C]";
+const SURFACE = "bg-white/[0.03] border border-white/[0.07]";
+const SURFACE_HOVER = "hover:border-emerald-400/30 hover:bg-white/[0.05]";
+const TEXT = "text-white";
+const TEXT_MUTED = "text-white/60";
+const TEXT_DIM = "text-white/40";
+const EMERALD = "text-emerald-400";
+const RING_EMERALD = "border-emerald-400/25";
+const SOFT_GRADIENT =
+  "bg-[radial-gradient(ellipse_at_top,hsl(160_84%_39%/0.18)_0%,transparent_55%)]";
+
+// ───────────────── SEO
 const useSeo = () => {
   useEffect(() => {
     document.title = PAGE_TITLE;
@@ -68,6 +82,7 @@ const useSeo = () => {
       "keywords",
       "fralda geriátrica gratuita SUS, laudo médico fralda, Farmácia Popular fralda idoso, fralda geriátrica grátis, laudo fralda online",
     );
+    upsertMeta("name", "theme-color", "#0A0D0C");
     upsertMeta("property", "og:title", PAGE_TITLE);
     upsertMeta("property", "og:description", PAGE_DESC);
     upsertMeta("property", "og:type", "website");
@@ -79,7 +94,6 @@ const useSeo = () => {
     upsertMeta("name", "twitter:description", PAGE_DESC);
     upsertMeta("name", "twitter:image", OG_IMAGE);
 
-    // Canonical
     let canon = document.head.querySelector<HTMLLinkElement>(
       'link[rel="canonical"]',
     );
@@ -90,7 +104,6 @@ const useSeo = () => {
     }
     canon.href = CANONICAL;
 
-    // JSON-LD MedicalBusiness + FAQPage
     const ldId = "ld-fralda";
     document.getElementById(ldId)?.remove();
     const ld = document.createElement("script");
@@ -119,10 +132,14 @@ const useSeo = () => {
       },
     ]);
     document.head.appendChild(ld);
+
+    return () => {
+      document.documentElement.lang = "pt-BR";
+    };
   }, []);
 };
 
-// ───────────────── FAQ data
+// ───────────────── FAQ
 const faqItems = [
   {
     q: "Isso é golpe? Por que preciso pagar para receber algo gratuito?",
@@ -160,24 +177,25 @@ const faqItems = [
 
 // ───────────────── Header
 const Header = () => (
-  <nav className="fixed top-0 w-full z-50 glass-header">
-    <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+  <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#0A0D0C]/70 border-b border-white/[0.06]">
+    <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="/fralda" className="flex items-center gap-2 group">
-        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20">
-          <Leaf className="w-[18px] h-[18px]" />
+        <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-[#0A0D0C] shadow-lg shadow-emerald-500/20">
+          <Leaf className="w-[18px] h-[18px]" strokeWidth={2.5} />
         </div>
-        <span className="font-semibold text-lg tracking-tighter-custom text-foreground">
-          fralda<span className="text-slate-400 font-normal">geriátrica</span>
+        <span className="font-semibold text-lg tracking-tighter-custom text-white">
+          fralda<span className="text-white/40 font-normal">geriátrica</span>
         </span>
       </a>
 
       <div className="hidden md:flex items-center gap-5">
-        <span className="text-xs font-medium text-muted-foreground">
-          Resp. técnico: <span className="text-foreground">{MEDICO_CRM}</span>
+        <span className="text-xs font-medium text-white/50">
+          Resp. técnico: <span className="text-white/80">{MEDICO_CRM}</span>
         </span>
         <Button
           asChild
-          className="rounded-full bg-slate-900 hover:bg-foreground text-white gap-2"
+          className="rounded-full bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold gap-2"
+          data-cta-id="header-whatsapp"
         >
           <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
             <MessageCircle className="w-4 h-4" />
@@ -189,7 +207,8 @@ const Header = () => (
       <Button
         asChild
         size="sm"
-        className="md:hidden rounded-full bg-slate-900 hover:bg-foreground text-white gap-2"
+        className="md:hidden rounded-full bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold gap-2"
+        data-cta-id="header-whatsapp-mobile"
       >
         <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
           <MessageCircle className="w-4 h-4" />
@@ -202,48 +221,51 @@ const Header = () => (
 
 // ───────────────── Hero
 const Hero = () => (
-  <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
-    <div className="absolute w-[600px] h-[600px] bg-[radial-gradient(circle,hsl(var(--emerald)/0.15)_0%,transparent_70%)] top-[-100px] left-1/2 -translate-x-1/2 z-0 pointer-events-none" />
+  <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+    <div className={`absolute inset-0 ${SOFT_GRADIENT} pointer-events-none`} />
+    <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-emerald-500/[0.06] rounded-full blur-[120px] pointer-events-none" />
+
     <div className="max-w-5xl mx-auto px-6 relative z-10">
       <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
         <ScrollReveal delay={0}>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-border shadow-sm mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] mb-8">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
             </span>
-            <span className="text-xs font-medium text-muted-foreground tracking-tight">
+            <span className="text-xs font-medium text-white/70 tracking-tight">
               Direito garantido pela Farmácia Popular do SUS
             </span>
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-foreground tracking-tighter-custom mb-6 leading-[1.1]">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-tighter-custom mb-6 leading-[1.05]">
             Fralda geriátrica{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-glow">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-emerald-500">
               gratuita pelo SUS
             </span>
-            <br className="hidden sm:block" />— sem fila, com laudo médico online.
+            <br className="hidden sm:block" />
+            <span className="text-white/80 font-light"> — sem fila, com laudo médico online.</span>
           </h1>
         </ScrollReveal>
 
         <ScrollReveal delay={0.2}>
-          <p className="text-lg text-muted-foreground mb-10 leading-relaxed font-light max-w-2xl mx-auto">
-            Idosos com 60 anos ou mais e pessoas com deficiência têm direito à
-            fralda geriátrica <span className="font-semibold text-foreground">gratuita</span>{" "}
-            pela Farmácia Popular (Portaria GM/MS nº 3.073/2024). Emitimos o
-            laudo médico digital exigido pela farmácia em poucas horas, sem o
-            seu familiar precisar sair de casa.
+          <p className="text-lg text-white/60 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
+            Idosos com 60+ e pessoas com deficiência têm direito à fralda{" "}
+            <span className="font-semibold text-white">gratuita</span> pela
+            Farmácia Popular (Portaria GM/MS nº 3.073/2024). Emitimos o laudo
+            digital exigido pela farmácia em <span className="font-semibold text-white">poucas horas</span>, sem o seu familiar precisar sair de casa.
           </p>
         </ScrollReveal>
 
         <ScrollReveal delay={0.3}>
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
             <Button
               asChild
               size="lg"
-              className="w-full sm:w-auto rounded-full px-8 py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2"
+              className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold shadow-xl shadow-emerald-500/25 hover:-translate-y-0.5 transition-all gap-2"
+              data-cta-id="hero-primary"
             >
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5" />
@@ -254,30 +276,53 @@ const Hero = () => (
               asChild
               variant="outline"
               size="lg"
-              className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-card hover:bg-secondary gap-2"
+              className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-white/[0.03] border-white/15 text-white hover:bg-white/[0.06] hover:text-white gap-2"
+              data-cta-id="hero-secondary"
             >
-              <a href="#como-funciona">Ver como funciona em 3 passos</a>
+              <a href="#como-funciona">
+                Ver como funciona
+                <ArrowRight className="w-4 h-4" />
+              </a>
             </Button>
           </div>
         </ScrollReveal>
 
         <ScrollReveal delay={0.4}>
-          <div className="mt-12 flex flex-wrap justify-center items-center gap-6 sm:gap-8 opacity-70">
+          <div className="mt-10 flex flex-wrap justify-center items-center gap-x-5 gap-y-2 text-xs text-white/50">
+            <span className="inline-flex items-center gap-1.5">
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              Laudo em até 24h úteis
+            </span>
+            <span className="text-white/20">·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              Economia de até R$ 7.200/ano
+            </span>
+            <span className="text-white/20">·</span>
+            <span className="inline-flex items-center gap-1.5">
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              100% online, sem deslocamento
+            </span>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={0.5}>
+          <div className="mt-10 flex flex-wrap justify-center items-center gap-6 sm:gap-8">
             <div className="flex items-center gap-2">
-              <BadgeCheck className="w-5 h-5 text-primary" />
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <BadgeCheck className="w-4 h-4 text-emerald-400" />
+              <span className="text-[10px] font-semibold text-white/50 uppercase tracking-widest">
                 CRM Ativo
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-primary" />
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span className="text-[10px] font-semibold text-white/50 uppercase tracking-widest">
                 Laudo ICP-Brasil
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Lock className="w-5 h-5 text-primary" />
-              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+              <Lock className="w-4 h-4 text-emerald-400" />
+              <span className="text-[10px] font-semibold text-white/50 uppercase tracking-widest">
                 LGPD
               </span>
             </div>
@@ -288,32 +333,29 @@ const Hero = () => (
   </section>
 );
 
-// ───────────────── Faixa de prova legal
+// ───────────────── Faixa legal
 const FaixaLegal = () => (
-  <section className="py-12 bg-card border-y border-border">
+  <section className="py-12 border-y border-white/[0.06]">
     <div className="max-w-4xl mx-auto px-6">
       <ScrollReveal>
-        <div className="flex flex-col md:flex-row items-start gap-5">
-          <div className="w-12 h-12 rounded-2xl bg-emerald-light border border-border flex items-center justify-center shrink-0">
-            <ScrollText className="w-5 h-5 text-primary" />
+        <div className={`rounded-2xl ${SURFACE} p-6 sm:p-7 flex flex-col sm:flex-row items-start gap-5`}>
+          <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+            <ScrollText className="w-5 h-5 text-emerald-400" />
           </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-primary mb-2">
+          <div className="flex-1">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-2">
               Base legal pública
             </p>
-            <p className="text-sm sm:text-base text-foreground leading-relaxed">
-              A entrega gratuita de fralda geriátrica pela Farmácia Popular é
-              regulamentada pela{" "}
-              <strong>Portaria GM/MS nº 3.073/2024</strong> e pela{" "}
-              <strong>Portaria nº 937/2017</strong> do Ministério da Saúde.
-              Qualquer cidadão pode consultar o texto integral no Diário
-              Oficial da União.
+            <p className="text-sm sm:text-base text-white/80 leading-relaxed">
+              A entrega gratuita de fralda geriátrica pela Farmácia Popular é regulamentada pela{" "}
+              <strong className="text-white">Portaria GM/MS nº 3.073/2024</strong> e pela{" "}
+              <strong className="text-white">Portaria nº 937/2017</strong> do Ministério da Saúde. Qualquer cidadão pode consultar o texto integral no Diário Oficial da União.
             </p>
             <a
               href="https://www.in.gov.br/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-primary hover:underline"
+              className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-emerald-400 hover:text-emerald-300"
             >
               Consultar Portarias no DOU →
             </a>
@@ -327,89 +369,90 @@ const FaixaLegal = () => (
 // ───────────────── Como funciona
 const steps = [
   {
-    num: "1",
+    num: "01",
     title: "Triagem pelo WhatsApp",
     desc: "Você envia os dados do seu familiar e a documentação básica em poucos minutos.",
     Icon: ClipboardCheck,
-    dark: false,
   },
   {
-    num: "2",
+    num: "02",
     title: "Teleconsulta com médico",
     desc: "Vídeo rápido com médico de CRM ativo para avaliar a indicação clínica do uso contínuo.",
     Icon: Video,
-    dark: false,
   },
   {
-    num: "3",
+    num: "03",
     title: "Laudo digital no WhatsApp",
     desc: "Você recebe o laudo assinado em ICP-Brasil e leva à Farmácia Popular para retirar a fralda.",
     Icon: MessageCircle,
-    dark: true,
+    highlight: true,
   },
 ];
 
 const ComoFunciona = () => (
-  <section
-    id="como-funciona"
-    className="py-20 bg-background border-y border-border"
-  >
-    <div className="max-w-5xl mx-auto px-6">
+  <section id="como-funciona" className="py-24 border-b border-white/[0.06]">
+    <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
-        <div className="mb-14">
-          <h2 className="text-3xl font-semibold text-foreground tracking-tighter-custom">
+        <div className="mb-14 max-w-2xl">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+            Processo
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
             Como funciona em 3 passos
           </h2>
-          <p className="text-muted-foreground mt-2 font-light">
+          <p className="text-white/60 mt-3 font-light">
             Sem deslocamento. Sem fila. Sem burocracia.
           </p>
         </div>
       </ScrollReveal>
 
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid md:grid-cols-3 gap-4">
         {steps.map((step, i) => (
-          <ScrollReveal key={step.num} delay={i * 0.15}>
+          <ScrollReveal key={step.num} delay={i * 0.1}>
             <div
-              className={`rounded-3xl p-8 relative overflow-hidden group transition-colors duration-300 h-full ${
-                step.dark
-                  ? "bg-slate-900 border border-slate-800"
-                  : "bg-card border border-border hover:border-primary/30"
+              className={`relative overflow-hidden rounded-3xl p-7 h-full transition-all duration-300 ${
+                step.highlight
+                  ? "bg-gradient-to-br from-emerald-500/[0.12] to-emerald-500/[0.02] border border-emerald-400/25"
+                  : `${SURFACE} ${SURFACE_HOVER}`
               }`}
             >
+              {step.highlight && (
+                <div className="absolute -top-20 -right-20 w-52 h-52 bg-emerald-500/20 rounded-full blur-3xl" />
+              )}
               <div className="relative z-10">
-                <div
-                  className={`w-12 h-12 rounded-2xl border flex items-center justify-center mb-6 ${
-                    step.dark
-                      ? "bg-white/10 border-white/10 text-white backdrop-blur-md"
-                      : "bg-secondary border-border text-foreground"
-                  }`}
-                >
-                  <span className="font-bold font-mono">{step.num}</span>
+                <div className="flex items-center justify-between mb-8">
+                  <span className="text-xs font-mono font-semibold text-white/40 tracking-widest">
+                    {step.num}
+                  </span>
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                      step.highlight
+                        ? "bg-emerald-500/20 text-emerald-300"
+                        : "bg-white/[0.04] text-white/70"
+                    }`}
+                  >
+                    <step.Icon className="w-5 h-5" strokeWidth={1.75} />
+                  </div>
                 </div>
-                <h3
-                  className={`text-xl font-semibold mb-2 tracking-tight ${
-                    step.dark ? "text-white" : "text-foreground"
-                  }`}
-                >
+                <h3 className="text-xl font-semibold text-white mb-2 tracking-tight">
                   {step.title}
                 </h3>
-                <p
-                  className={`text-sm leading-relaxed ${
-                    step.dark ? "text-slate-400" : "text-muted-foreground"
-                  }`}
-                >
+                <p className="text-sm text-white/55 leading-relaxed">
                   {step.desc}
                 </p>
+                {step.highlight && (
+                  <div className="mt-6 inline-flex items-center gap-2 text-emerald-300 text-[10px] font-semibold uppercase tracking-widest">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
+                    Entrega no mesmo dia
+                  </div>
+                )}
               </div>
               <step.Icon
-                className={`absolute -bottom-4 -right-4 w-[140px] h-[140px] -rotate-[15deg] ${
-                  step.dark ? "text-white/5" : "text-slate-200"
+                className={`absolute -bottom-8 -right-8 w-[160px] h-[160px] -rotate-12 ${
+                  step.highlight ? "text-emerald-400/[0.06]" : "text-white/[0.025]"
                 }`}
                 strokeWidth={0.5}
               />
-              {step.dark && (
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-              )}
             </div>
           </ScrollReveal>
         ))}
@@ -418,72 +461,64 @@ const ComoFunciona = () => (
   </section>
 );
 
-// ───────────────── Para quem é
+// ───────────────── Para quem
 const ParaQuem = () => (
-  <section className="py-20 bg-card border-b border-border">
-    <div className="max-w-5xl mx-auto px-6">
+  <section className="py-24 border-b border-white/[0.06]">
+    <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
-        <div className="mb-14">
-          <h2 className="text-3xl font-semibold text-foreground tracking-tighter-custom">
+        <div className="mb-14 max-w-2xl">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+            Elegibilidade
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
             Para quem é o laudo
           </h2>
-          <p className="text-muted-foreground mt-2 font-light">
+          <p className="text-white/60 mt-3 font-light">
             Dois perfis com direito garantido em lei.
           </p>
         </div>
       </ScrollReveal>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <ScrollReveal>
-          <div className="bg-background rounded-3xl border border-border p-8 h-full">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-light border border-border flex items-center justify-center mb-5">
-              <HeartHandshake className="w-5 h-5 text-primary" />
+      <div className="grid md:grid-cols-2 gap-4">
+        {[
+          {
+            Icon: HeartHandshake,
+            title: "Idosos a partir de 60 anos",
+            items: [
+              "Com indicação clínica de uso contínuo da fralda.",
+              "Em quadros de incontinência, mobilidade reduzida ou acamamento.",
+              "Atendimento via familiar ou cuidador, 100% online.",
+            ],
+          },
+          {
+            Icon: Accessibility,
+            title: "Pessoas com deficiência",
+            items: [
+              "Crianças, adultos e idosos PCD com necessidade comprovada.",
+              "Avaliação médica considera o quadro clínico individual.",
+              "Procurador legal pode acompanhar a teleconsulta.",
+            ],
+          },
+        ].map((b, i) => (
+          <ScrollReveal key={b.title} delay={i * 0.1}>
+            <div className={`rounded-3xl ${SURFACE} ${SURFACE_HOVER} p-8 h-full transition-all`}>
+              <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6">
+                <b.Icon className="w-5 h-5 text-emerald-400" strokeWidth={1.75} />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-4 tracking-tight">
+                {b.title}
+              </h3>
+              <ul className="space-y-3 text-sm text-white/60">
+                {b.items.map((it) => (
+                  <li key={it} className="flex gap-3">
+                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span>{it}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3 tracking-tight">
-              Idosos a partir de 60 anos
-            </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex gap-2">
-                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                Com indicação clínica de uso contínuo da fralda.
-              </li>
-              <li className="flex gap-2">
-                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                Em quadros de incontinência, mobilidade reduzida ou
-                acamamento.
-              </li>
-              <li className="flex gap-2">
-                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                Atendimento via familiar ou cuidador, 100% online.
-              </li>
-            </ul>
-          </div>
-        </ScrollReveal>
-
-        <ScrollReveal delay={0.1}>
-          <div className="bg-background rounded-3xl border border-border p-8 h-full">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-light border border-border flex items-center justify-center mb-5">
-              <Accessibility className="w-5 h-5 text-primary" />
-            </div>
-            <h3 className="text-xl font-semibold text-foreground mb-3 tracking-tight">
-              Pessoas com deficiência
-            </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex gap-2">
-                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                Crianças, adultos e idosos PCD com necessidade comprovada.
-              </li>
-              <li className="flex gap-2">
-                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                Avaliação médica considera o quadro clínico individual.
-              </li>
-              <li className="flex gap-2">
-                <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                Procurador legal pode acompanhar a teleconsulta.
-              </li>
-            </ul>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        ))}
       </div>
     </div>
   </section>
@@ -491,57 +526,57 @@ const ParaQuem = () => (
 
 // ───────────────── Quanto custa
 const QuantoCusta = () => (
-  <section className="py-24 bg-background border-b border-border">
+  <section className="py-24 border-b border-white/[0.06]">
     <div className="max-w-3xl mx-auto px-6">
       <ScrollReveal>
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-semibold text-foreground tracking-tighter-custom mb-3">
-            Transparência radical
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+            Transparência
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom mb-3">
+            A fralda é grátis. <span className="text-white/50 font-light">Você paga só o ato médico.</span>
           </h2>
-          <p className="text-muted-foreground font-light max-w-xl mx-auto">
-            A fralda continua gratuita pelo SUS. Você paga apenas o ato
-            médico — exigência legal para emissão do laudo.
+          <p className="text-white/60 font-light max-w-xl mx-auto">
+            Exigência legal para emissão do laudo conforme Resolução CFM 2.314/2022.
           </p>
         </div>
       </ScrollReveal>
 
       <ScrollReveal delay={0.1}>
-        <div className="bg-card rounded-3xl border border-border p-8 sm:p-10 shadow-lg relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/[0.05] to-white/[0.01] border border-white/[0.08] p-8 sm:p-10">
+          <div className="absolute -top-32 -right-32 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl" />
           <div className="relative z-10">
-            <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-2">
+            <p className="text-[10px] uppercase tracking-widest text-white/50 font-semibold mb-3">
               Teleconsulta + laudo digital
             </p>
-            <div className="flex items-baseline gap-2 mb-6">
-              <span className="text-5xl sm:text-6xl font-semibold text-foreground tracking-tighter-custom">
+            <div className="flex items-baseline gap-3 mb-8">
+              <span className="text-5xl sm:text-6xl font-semibold text-white tracking-tighter-custom">
                 {PRECO}
               </span>
-              <span className="text-sm text-muted-foreground">
-                pagamento único
-              </span>
+              <span className="text-sm text-white/50">pagamento único</span>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 mb-8">
-              <div className="rounded-2xl border border-border bg-secondary/50 p-5">
-                <p className="text-xs uppercase tracking-wide text-muted-foreground font-semibold mb-1">
-                  Gasto médio sem o laudo
+            <div className="grid sm:grid-cols-2 gap-3 mb-8">
+              <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
+                <p className="text-[10px] uppercase tracking-widest text-white/40 font-semibold mb-2">
+                  Sem o laudo
                 </p>
-                <p className="text-2xl font-semibold text-foreground tracking-tight">
-                  R$ 300 a R$ 600
+                <p className="text-2xl font-semibold text-white tracking-tight line-through decoration-red-400/40">
+                  R$ 300 – R$ 600
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  por mês com fralda paga em farmácia comum
+                <p className="text-xs text-white/45 mt-1">
+                  por mês com fralda paga em farmácia
                 </p>
               </div>
-              <div className="rounded-2xl border border-primary/30 bg-emerald-light p-5">
-                <p className="text-xs uppercase tracking-wide text-primary font-semibold mb-1">
-                  Economia possível em 12 meses
+              <div className="rounded-2xl border border-emerald-400/25 bg-emerald-500/[0.08] p-5">
+                <p className="text-[10px] uppercase tracking-widest text-emerald-400 font-semibold mb-2">
+                  Economia em 12 meses
                 </p>
-                <p className="text-2xl font-semibold text-foreground tracking-tight">
+                <p className="text-2xl font-semibold text-white tracking-tight">
                   Até R$ 7.200
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  retirando pelo Farmácia Popular do SUS
+                <p className="text-xs text-white/55 mt-1">
+                  retirando pelo Farmácia Popular
                 </p>
               </div>
             </div>
@@ -549,16 +584,16 @@ const QuantoCusta = () => (
             <Button
               asChild
               size="lg"
-              className="w-full rounded-full py-6 text-base shadow-xl shadow-primary/20 hover:-translate-y-0.5 transition-all gap-2"
+              className="w-full rounded-full py-6 text-base bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold shadow-xl shadow-emerald-500/25 hover:-translate-y-0.5 transition-all gap-2"
+              data-cta-id="pricing-primary"
             >
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5" />
                 Iniciar laudo pelo WhatsApp
               </a>
             </Button>
-            <p className="mt-4 text-xs text-muted-foreground text-center">
-              Valores e disponibilidade da fralda dependem da unidade da
-              Farmácia Popular. [REVISAR COM MÉDICO RESPONSÁVEL]
+            <p className="mt-4 text-[11px] text-white/40 text-center">
+              Disponibilidade da fralda depende da unidade da Farmácia Popular.
             </p>
           </div>
         </div>
@@ -567,27 +602,26 @@ const QuantoCusta = () => (
   </section>
 );
 
-// ───────────────── Médico responsável
+// ───────────────── Médico
 const Medico = () => (
-  <section className="py-20 bg-card border-b border-border">
+  <section className="py-24 border-b border-white/[0.06]">
     <div className="max-w-4xl mx-auto px-6">
       <ScrollReveal>
-        <div className="bg-background rounded-3xl border border-border p-8 sm:p-10 flex flex-col sm:flex-row gap-8 items-start">
-          <div className="w-28 h-28 rounded-3xl bg-secondary border border-border flex items-center justify-center shrink-0">
-            <Stethoscope className="w-10 h-10 text-primary" />
-            {/* [PREENCHER: foto real do médico, alt="Foto de {MEDICO_NOME}, médico responsável"] */}
+        <div className={`rounded-3xl ${SURFACE} p-8 sm:p-10 flex flex-col sm:flex-row gap-8 items-start`}>
+          <div className="w-28 h-28 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
+            <Stethoscope className="w-10 h-10 text-emerald-400" strokeWidth={1.5} />
           </div>
-          <div>
-            <p className="text-xs uppercase tracking-wide text-primary font-semibold mb-2">
+          <div className="flex-1">
+            <p className="text-[10px] uppercase tracking-widest text-emerald-400 font-semibold mb-2">
               Médico responsável
             </p>
-            <h2 className="text-2xl font-semibold text-foreground tracking-tighter-custom mb-1">
+            <h2 className="text-2xl font-semibold text-white tracking-tighter-custom mb-1">
               {MEDICO_NOME}
             </h2>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-white/50 mb-5">
               {MEDICO_ESPECIALIDADE} · {MEDICO_CRM}
             </p>
-            <p className="text-sm sm:text-base text-foreground leading-relaxed">
+            <p className="text-sm sm:text-base text-white/70 leading-relaxed">
               [PREENCHER: frase pessoal do médico — por que decidiu dedicar
               parte da prática a ajudar famílias a acessarem esse direito.
               Linguagem sóbria, sem promessa de resultado.]
@@ -603,39 +637,48 @@ const Medico = () => (
 const FAQ = () => {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section id="faq" className="py-20 bg-background border-b border-border">
+    <section id="faq" className="py-24 border-b border-white/[0.06]">
       <div className="max-w-3xl mx-auto px-6">
         <ScrollReveal>
           <div className="mb-12">
-            <h2 className="text-3xl font-semibold text-foreground tracking-tighter-custom">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+              Dúvidas
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
               Perguntas frequentes
             </h2>
-            <p className="text-muted-foreground mt-2 font-light">
+            <p className="text-white/60 mt-3 font-light">
               Respostas diretas às dúvidas mais comuns dos familiares.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="space-y-3">
+        <div className="space-y-2">
           {faqItems.map((item, i) => (
             <Collapsible
               key={i}
               open={open === i}
               onOpenChange={(v) => setOpen(v ? i : null)}
             >
-              <div className="rounded-2xl border border-border bg-card overflow-hidden">
-                <CollapsibleTrigger className="w-full flex items-center justify-between gap-4 p-5 text-left hover:bg-secondary/50 transition-colors">
-                  <span className="text-sm sm:text-base font-medium text-foreground">
+              <div
+                className={`rounded-2xl border overflow-hidden transition-colors ${
+                  open === i
+                    ? "border-emerald-400/25 bg-white/[0.04]"
+                    : "border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.035]"
+                }`}
+              >
+                <CollapsibleTrigger className="w-full flex items-center justify-between gap-4 p-5 text-left">
+                  <span className="text-sm sm:text-base font-medium text-white">
                     {item.q}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform ${
-                      open === i ? "rotate-180" : ""
+                    className={`w-5 h-5 text-white/40 shrink-0 transition-transform ${
+                      open === i ? "rotate-180 text-emerald-400" : ""
                     }`}
                   />
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">
+                  <div className="px-5 pb-5 text-sm text-white/65 leading-relaxed">
                     {item.a}
                   </div>
                 </CollapsibleContent>
@@ -650,28 +693,34 @@ const FAQ = () => {
 
 // ───────────────── CTA final
 const CtaFinal = () => (
-  <section className="py-24 bg-card">
-    <div className="max-w-3xl mx-auto px-6">
+  <section className="py-24">
+    <div className="max-w-4xl mx-auto px-6">
       <ScrollReveal>
-        <div className="bg-slate-900 rounded-3xl p-10 sm:p-14 relative overflow-hidden text-center">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,hsl(var(--emerald)/0.25)_0%,transparent_60%)]" />
+        <div className="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-gradient-to-br from-emerald-500/[0.10] via-white/[0.02] to-transparent p-10 sm:p-14 text-center">
+          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-emerald-500/15 rounded-full blur-[100px]" />
           <div className="relative z-10">
-            <FileText className="w-10 h-10 text-primary mx-auto mb-5" />
-            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/25 mb-6">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-300">
+                Atendimento humano, hoje
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom mb-4 max-w-xl mx-auto leading-tight">
               Tire dúvida com a equipe médica agora.
             </h2>
-            <p className="text-slate-400 mb-8 max-w-lg mx-auto">
+            <p className="text-white/60 mb-8 max-w-lg mx-auto font-light">
               Resposta humana pelo WhatsApp. Atendimento conduzido por médico
               com CRM ativo, em conformidade com a Resolução CFM 2.314/2022.
             </p>
             <Button
               asChild
               size="lg"
-              className="rounded-full px-8 py-6 text-base shadow-xl shadow-primary/30 hover:-translate-y-0.5 transition-all gap-2"
+              className="rounded-full px-8 py-6 text-base bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all gap-2"
+              data-cta-id="cta-final"
             >
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5" />
-                Tirar dúvida com a equipe médica
+                Falar agora no WhatsApp
               </a>
             </Button>
           </div>
@@ -683,61 +732,39 @@ const CtaFinal = () => (
 
 // ───────────────── Footer
 const Footer = () => (
-  <footer className="bg-secondary pt-16 pb-12 border-t border-border">
-    <div className="max-w-5xl mx-auto px-6">
+  <footer className="pt-16 pb-12 border-t border-white/[0.06]">
+    <div className="max-w-6xl mx-auto px-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-10">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 bg-foreground rounded-md flex items-center justify-center text-background">
-              <Leaf className="w-3.5 h-3.5" />
+            <div className="w-6 h-6 bg-emerald-500 rounded-md flex items-center justify-center text-[#0A0D0C]">
+              <Leaf className="w-3.5 h-3.5" strokeWidth={2.5} />
             </div>
-            <span className="font-semibold text-base tracking-tighter-custom text-foreground">
+            <span className="font-semibold text-base tracking-tighter-custom text-white">
               fraldageriatrica.com
             </span>
           </div>
-          <p className="text-sm text-muted-foreground max-w-xs">
+          <p className="text-sm text-white/50 max-w-xs">
             Telemedicina ética para famílias que cuidam.
           </p>
         </div>
         <div className="flex flex-wrap gap-5 text-sm">
-          <a
-            href="/blog"
-            className="text-muted-foreground hover:text-primary transition-colors"
-          >
-            Blog
-          </a>
-          <a
-            href="/como-funciona"
-            className="text-muted-foreground hover:text-primary transition-colors"
-          >
-            Como funciona
-          </a>
-          <a
-            href="#"
-            className="text-muted-foreground hover:text-primary transition-colors"
-          >
-            Política de Privacidade (LGPD)
-          </a>
-          <a
-            href="#"
-            className="text-muted-foreground hover:text-primary transition-colors"
-          >
-            Termos de uso
-          </a>
+          <a href="#como-funciona" className="text-white/55 hover:text-emerald-400 transition-colors">Como funciona</a>
+          <a href="#faq" className="text-white/55 hover:text-emerald-400 transition-colors">Dúvidas</a>
+          <a href="#" className="text-white/55 hover:text-emerald-400 transition-colors">Privacidade (LGPD)</a>
+          <a href="#" className="text-white/55 hover:text-emerald-400 transition-colors">Termos</a>
         </div>
       </div>
 
-      <div className="border-t border-border pt-6 grid sm:grid-cols-2 gap-3 text-xs text-muted-foreground">
-        <p>
-          CNPJ: {CNPJ} · {ENDERECO}
-        </p>
+      <div className="border-t border-white/[0.06] pt-6 grid sm:grid-cols-2 gap-3 text-xs text-white/45">
+        <p>CNPJ: {CNPJ} · {ENDERECO}</p>
         <p className="sm:text-right">
           Responsável técnico: {MEDICO_NOME} — {MEDICO_CRM}
         </p>
       </div>
 
-      <div className="mt-6 pt-6 border-t border-border">
-        <p className="text-[10px] text-muted-foreground/70 leading-relaxed max-w-3xl">
+      <div className="mt-6 pt-6 border-t border-white/[0.06]">
+        <p className="text-[10px] text-white/35 leading-relaxed max-w-3xl">
           Este serviço não substitui atendimento presencial de emergência. A
           emissão do laudo está sujeita à avaliação médica individual conforme
           a Resolução CFM 2.314/2022. A fralda geriátrica é fornecida
@@ -746,7 +773,7 @@ const Footer = () => (
           comercializa o produto. Disponibilidade e quantitativo dependem da
           unidade da Farmácia Popular.
         </p>
-        <p className="text-[10px] text-muted-foreground/60 mt-3">
+        <p className="text-[10px] text-white/30 mt-3">
           © 2026 fraldageriatrica.com. Todos os direitos reservados.
         </p>
       </div>
@@ -758,7 +785,7 @@ const Footer = () => (
 const Fralda = () => {
   useSeo();
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className={`min-h-screen ${BG} ${TEXT} antialiased selection:bg-emerald-500/30`}>
       <Header />
       <main>
         <Hero />
