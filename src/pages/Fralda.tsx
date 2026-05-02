@@ -909,9 +909,7 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-10">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 bg-sky-500 rounded-md flex items-center justify-center text-[#070B12]">
-              <Leaf className="w-3.5 h-3.5" strokeWidth={2.5} />
-            </div>
+            <Logo size={24} />
             <span className="font-semibold text-base tracking-tighter-custom text-white">
               fraldageriatrica.com
             </span>
@@ -922,17 +920,15 @@ const Footer = () => (
         </div>
         <div className="flex flex-wrap gap-5 text-sm">
           <a href="#como-funciona" className="text-white/55 hover:text-sky-400 transition-colors">Como funciona</a>
+          <a href="#calculadora" className="text-white/55 hover:text-sky-400 transition-colors">Calculadora</a>
           <a href="#faq" className="text-white/55 hover:text-sky-400 transition-colors">Dúvidas</a>
           <a href="#" className="text-white/55 hover:text-sky-400 transition-colors">Privacidade (LGPD)</a>
           <a href="#" className="text-white/55 hover:text-sky-400 transition-colors">Termos</a>
         </div>
       </div>
 
-      <div className="border-t border-white/[0.06] pt-6 grid sm:grid-cols-2 gap-3 text-xs text-white/45">
+      <div className="border-t border-white/[0.06] pt-6 text-xs text-white/45">
         <p>CNPJ: {CNPJ} · {ENDERECO}</p>
-        <p className="sm:text-right">
-          Responsável técnico: {MEDICO_NOME} — {MEDICO_CRM}
-        </p>
       </div>
 
       <div className="mt-6 pt-6 border-t border-white/[0.06]">
