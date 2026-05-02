@@ -120,7 +120,7 @@ const useSeo = () => {
         image: OG_IMAGE,
         description: PAGE_DESC,
         medicalSpecialty: "Geriatrics",
-        priceRange: PRECO,
+        priceRange: "R$49",
         areaServed: "BR",
       },
       {
