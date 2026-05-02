@@ -177,23 +177,36 @@ const faqItems = [
   },
 ];
 
+// ───────────────── Logo (Shield + Plus)
+const Logo = ({ size = 32 }: { size?: number }) => (
+  <div
+    className="relative bg-gradient-to-br from-sky-400 to-sky-600 rounded-lg flex items-center justify-center shadow-lg shadow-sky-500/25"
+    style={{ width: size, height: size }}
+  >
+    <Shield className="text-[#070B12]" style={{ width: size * 0.62, height: size * 0.62 }} strokeWidth={2.25} />
+    <Plus
+      className="absolute text-[#070B12]"
+      style={{ width: size * 0.32, height: size * 0.32 }}
+      strokeWidth={3}
+    />
+  </div>
+);
+
 // ───────────────── Header
 const Header = () => (
   <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#070B12]/70 border-b border-white/[0.06]">
     <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="/fralda" className="flex items-center gap-2 group">
-        <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center text-[#070B12] shadow-lg shadow-sky-500/20">
-          <Leaf className="w-[18px] h-[18px]" strokeWidth={2.5} />
-        </div>
+      <a href="/fralda" className="flex items-center gap-2.5 group">
+        <Logo size={32} />
         <span className="font-semibold text-lg tracking-tighter-custom text-white">
           fralda<span className="text-white/40 font-normal">geriátrica</span>
         </span>
       </a>
 
       <div className="hidden md:flex items-center gap-5">
-        <span className="text-xs font-medium text-white/50">
-          Resp. técnico: <span className="text-white/80">{MEDICO_CRM}</span>
-        </span>
+        <a href="#como-funciona" className="text-sm font-medium text-white/60 hover:text-white transition-colors">Como funciona</a>
+        <a href="#calculadora" className="text-sm font-medium text-white/60 hover:text-white transition-colors">Calculadora</a>
+        <a href="#faq" className="text-sm font-medium text-white/60 hover:text-white transition-colors">Dúvidas</a>
         <Button
           asChild
           className="rounded-full bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold gap-2"
