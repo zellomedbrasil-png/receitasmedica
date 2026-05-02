@@ -881,7 +881,7 @@ const CtaFinal = () => (
               Tire dúvida com a equipe médica agora.
             </h2>
             <p className="text-white/60 mb-8 max-w-lg mx-auto font-light">
-              Resposta humana pelo WhatsApp. Atendimento conduzido por médico
+              Resposta humana em poucos minutos, das 7h às 22h. Atendimento conduzido por médico
               com CRM ativo, em conformidade com a Resolução CFM 2.314/2022.
             </p>
             <Button
