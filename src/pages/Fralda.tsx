@@ -267,7 +267,7 @@ const Hero = () => (
 
         <ScrollReveal delay={0.2}>
           <p className="text-lg text-white/65 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
-            Se o seu familiar tem <span className="font-semibold text-white">60 anos ou mais</span> ou é <span className="font-semibold text-white">PCD</span>, ele tem direito por lei a retirar fralda <span className="font-semibold text-white">grátis</span> na Farmácia Popular — basta apresentar um laudo médico. A gente emite esse laudo <span className="font-semibold text-white">100% online, no mesmo dia</span>.
+            Se o seu familiar tem <span className="font-semibold text-white">60 anos ou mais</span> ou é <span className="font-semibold text-white">PCD</span>, ele tem direito por lei a retirar fralda <span className="font-semibold text-white">grátis</span> na Farmácia Popular — basta apresentar um laudo médico. A gente emite esse laudo <span className="font-semibold text-white">100% online, em até 24h úteis</span>.
           </p>
         </ScrollReveal>
 
@@ -297,6 +297,9 @@ const Hero = () => (
               </a>
             </Button>
           </div>
+          <p className="mt-4 text-xs text-white/45 text-center">
+            Sem consulta presencial. Sem agendamento. Sem fila.
+          </p>
         </ScrollReveal>
 
         <ScrollReveal delay={0.4}>
