@@ -43,16 +43,16 @@ const OG_IMAGE = "https://receitas.site/og-fralda.jpg";
 
 // ───────────────── Design tokens (dark premium — local à página)
 // Não polui o tema global. Coerente com a estética de IndexVB.
-const BG = "bg-[#0A0D0C]";
+const BG = "bg-[#070B12]";
 const SURFACE = "bg-white/[0.03] border border-white/[0.07]";
-const SURFACE_HOVER = "hover:border-emerald-400/30 hover:bg-white/[0.05]";
+const SURFACE_HOVER = "hover:border-sky-400/30 hover:bg-white/[0.05]";
 const TEXT = "text-white";
 const TEXT_MUTED = "text-white/60";
 const TEXT_DIM = "text-white/40";
-const EMERALD = "text-emerald-400";
-const RING_EMERALD = "border-emerald-400/25";
+const EMERALD = "text-sky-400";
+const RING_EMERALD = "border-sky-400/25";
 const SOFT_GRADIENT =
-  "bg-[radial-gradient(ellipse_at_top,hsl(160_84%_39%/0.18)_0%,transparent_55%)]";
+  "bg-[radial-gradient(ellipse_at_top,hsl(210_92%_55%/0.18)_0%,transparent_55%)]";
 
 // ───────────────── SEO
 const useSeo = () => {
@@ -82,7 +82,7 @@ const useSeo = () => {
       "keywords",
       "fralda geriátrica gratuita SUS, laudo médico fralda, Farmácia Popular fralda idoso, fralda geriátrica grátis, laudo fralda online",
     );
-    upsertMeta("name", "theme-color", "#0A0D0C");
+    upsertMeta("name", "theme-color", "#070B12");
     upsertMeta("property", "og:title", PAGE_TITLE);
     upsertMeta("property", "og:description", PAGE_DESC);
     upsertMeta("property", "og:type", "website");
@@ -177,10 +177,10 @@ const faqItems = [
 
 // ───────────────── Header
 const Header = () => (
-  <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#0A0D0C]/70 border-b border-white/[0.06]">
+  <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#070B12]/70 border-b border-white/[0.06]">
     <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="/fralda" className="flex items-center gap-2 group">
-        <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-[#0A0D0C] shadow-lg shadow-emerald-500/20">
+        <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center text-[#070B12] shadow-lg shadow-sky-500/20">
           <Leaf className="w-[18px] h-[18px]" strokeWidth={2.5} />
         </div>
         <span className="font-semibold text-lg tracking-tighter-custom text-white">
@@ -194,7 +194,7 @@ const Header = () => (
         </span>
         <Button
           asChild
-          className="rounded-full bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold gap-2"
+          className="rounded-full bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold gap-2"
           data-cta-id="header-whatsapp"
         >
           <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
@@ -207,7 +207,7 @@ const Header = () => (
       <Button
         asChild
         size="sm"
-        className="md:hidden rounded-full bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold gap-2"
+        className="md:hidden rounded-full bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold gap-2"
         data-cta-id="header-whatsapp-mobile"
       >
         <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
@@ -223,15 +223,15 @@ const Header = () => (
 const Hero = () => (
   <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
     <div className={`absolute inset-0 ${SOFT_GRADIENT} pointer-events-none`} />
-    <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-emerald-500/[0.06] rounded-full blur-[120px] pointer-events-none" />
+    <div className="absolute top-40 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-sky-500/[0.06] rounded-full blur-[120px] pointer-events-none" />
 
     <div className="max-w-5xl mx-auto px-6 relative z-10">
       <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
         <ScrollReveal delay={0}>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] mb-8">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
             </span>
             <span className="text-xs font-medium text-white/70 tracking-tight">
               Direito garantido pela Farmácia Popular do SUS
@@ -242,7 +242,7 @@ const Hero = () => (
         <ScrollReveal delay={0.1}>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white tracking-tighter-custom mb-6 leading-[1.05]">
             Fralda geriátrica{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-emerald-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-sky-500">
               gratuita pelo SUS
             </span>
             <br className="hidden sm:block" />
@@ -264,7 +264,7 @@ const Hero = () => (
             <Button
               asChild
               size="lg"
-              className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold shadow-xl shadow-emerald-500/25 hover:-translate-y-0.5 transition-all gap-2"
+              className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold shadow-xl shadow-sky-500/25 hover:-translate-y-0.5 transition-all gap-2"
               data-cta-id="hero-primary"
             >
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
@@ -290,17 +290,17 @@ const Hero = () => (
         <ScrollReveal delay={0.4}>
           <div className="mt-10 flex flex-wrap justify-center items-center gap-x-5 gap-y-2 text-xs text-white/50">
             <span className="inline-flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <Check className="w-3.5 h-3.5 text-sky-400" />
               Laudo em até 24h úteis
             </span>
             <span className="text-white/20">·</span>
             <span className="inline-flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <Check className="w-3.5 h-3.5 text-sky-400" />
               Economia de até R$ 7.200/ano
             </span>
             <span className="text-white/20">·</span>
             <span className="inline-flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <Check className="w-3.5 h-3.5 text-sky-400" />
               100% online, sem deslocamento
             </span>
           </div>
@@ -309,19 +309,19 @@ const Hero = () => (
         <ScrollReveal delay={0.5}>
           <div className="mt-10 flex flex-wrap justify-center items-center gap-6 sm:gap-8">
             <div className="flex items-center gap-2">
-              <BadgeCheck className="w-4 h-4 text-emerald-400" />
+              <BadgeCheck className="w-4 h-4 text-sky-400" />
               <span className="text-[10px] font-semibold text-white/50 uppercase tracking-widest">
                 CRM Ativo
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <ShieldCheck className="w-4 h-4 text-sky-400" />
               <span className="text-[10px] font-semibold text-white/50 uppercase tracking-widest">
                 Laudo ICP-Brasil
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <Lock className="w-4 h-4 text-emerald-400" />
+              <Lock className="w-4 h-4 text-sky-400" />
               <span className="text-[10px] font-semibold text-white/50 uppercase tracking-widest">
                 LGPD
               </span>
@@ -339,11 +339,11 @@ const FaixaLegal = () => (
     <div className="max-w-4xl mx-auto px-6">
       <ScrollReveal>
         <div className={`rounded-2xl ${SURFACE} p-6 sm:p-7 flex flex-col sm:flex-row items-start gap-5`}>
-          <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-            <ScrollText className="w-5 h-5 text-emerald-400" />
+          <div className="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center shrink-0">
+            <ScrollText className="w-5 h-5 text-sky-400" />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-2">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-2">
               Base legal pública
             </p>
             <p className="text-sm sm:text-base text-white/80 leading-relaxed">
@@ -355,7 +355,7 @@ const FaixaLegal = () => (
               href="https://www.in.gov.br/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-emerald-400 hover:text-emerald-300"
+              className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-sky-400 hover:text-sky-300"
             >
               Consultar Portarias no DOU →
             </a>
@@ -394,7 +394,7 @@ const ComoFunciona = () => (
     <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
         <div className="mb-14 max-w-2xl">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-3">
             Processo
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
@@ -412,12 +412,12 @@ const ComoFunciona = () => (
             <div
               className={`relative overflow-hidden rounded-3xl p-7 h-full transition-all duration-300 ${
                 step.highlight
-                  ? "bg-gradient-to-br from-emerald-500/[0.12] to-emerald-500/[0.02] border border-emerald-400/25"
+                  ? "bg-gradient-to-br from-sky-500/[0.12] to-sky-500/[0.02] border border-sky-400/25"
                   : `${SURFACE} ${SURFACE_HOVER}`
               }`}
             >
               {step.highlight && (
-                <div className="absolute -top-20 -right-20 w-52 h-52 bg-emerald-500/20 rounded-full blur-3xl" />
+                <div className="absolute -top-20 -right-20 w-52 h-52 bg-sky-500/20 rounded-full blur-3xl" />
               )}
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-8">
@@ -427,7 +427,7 @@ const ComoFunciona = () => (
                   <div
                     className={`w-10 h-10 rounded-xl flex items-center justify-center ${
                       step.highlight
-                        ? "bg-emerald-500/20 text-emerald-300"
+                        ? "bg-sky-500/20 text-sky-300"
                         : "bg-white/[0.04] text-white/70"
                     }`}
                   >
@@ -441,15 +441,15 @@ const ComoFunciona = () => (
                   {step.desc}
                 </p>
                 {step.highlight && (
-                  <div className="mt-6 inline-flex items-center gap-2 text-emerald-300 text-[10px] font-semibold uppercase tracking-widest">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-dot" />
+                  <div className="mt-6 inline-flex items-center gap-2 text-sky-300 text-[10px] font-semibold uppercase tracking-widest">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse-dot" />
                     Entrega no mesmo dia
                   </div>
                 )}
               </div>
               <step.Icon
                 className={`absolute -bottom-8 -right-8 w-[160px] h-[160px] -rotate-12 ${
-                  step.highlight ? "text-emerald-400/[0.06]" : "text-white/[0.025]"
+                  step.highlight ? "text-sky-400/[0.06]" : "text-white/[0.025]"
                 }`}
                 strokeWidth={0.5}
               />
@@ -467,7 +467,7 @@ const ParaQuem = () => (
     <div className="max-w-6xl mx-auto px-6">
       <ScrollReveal>
         <div className="mb-14 max-w-2xl">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-3">
             Elegibilidade
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
@@ -502,8 +502,8 @@ const ParaQuem = () => (
         ].map((b, i) => (
           <ScrollReveal key={b.title} delay={i * 0.1}>
             <div className={`rounded-3xl ${SURFACE} ${SURFACE_HOVER} p-8 h-full transition-all`}>
-              <div className="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-6">
-                <b.Icon className="w-5 h-5 text-emerald-400" strokeWidth={1.75} />
+              <div className="w-11 h-11 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-6">
+                <b.Icon className="w-5 h-5 text-sky-400" strokeWidth={1.75} />
               </div>
               <h3 className="text-xl font-semibold text-white mb-4 tracking-tight">
                 {b.title}
@@ -511,7 +511,7 @@ const ParaQuem = () => (
               <ul className="space-y-3 text-sm text-white/60">
                 {b.items.map((it) => (
                   <li key={it} className="flex gap-3">
-                    <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <Check className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
                     <span>{it}</span>
                   </li>
                 ))}
@@ -530,7 +530,7 @@ const QuantoCusta = () => (
     <div className="max-w-3xl mx-auto px-6">
       <ScrollReveal>
         <div className="mb-12 text-center">
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-3">
             Transparência
           </p>
           <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom mb-3">
@@ -544,7 +544,7 @@ const QuantoCusta = () => (
 
       <ScrollReveal delay={0.1}>
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white/[0.05] to-white/[0.01] border border-white/[0.08] p-8 sm:p-10">
-          <div className="absolute -top-32 -right-32 w-72 h-72 bg-emerald-500/15 rounded-full blur-3xl" />
+          <div className="absolute -top-32 -right-32 w-72 h-72 bg-sky-500/15 rounded-full blur-3xl" />
           <div className="relative z-10">
             <p className="text-[10px] uppercase tracking-widest text-white/50 font-semibold mb-3">
               Teleconsulta + laudo digital
@@ -568,8 +568,8 @@ const QuantoCusta = () => (
                   por mês com fralda paga em farmácia
                 </p>
               </div>
-              <div className="rounded-2xl border border-emerald-400/25 bg-emerald-500/[0.08] p-5">
-                <p className="text-[10px] uppercase tracking-widest text-emerald-400 font-semibold mb-2">
+              <div className="rounded-2xl border border-sky-400/25 bg-sky-500/[0.08] p-5">
+                <p className="text-[10px] uppercase tracking-widest text-sky-400 font-semibold mb-2">
                   Economia em 12 meses
                 </p>
                 <p className="text-2xl font-semibold text-white tracking-tight">
@@ -584,7 +584,7 @@ const QuantoCusta = () => (
             <Button
               asChild
               size="lg"
-              className="w-full rounded-full py-6 text-base bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold shadow-xl shadow-emerald-500/25 hover:-translate-y-0.5 transition-all gap-2"
+              className="w-full rounded-full py-6 text-base bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold shadow-xl shadow-sky-500/25 hover:-translate-y-0.5 transition-all gap-2"
               data-cta-id="pricing-primary"
             >
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
@@ -608,11 +608,11 @@ const Medico = () => (
     <div className="max-w-4xl mx-auto px-6">
       <ScrollReveal>
         <div className={`rounded-3xl ${SURFACE} p-8 sm:p-10 flex flex-col sm:flex-row gap-8 items-start`}>
-          <div className="w-28 h-28 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
-            <Stethoscope className="w-10 h-10 text-emerald-400" strokeWidth={1.5} />
+          <div className="w-28 h-28 rounded-3xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center shrink-0">
+            <Stethoscope className="w-10 h-10 text-sky-400" strokeWidth={1.5} />
           </div>
           <div className="flex-1">
-            <p className="text-[10px] uppercase tracking-widest text-emerald-400 font-semibold mb-2">
+            <p className="text-[10px] uppercase tracking-widest text-sky-400 font-semibold mb-2">
               Médico responsável
             </p>
             <h2 className="text-2xl font-semibold text-white tracking-tighter-custom mb-1">
@@ -641,7 +641,7 @@ const FAQ = () => {
       <div className="max-w-3xl mx-auto px-6">
         <ScrollReveal>
           <div className="mb-12">
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-400 mb-3">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-3">
               Dúvidas
             </p>
             <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
@@ -663,7 +663,7 @@ const FAQ = () => {
               <div
                 className={`rounded-2xl border overflow-hidden transition-colors ${
                   open === i
-                    ? "border-emerald-400/25 bg-white/[0.04]"
+                    ? "border-sky-400/25 bg-white/[0.04]"
                     : "border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.035]"
                 }`}
               >
@@ -673,7 +673,7 @@ const FAQ = () => {
                   </span>
                   <ChevronDown
                     className={`w-5 h-5 text-white/40 shrink-0 transition-transform ${
-                      open === i ? "rotate-180 text-emerald-400" : ""
+                      open === i ? "rotate-180 text-sky-400" : ""
                     }`}
                   />
                 </CollapsibleTrigger>
@@ -696,12 +696,12 @@ const CtaFinal = () => (
   <section className="py-24">
     <div className="max-w-4xl mx-auto px-6">
       <ScrollReveal>
-        <div className="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-gradient-to-br from-emerald-500/[0.10] via-white/[0.02] to-transparent p-10 sm:p-14 text-center">
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-emerald-500/15 rounded-full blur-[100px]" />
+        <div className="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-gradient-to-br from-sky-500/[0.10] via-white/[0.02] to-transparent p-10 sm:p-14 text-center">
+          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-sky-500/15 rounded-full blur-[100px]" />
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-400/25 mb-6">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="text-[10px] font-semibold uppercase tracking-widest text-emerald-300">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-400/25 mb-6">
+              <Sparkles className="w-3.5 h-3.5 text-sky-400" />
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-sky-300">
                 Atendimento humano, hoje
               </span>
             </div>
@@ -715,7 +715,7 @@ const CtaFinal = () => (
             <Button
               asChild
               size="lg"
-              className="rounded-full px-8 py-6 text-base bg-emerald-500 hover:bg-emerald-400 text-[#0A0D0C] font-semibold shadow-xl shadow-emerald-500/30 hover:-translate-y-0.5 transition-all gap-2"
+              className="rounded-full px-8 py-6 text-base bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold shadow-xl shadow-sky-500/30 hover:-translate-y-0.5 transition-all gap-2"
               data-cta-id="cta-final"
             >
               <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
@@ -737,7 +737,7 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-10">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 bg-emerald-500 rounded-md flex items-center justify-center text-[#0A0D0C]">
+            <div className="w-6 h-6 bg-sky-500 rounded-md flex items-center justify-center text-[#070B12]">
               <Leaf className="w-3.5 h-3.5" strokeWidth={2.5} />
             </div>
             <span className="font-semibold text-base tracking-tighter-custom text-white">
@@ -749,10 +749,10 @@ const Footer = () => (
           </p>
         </div>
         <div className="flex flex-wrap gap-5 text-sm">
-          <a href="#como-funciona" className="text-white/55 hover:text-emerald-400 transition-colors">Como funciona</a>
-          <a href="#faq" className="text-white/55 hover:text-emerald-400 transition-colors">Dúvidas</a>
-          <a href="#" className="text-white/55 hover:text-emerald-400 transition-colors">Privacidade (LGPD)</a>
-          <a href="#" className="text-white/55 hover:text-emerald-400 transition-colors">Termos</a>
+          <a href="#como-funciona" className="text-white/55 hover:text-sky-400 transition-colors">Como funciona</a>
+          <a href="#faq" className="text-white/55 hover:text-sky-400 transition-colors">Dúvidas</a>
+          <a href="#" className="text-white/55 hover:text-sky-400 transition-colors">Privacidade (LGPD)</a>
+          <a href="#" className="text-white/55 hover:text-sky-400 transition-colors">Termos</a>
         </div>
       </div>
 
@@ -785,7 +785,7 @@ const Footer = () => (
 const Fralda = () => {
   useSeo();
   return (
-    <div className={`min-h-screen ${BG} ${TEXT} antialiased selection:bg-emerald-500/30`}>
+    <div className={`min-h-screen ${BG} ${TEXT} antialiased selection:bg-sky-500/30`}>
       <Header />
       <main>
         <Hero />
