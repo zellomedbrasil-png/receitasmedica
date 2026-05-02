@@ -367,7 +367,7 @@ const FaixaLegal = () => (
               <strong className="text-white">Portaria nº 937/2017</strong> do Ministério da Saúde. Qualquer cidadão pode consultar o texto integral no Diário Oficial da União.
             </p>
             <a
-              href="https://www.in.gov.br/"
+              href="https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-3.073-de-26-de-marco-de-2024-552107636"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-sky-400 hover:text-sky-300"
