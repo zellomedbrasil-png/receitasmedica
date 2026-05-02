@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import {
   ShieldCheck,
+  Shield,
+  Plus,
   Lock,
   BadgeCheck,
   FileText,
@@ -12,9 +14,13 @@ import {
   ScrollText,
   ChevronDown,
   Check,
-  Leaf,
   ArrowRight,
   Sparkles,
+  PackageCheck,
+  RefreshCw,
+  BellRing,
+  FileSignature,
+  HeadphonesIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ScrollReveal from "@/components/landing/ScrollReveal";
@@ -27,15 +33,13 @@ import {
 // ───────────────── Constantes [PREENCHER]
 const WHATSAPP =
   "https://wa.me/5585991275429?text=Quero%20laudo%20m%C3%A9dico%20para%20fralda%20gratuita%20pela%20Farm%C3%A1cia%20Popular";
-const MEDICO_NOME = "[PREENCHER: NOME DO MÉDICO RESPONSÁVEL]";
-const MEDICO_CRM = "[PREENCHER: CRM/UF 000000]";
-const PRECO = "[PREENCHER: R$ XX]";
+const PRECO = "R$ 49";
 const CNPJ = "[PREENCHER: 00.000.000/0001-00]";
 const ENDERECO = "[PREENCHER: ENDEREÇO COMPLETO]";
 
-const PAGE_TITLE = "Fralda Geriátrica Gratuita pelo SUS | Laudo Médico Online";
+const PAGE_TITLE = "Fralda Geriátrica Gratuita pelo SUS | Laudo Médico Online por R$ 49";
 const PAGE_DESC =
-  "Idosos 60+ e PCDs têm direito a fralda geriátrica gratuita pela Farmácia Popular. Emitimos o laudo médico online em horas. Fale com o médico no WhatsApp.";
+  "Idosos 60+ e PCDs têm direito a fralda geriátrica gratuita pela Farmácia Popular. Emitimos o laudo médico online em até 24h por R$ 49. Fale no WhatsApp.";
 const CANONICAL = "https://receitas.site/fralda";
 const OG_IMAGE = "https://receitas.site/og-fralda.jpg";
 
@@ -116,7 +120,7 @@ const useSeo = () => {
         image: OG_IMAGE,
         description: PAGE_DESC,
         medicalSpecialty: "Geriatrics",
-        priceRange: PRECO,
+        priceRange: "R$49",
         areaServed: "BR",
       },
       {
@@ -141,7 +145,7 @@ const useSeo = () => {
 const faqItems = [
   {
     q: "Isso é golpe? Por que preciso pagar para receber algo gratuito?",
-    a: "Não é golpe. A fralda continua 100% gratuita pela Farmácia Popular do SUS. O que você paga é o ato médico — a teleconsulta e a emissão do laudo, que por lei (Resolução CFM 2.314/2022) só pode ser feito por médico com CRM ativo. O laudo é o documento que a farmácia exige para liberar a retirada.",
+    a: "Não é golpe. A fralda continua 100% gratuita pela Farmácia Popular do SUS. Você paga R$ 49 pelo ato médico — a teleconsulta e a emissão do laudo, que por lei (Resolução CFM 2.314/2022) só pode ser feito por médico com CRM ativo. O laudo é o documento que a farmácia exige para liberar a retirada.",
   },
   {
     q: "Qual a base legal desse direito?",
@@ -173,23 +177,36 @@ const faqItems = [
   },
 ];
 
+// ───────────────── Logo (Shield + Plus)
+const Logo = ({ size = 32 }: { size?: number }) => (
+  <div
+    className="relative bg-gradient-to-br from-sky-400 to-sky-600 rounded-lg flex items-center justify-center shadow-lg shadow-sky-500/25"
+    style={{ width: size, height: size }}
+  >
+    <Shield className="text-[#070B12]" style={{ width: size * 0.62, height: size * 0.62 }} strokeWidth={2.25} />
+    <Plus
+      className="absolute text-[#070B12]"
+      style={{ width: size * 0.32, height: size * 0.32 }}
+      strokeWidth={3}
+    />
+  </div>
+);
+
 // ───────────────── Header
 const Header = () => (
   <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-[#070B12]/70 border-b border-white/[0.06]">
     <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-      <a href="/fralda" className="flex items-center gap-2 group">
-        <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center text-[#070B12] shadow-lg shadow-sky-500/20">
-          <Leaf className="w-[18px] h-[18px]" strokeWidth={2.5} />
-        </div>
+      <a href="/fralda" className="flex items-center gap-2.5 group">
+        <Logo size={32} />
         <span className="font-semibold text-lg tracking-tighter-custom text-white">
           fralda<span className="text-white/40 font-normal">geriátrica</span>
         </span>
       </a>
 
       <div className="hidden md:flex items-center gap-5">
-        <span className="text-xs font-medium text-white/50">
-          Resp. técnico: <span className="text-white/80">{MEDICO_CRM}</span>
-        </span>
+        <a href="#como-funciona" className="text-sm font-medium text-white/60 hover:text-white transition-colors">Como funciona</a>
+        <a href="#calculadora" className="text-sm font-medium text-white/60 hover:text-white transition-colors">Calculadora</a>
+        <a href="#faq" className="text-sm font-medium text-white/60 hover:text-white transition-colors">Dúvidas</a>
         <Button
           asChild
           className="rounded-full bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold gap-2"
@@ -250,7 +267,7 @@ const Hero = () => (
 
         <ScrollReveal delay={0.2}>
           <p className="text-lg text-white/65 mb-10 leading-relaxed font-light max-w-2xl mx-auto">
-            Se o seu familiar tem <span className="font-semibold text-white">60 anos ou mais</span> ou é <span className="font-semibold text-white">PCD</span>, ele tem direito por lei a retirar fralda <span className="font-semibold text-white">grátis</span> na Farmácia Popular — basta apresentar um laudo médico. A gente emite esse laudo <span className="font-semibold text-white">100% online, no mesmo dia</span>.
+            Se o seu familiar tem <span className="font-semibold text-white">60 anos ou mais</span> ou é <span className="font-semibold text-white">PCD</span>, ele tem direito por lei a retirar fralda <span className="font-semibold text-white">grátis</span> na Farmácia Popular — basta apresentar um laudo médico. A gente emite esse laudo <span className="font-semibold text-white">100% online, em até 24h úteis</span>.
           </p>
         </ScrollReveal>
 
@@ -280,6 +297,9 @@ const Hero = () => (
               </a>
             </Button>
           </div>
+          <p className="mt-4 text-xs text-white/45 text-center">
+            Sem consulta presencial. Sem agendamento. Sem fila.
+          </p>
         </ScrollReveal>
 
         <ScrollReveal delay={0.4}>
@@ -347,7 +367,7 @@ const FaixaLegal = () => (
               <strong className="text-white">Portaria nº 937/2017</strong> do Ministério da Saúde. Qualquer cidadão pode consultar o texto integral no Diário Oficial da União.
             </p>
             <a
-              href="https://www.in.gov.br/"
+              href="https://www.in.gov.br/web/dou/-/portaria-gm/ms-n-3.073-de-26-de-marco-de-2024-552107636"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 mt-3 text-sm font-medium text-sky-400 hover:text-sky-300"
@@ -542,14 +562,19 @@ const QuantoCusta = () => (
           <div className="absolute -top-32 -right-32 w-72 h-72 bg-sky-500/15 rounded-full blur-3xl" />
           <div className="relative z-10">
             <p className="text-[10px] uppercase tracking-widest text-white/50 font-semibold mb-3">
-              Teleconsulta + laudo digital
+              Teleconsulta + emissão do laudo
             </p>
-            <div className="flex items-baseline gap-3 mb-8">
-              <span className="text-5xl sm:text-6xl font-semibold text-white tracking-tighter-custom">
-                {PRECO}
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-2xl font-medium text-white/70">R$</span>
+              <span className="text-6xl sm:text-7xl font-semibold text-white tracking-tighter-custom leading-none">
+                49
               </span>
-              <span className="text-sm text-white/50">pagamento único</span>
+              <span className="text-xl text-white/50">,00</span>
+              <span className="text-sm text-white/50 ml-2 self-end mb-1.5">· pagamento único</span>
             </div>
+            <p className="text-sm text-white/55 mb-8 leading-relaxed">
+              Você paga só pela emissão do laudo médico. <span className="text-white">A fralda continua 100% gratuita pelo SUS.</span>
+            </p>
 
             <div className="grid sm:grid-cols-2 gap-3 mb-8">
               <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5">
@@ -597,22 +622,34 @@ const QuantoCusta = () => (
   </section>
 );
 
-// ───────────────── Calculadora de tamanho da fralda
+// ───────────────── Calculadora de tamanho da fralda (por peso)
 type SizeKey = "P" | "M" | "G" | "XG";
 const SIZE_TABLE: { key: SizeKey; label: string; range: string; min: number; max: number; desc: string }[] = [
-  { key: "P", label: "Pequeno (P)", range: "40 – 80 cm", min: 40, max: 80, desc: "Pessoas magras ou de baixa estatura." },
-  { key: "M", label: "Médio (M)", range: "80 – 115 cm", min: 80, max: 115, desc: "Tamanho mais comum entre adultos." },
-  { key: "G", label: "Grande (G)", range: "100 – 150 cm", min: 100, max: 150, desc: "Adultos de porte maior." },
-  { key: "XG", label: "Extra Grande (XG)", range: "120 – 165 cm", min: 120, max: 165, desc: "Pessoas obesas ou de quadril largo." },
+  { key: "P", label: "Pequeno (P)", range: "40 – 60 kg", min: 40, max: 60, desc: "Pessoas magras ou de baixa estatura." },
+  { key: "M", label: "Médio (M)", range: "55 – 80 kg", min: 55, max: 80, desc: "Faixa de peso mais comum entre adultos." },
+  { key: "G", label: "Grande (G)", range: "75 – 100 kg", min: 75, max: 100, desc: "Adultos de porte maior." },
+  { key: "XG", label: "Extra Grande (XG)", range: "95 – 130 kg", min: 95, max: 130, desc: "Pessoas obesas ou de quadril largo." },
 ];
 
+// Quando o peso cai em sobreposição entre faixas, escolhe aquela cuja média está mais próxima.
+const pickSize = (kg: number) => {
+  const matches = SIZE_TABLE.filter((s) => kg >= s.min && kg <= s.max);
+  if (matches.length === 0) {
+    if (kg < SIZE_TABLE[0].min) return SIZE_TABLE[0];
+    return SIZE_TABLE[SIZE_TABLE.length - 1];
+  }
+  return matches.reduce((best, cur) => {
+    const bMid = (best.min + best.max) / 2;
+    const cMid = (cur.min + cur.max) / 2;
+    return Math.abs(cMid - kg) < Math.abs(bMid - kg) ? cur : best;
+  });
+};
+
 const Calculadora = () => {
-  const [cm, setCm] = useState<string>("");
-  const value = parseInt(cm, 10);
+  const [kg, setKg] = useState<string>("");
+  const value = parseInt(kg, 10);
   const valid = !isNaN(value) && value >= 30 && value <= 200;
-  const recommended = valid
-    ? SIZE_TABLE.find((s) => value >= s.min && value <= s.max) ?? SIZE_TABLE[SIZE_TABLE.length - 1]
-    : null;
+  const recommended = valid ? pickSize(value) : null;
 
   return (
     <section id="calculadora" className="py-24 border-b border-white/[0.06]">
@@ -626,7 +663,7 @@ const Calculadora = () => {
               Descubra o tamanho certo da fralda
             </h2>
             <p className="text-white/60 font-light">
-              Meça o quadril do seu familiar com uma fita métrica, na parte mais larga, e veja qual tamanho retirar na farmácia.
+              Informe o peso aproximado do seu familiar para receber uma indicação média do tamanho ideal — útil antes de retirar na Farmácia Popular.
             </p>
           </div>
         </ScrollReveal>
@@ -635,29 +672,29 @@ const Calculadora = () => {
           <div className={`rounded-3xl ${SURFACE} p-6 sm:p-8 grid md:grid-cols-2 gap-8`}>
             {/* Input */}
             <div>
-              <label htmlFor="cintura" className="block text-sm font-medium text-white/80 mb-3">
-                Medida do quadril
+              <label htmlFor="peso" className="block text-sm font-medium text-white/80 mb-3">
+                Peso aproximado
               </label>
               <div className="relative">
                 <input
-                  id="cintura"
+                  id="peso"
                   type="number"
                   inputMode="numeric"
                   min={30}
                   max={200}
-                  placeholder="Ex: 95"
-                  value={cm}
-                  onChange={(e) => setCm(e.target.value)}
+                  placeholder="Ex: 70"
+                  value={kg}
+                  onChange={(e) => setKg(e.target.value)}
                   className="w-full bg-white/[0.04] border border-white/[0.10] rounded-2xl px-5 py-4 pr-16 text-2xl font-semibold text-white placeholder:text-white/25 focus:outline-none focus:border-sky-400/50 focus:bg-white/[0.06] transition-all"
                 />
                 <span className="absolute right-5 top-1/2 -translate-y-1/2 text-sm font-medium text-white/40">
-                  cm
+                  kg
                 </span>
               </div>
               <div className="mt-4 flex items-start gap-2 text-xs text-white/50 leading-relaxed">
                 <Check className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
                 <span>
-                  Use uma fita métrica comum. Meça o ponto mais largo entre cintura e quadril, sobre roupa fina.
+                  Se houver muita oscilação de peso ou quadril largo desproporcional, escolha o tamanho imediatamente acima.
                 </span>
               </div>
             </div>
@@ -670,7 +707,7 @@ const Calculadora = () => {
                     <Sparkles className="w-5 h-5 text-white/40" strokeWidth={1.75} />
                   </div>
                   <p className="text-sm text-white/50">
-                    Digite a medida em centímetros para ver o tamanho recomendado.
+                    Digite o peso em quilos para ver o tamanho recomendado.
                   </p>
                 </div>
               ) : (
@@ -715,9 +752,54 @@ const Calculadora = () => {
 
         <ScrollReveal delay={0.3}>
           <p className="mt-6 text-[11px] text-white/40 text-center max-w-2xl mx-auto leading-relaxed">
-            Estimativa orientativa baseada em medidas usuais de fabricantes. O tamanho final dispensado pela Farmácia Popular pode variar conforme estoque e marca disponível na unidade.
+            Estimativa orientativa baseada na média entre fabricantes (Bigfral, Tena, Plenitud). O tamanho final dispensado pela Farmácia Popular pode variar conforme estoque e marca disponível na unidade.
           </p>
         </ScrollReveal>
+      </div>
+    </section>
+  );
+};
+
+// ───────────────── O que você recebe
+const OQueRecebe = () => {
+  const items = [
+    { Icon: FileSignature, title: "Laudo médico em PDF", desc: "Assinado digitalmente em ICP-Brasil, com validade jurídica." },
+    { Icon: PackageCheck, title: "Modelo aceito pela Farmácia Popular", desc: "Documento no formato exigido pelo programa, pronto para retirada." },
+    { Icon: RefreshCw, title: "Reemissão gratuita", desc: "Se a unidade pedir ajuste pontual, refazemos sem cobrança extra." },
+    { Icon: HeadphonesIcon, title: "Orientação por WhatsApp", desc: "Equipe explica passo a passo como retirar a fralda na sua cidade." },
+    { Icon: BellRing, title: "Lembrete de renovação", desc: "Avisamos antes do laudo vencer, para não interromper o benefício." },
+    { Icon: ShieldCheck, title: "Conformidade CFM", desc: "Atendimento conduzido por médico com CRM ativo (Res. 2.314/2022)." },
+  ];
+  return (
+    <section className="py-24 border-b border-white/[0.06]">
+      <div className="max-w-6xl mx-auto px-6">
+        <ScrollReveal>
+          <div className="mb-14 max-w-2xl">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-sky-400 mb-3">
+              O que você recebe
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-white tracking-tighter-custom">
+              Tudo que está incluso nos R$ 49
+            </h2>
+            <p className="text-white/60 mt-3 font-light">
+              Nada de letras miúdas. Veja exatamente o que entregamos.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {items.map((it, i) => (
+            <ScrollReveal key={it.title} delay={i * 0.07}>
+              <div className={`rounded-3xl ${SURFACE} ${SURFACE_HOVER} p-6 h-full transition-all`}>
+                <div className="w-10 h-10 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-4">
+                  <it.Icon className="w-5 h-5 text-sky-400" strokeWidth={1.75} />
+                </div>
+                <h3 className="text-base font-semibold text-white mb-1.5 tracking-tight">{it.title}</h3>
+                <p className="text-sm text-white/55 leading-relaxed">{it.desc}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -799,7 +881,7 @@ const CtaFinal = () => (
               Tire dúvida com a equipe médica agora.
             </h2>
             <p className="text-white/60 mb-8 max-w-lg mx-auto font-light">
-              Resposta humana pelo WhatsApp. Atendimento conduzido por médico
+              Resposta humana em poucos minutos, das 7h às 22h. Atendimento conduzido por médico
               com CRM ativo, em conformidade com a Resolução CFM 2.314/2022.
             </p>
             <Button
@@ -827,9 +909,7 @@ const Footer = () => (
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 mb-10">
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 bg-sky-500 rounded-md flex items-center justify-center text-[#070B12]">
-              <Leaf className="w-3.5 h-3.5" strokeWidth={2.5} />
-            </div>
+            <Logo size={24} />
             <span className="font-semibold text-base tracking-tighter-custom text-white">
               fraldageriatrica.com
             </span>
@@ -840,17 +920,15 @@ const Footer = () => (
         </div>
         <div className="flex flex-wrap gap-5 text-sm">
           <a href="#como-funciona" className="text-white/55 hover:text-sky-400 transition-colors">Como funciona</a>
+          <a href="#calculadora" className="text-white/55 hover:text-sky-400 transition-colors">Calculadora</a>
           <a href="#faq" className="text-white/55 hover:text-sky-400 transition-colors">Dúvidas</a>
           <a href="#" className="text-white/55 hover:text-sky-400 transition-colors">Privacidade (LGPD)</a>
           <a href="#" className="text-white/55 hover:text-sky-400 transition-colors">Termos</a>
         </div>
       </div>
 
-      <div className="border-t border-white/[0.06] pt-6 grid sm:grid-cols-2 gap-3 text-xs text-white/45">
+      <div className="border-t border-white/[0.06] pt-6 text-xs text-white/45">
         <p>CNPJ: {CNPJ} · {ENDERECO}</p>
-        <p className="sm:text-right">
-          Responsável técnico: {MEDICO_NOME} — {MEDICO_CRM}
-        </p>
       </div>
 
       <div className="mt-6 pt-6 border-t border-white/[0.06]">
@@ -883,6 +961,7 @@ const Fralda = () => {
         <ComoFunciona />
         <ParaQuem />
         <QuantoCusta />
+        <OQueRecebe />
         <Calculadora />
         <FAQ />
         <CtaFinal />
