@@ -1,81 +1,105 @@
-## Refinos na landing `/fralda`
 
-### 1. Preço fixo: R$ 49
+## Objetivo
 
-- Substituir a constante `PRECO = "[PREENCHER: R$ XX]"` por `"R$ 49"`.
-- No bloco `QuantoCusta`:
-  - Renderizar valor formatado como cifrão pequeno + "49" grande + ",00" pequeno (mesmo padrão visual do componente `Precos.tsx` da home).
-  - Trocar o rótulo "pagamento único" por **"laudo médico · pagamento único"** para reforçar que o valor é relativo ao laudo (não à fralda).
-  - Incluir microcopy abaixo do preço: *"Você paga só pela emissão do laudo. A fralda continua 100% gratuita pelo SUS."*
-- Atualizar o JSON-LD `priceRange` para `"R$49"`.
+Criar a rota `/funil` com um funil de conversão de **10 etapas** (eligibilidade → laudo → pagamento), inspirado no HTML enviado, mas com a **mesma identidade visual do `/fralda`** (dark `#070B12`, accent `sky-400`, tipografia atual, glass cards). Sem usar a paleta creme/verde-musgo do HTML original.
 
-### 2. Calculadora: trocar quadril → peso (média)
+## Arquitetura
 
-Refatorar o componente `Calculadora` para estimar o tamanho da fralda a partir do **peso em kg** (mais fácil de obter do que medir o quadril em idoso acamado).
+**Novos arquivos:**
+- `src/pages/Funil.tsx` — página única, autocontida, com state machine local.
+- Rota adicionada em `src/App.tsx`: `<Route path="/funil" element={<Funil />} />`.
 
-Nova tabela de referência (média de mercado entre fabricantes — Bigfral, Tena, Plenitud):
+**Sem dependências novas.** Reaproveita: `Button`, `Input`, `Progress`, `ScrollReveal`, ícones lucide.
 
-| Tamanho | Faixa de peso | Descrição                                        |
-|---------|---------------|--------------------------------------------------|
-| P       | 40 – 60 kg    | Pessoas magras ou de baixa estatura              |
-| M       | 55 – 80 kg    | Faixa mais comum entre adultos                   |
-| G       | 75 – 100 kg   | Adultos de porte maior                           |
-| XG      | 95 – 130 kg   | Pessoas obesas ou de quadril largo               |
+## Estrutura da página
 
-Mudanças no UX:
-- Label do input: **"Peso aproximado"**, sufixo `kg`, placeholder `Ex: 70`.
-- Validação: 30–200 kg.
-- Heading da seção: **"Descubra o tamanho certo da fralda"** (mantém).
-- Subtítulo: *"Informe o peso aproximado do seu familiar para receber uma indicação média do tamanho ideal — útil antes de retirar na Farmácia Popular."*
-- Dica abaixo do input: *"Se houver muita oscilação de peso ou quadril largo desproporcional, escolha o tamanho imediatamente acima."*
-- Tabela de referência embaixo passa a mostrar a faixa em kg.
-- Disclaimer mantido (estimativa orientativa).
+```text
+┌──────────────────────────────────────────────┐
+│ Editorial band (atendimento online · 24h)    │
+├──────────────────────────────────────────────┤
+│ Header (logo Shield+Plus · CRM/CE)           │
+├──────────────────────────────────────────────┤
+│ Progress: "Etapa 03 / 10" · barra · 30%      │
+├──────────────────────────────────────────────┤
+│ Card glass (uma etapa visível por vez)       │
+│  - eyebrow                                   │
+│  - título com <em> em sky-400                │
+│  - descrição                                 │
+│  - opções / inputs / resumo                  │
+│  - botões primário + voltar                  │
+├──────────────────────────────────────────────┤
+│ Trust pills + assinatura                     │
+└──────────────────────────────────────────────┘
+```
 
-### 3. Nova logo
+## State machine
 
-- Trocar o ícone `Leaf` (folha — tema farmácia) por **`Shield`** ou **`HeartPulse`** do lucide-react. Vou usar **`Shield`** com um pequeno **`Plus`** sobreposto (composição via CSS), transmitindo "proteção + saúde" — coerente com o produto fralda/cuidado.
-- Aplicar tanto no `Header` quanto no `Footer`.
-- Manter cor sky-500 no fundo do badge.
-- Wordmark continua: `fralda` + `geriátrica` (cinza).
+```ts
+type State = {
+  step: 1..10;
+  paraQuem, idade, condicao, gastoAtual: string;
+  tamanho: 'P' | 'M' | 'G' | 'EG';
+  freq: '3-5' | '6-8' | '8+' | 'nao-sei';
+  nome, cpf, whatsapp: string;
+  economiaAnual: number;  // derivado da freq
+};
+```
 
-### 4. Remover "Responsável técnico"
+Avança automático em etapas com opções (380ms delay), manual nas etapas 5, 8, 9. Botão "Voltar" em todas exceto a 1.
 
-- Remover do `Header` o trecho `<span>Resp. técnico: {MEDICO_CRM}</span>`.
-- Remover do rodapé a linha `Responsável técnico: {MEDICO_NOME} — {MEDICO_CRM}`.
-- Remover as constantes `MEDICO_NOME` e `MEDICO_CRM` (não mais usadas).
-- O footer mantém a linha de CNPJ/Endereço e o disclaimer com referência à Resolução CFM 2.314/2022 — isso já cobre compliance sem expor nome/CRM individual.
+## Conteúdo das 10 etapas
 
-### 5. Melhorias de conteúdo e UX
+1. **Elegibilidade** — Para quem? (mãe/pai · avós · familiar · eu)
+2. **Idade** — 60–70 · 71–80 · 80+ · <60 PCD
+3. **Condição** — Incontinência urinária / fecal / mista / acamado (com nota Portaria 3.073/2024)
+4. **Gasto atual** — >R$300/mês · economiza · ainda não · outro meio
+5. **Bloco educacional** — card explicando: fralda 100% gratuita, paga-se a consulta médica, sem laudo a Farmácia Popular não libera. Comparativo Hoje (R$ 450/mês) → Depois (R$ 0/mês). CTA "Entendi · quero meu laudo".
+6. **Tamanho** — P/M/G/EG com referências de cintura+peso
+7. **Frequência** — 3–5 (noite) · 6–8 (dia) · 8+ (acamado) · não sei. Define `economiaAnual` (3600/4800/6000/4800).
+8. **Nome + CPF** — inputs com máscara + validação CPF (algoritmo dos dígitos verificadores). Botão habilita só com nome ≥ 2 palavras + CPF válido.
+9. **WhatsApp** — input com máscara `(00) 00000-0000`. Habilita com ≥10 dígitos.
+10. **Resumo + pagamento** — checkmark de sucesso, resumo do pedido (paciente, CPF, tamanho, frequência, WA, prazo 24h), bloco "Economia anual estimada" R$ X, disclaimer (paga-se laudo, fralda gratuita), card de pagamento Mercado Pago (R$ 49) + CTA WhatsApp para enviar comprovante.
 
-**a) Hero — pequena reescrita para mais clareza objetiva**
-- Subheadline atual fala em "100% online, no mesmo dia". Vou alinhar com o trust badge "Laudo em até 24h úteis" trocando por **"em até 24h úteis"** (consistência) e remover ambiguidade.
-- Adicionar abaixo dos CTAs uma micro-linha: *"Sem consulta presencial. Sem agendamento. Sem fila."*
+## Decisões de conteúdo (mantém compliance do /fralda)
 
-**b) Nova seção "O que você recebe" (entre `QuantoCusta` e `Calculadora`)**
-Card único listando o entregável concreto:
-- Laudo médico em PDF assinado em ICP-Brasil
-- Modelo aceito pela Farmácia Popular
-- Reemissão gratuita se a unidade pedir ajuste
-- Orientação por WhatsApp sobre como retirar
-- Lembrete automático de renovação antes do vencimento
+- **Preço do laudo: R$ 49** (consistente com a memory do projeto e o /fralda atual — *não* R$ 97 do HTML enviado).
+- **Disclaimer obrigatório** no step 5 e step 10: "Você paga apenas pela consulta médica e emissão do laudo. As fraldas continuam 100% gratuitas pela Farmácia Popular."
+- Referência à **Portaria GM/MS 3.073/2024** e **Resolução CFM 2.314/2022** no rodapé/legal.
+- Sem nome de responsável técnico exposto (alinhado à decisão prévia do `/fralda`).
+- WhatsApp: o mesmo número já usado no projeto (`5585991275429`).
 
-Isso responde objeção "o que exatamente eu vou receber por R$49?".
+## Design tokens (reutiliza os do `/fralda`)
 
-**c) FAQ — atualizar 1ª pergunta com o valor real**
-Reescrever a resposta de "Isso é golpe?" para citar **"R$ 49 pelo ato médico"** explicitamente, em vez de "o que você paga".
+```ts
+BG = "bg-[#070B12]"
+SURFACE = "bg-white/[0.03] border border-white/[0.07]"
+ACCENT = "text-sky-400" / "bg-sky-500"
+SOFT_GRADIENT = radial sky-500/18 no topo
+```
 
-**d) CTA Final — adicionar tempo de resposta**
-Trocar microcopy *"Resposta humana pelo WhatsApp"* por *"Resposta humana em poucos minutos, das 7h às 22h."*
+- Cards de opção: `rounded-2xl`, hover sky-400/30, selected com ring sky-400 + checkmark.
+- Botão primário: `bg-sky-500 hover:bg-sky-400 text-slate-950`, com ícone seta.
+- Botão pagamento (step 10): variant Mercado Pago (azul `#009ee3` → `#0070a8`) para diferenciar visualmente.
+- Botão WhatsApp: verde `#25D366`.
+- Progress: `<Progress />` do shadcn estilizado em sky-400.
+- Tipografia: mantém `tracking-tighter-custom` e fonte do tema (não importa Fraunces — mantém consistência com o resto do site).
 
-**e) Faixa Legal — adicionar link direto**
-Trocar o link genérico `https://www.in.gov.br/` por uma busca direta da Portaria 3.073/2024 no DOU, abrindo em nova aba.
+## SEO
 
-### Arquivo afetado
+- `title`: "Solicite seu laudo para fralda gratuita · Funil guiado"
+- `description`: "Em 10 passos rápidos descubra se sua família tem direito à fralda geriátrica gratuita pelo SUS e receba o laudo médico em até 24h."
+- `canonical`: `https://receitas.site/funil`
+- `noindex` *não* será aplicado (página de conversão pública).
 
-- `src/pages/Fralda.tsx` — todas as mudanças concentradas aqui (preço, calculadora, logo, remoção do responsável técnico, copy, nova seção "O que você recebe").
+## Scope e não-escopo
 
-### Compliance
+- ✅ Página estática client-side com state local.
+- ✅ Validação de CPF e formatação de máscaras.
+- ✅ Persistência simples em `sessionStorage` (para o usuário não perder dados ao recarregar) — opcional, vou incluir.
+- ❌ Sem integração com backend / sem gravar lead em banco (pode ser adicionado depois com Lovable Cloud).
+- ❌ Sem A/B testing ou analytics events (pode ser plugado depois).
 
-- Manter todas as referências a Resolução CFM 2.314/2022, Portaria GM/MS nº 3.073/2024 e Portaria nº 937/2017.
-- Disclaimer do footer continua reforçando que o site não comercializa fralda.
-- A remoção do nome do responsável técnico do header/footer é aceitável legalmente (não há obrigatoriedade de exibir CRM individual em landing comercial); o vínculo médico-CRM é declarado nos atendimentos via teleconsulta.
+## Arquivos afetados
+
+- **novo:** `src/pages/Funil.tsx`
+- **edit:** `src/App.tsx` (uma rota nova)
