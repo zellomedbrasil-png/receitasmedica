@@ -14,6 +14,24 @@ import {
   Scale,
   HeartPulse,
   Wallet,
+  Users,
+  UserRound,
+  HeartHandshake,
+  User,
+  Calendar,
+  Accessibility,
+  Droplet,
+  Droplets,
+  RefreshCw,
+  BedDouble,
+  TrendingDown,
+  PiggyBank,
+  Search,
+  Building2,
+  Moon,
+  Sun,
+  Repeat,
+  HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -208,39 +226,41 @@ const OptionList = ({
   selected: string;
   onSelect: (v: string) => void;
 }) => (
-  <div className="grid gap-3">
+  <div className="grid gap-2.5 sm:gap-3" role="radiogroup">
     {options.map((o) => {
       const active = selected === o.value;
       return (
         <button
           key={o.value}
           type="button"
+          role="radio"
+          aria-checked={active}
           onClick={() => onSelect(o.value)}
-          className={`group relative flex items-center gap-4 text-left rounded-2xl px-5 py-4 transition-all border ${
+          className={`group relative flex items-center gap-3 sm:gap-4 text-left rounded-2xl px-4 sm:px-5 py-3.5 sm:py-4 transition-all border ${
             active
               ? "bg-sky-500/[0.08] border-sky-400/60 ring-1 ring-sky-400/40"
               : "bg-white/[0.025] border-white/[0.07] hover:border-sky-400/40 hover:bg-white/[0.05]"
           }`}
         >
           <div
-            className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-sm font-semibold ${
+            className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${
               active
                 ? "bg-sky-500/20 text-sky-300 border border-sky-400/40"
                 : "bg-white/[0.04] text-white/70 border border-white/[0.07]"
             }`}
           >
-            {o.icon ?? o.value}
+            {o.icon}
           </div>
           <div className="flex-1 min-w-0">
-            <div className="text-white font-medium tracking-tight">
+            <div className="text-white font-medium tracking-tight text-[15px] sm:text-base">
               {o.title}
             </div>
             {o.sub && (
-              <div className="text-xs text-white/45 mt-0.5">{o.sub}</div>
+              <div className="text-xs text-white/45 mt-0.5 leading-snug">{o.sub}</div>
             )}
           </div>
           <div
-            className={`w-5 h-5 rounded-full border flex items-center justify-center ${
+            className={`shrink-0 w-5 h-5 rounded-full border flex items-center justify-center ${
               active
                 ? "border-sky-400 bg-sky-400 text-slate-950"
                 : "border-white/20"
