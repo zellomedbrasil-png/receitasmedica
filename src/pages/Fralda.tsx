@@ -213,8 +213,9 @@ const Header = () => (
           data-cta-id="header-whatsapp"
         >
           <a href={WHATSAPP}>
-            <MessageCircle className="w-4 h-4" />
-            Falar no WhatsApp
+            <Sparkles className="w-4 h-4" />
+            Ver se tenho direito (grátis)
+            <ArrowRight className="w-4 h-4" />
           </a>
         </Button>
       </div>
@@ -226,8 +227,9 @@ const Header = () => (
         data-cta-id="header-whatsapp-mobile"
       >
         <a href={WHATSAPP}>
-          <MessageCircle className="w-4 h-4" />
-          WhatsApp
+          <Sparkles className="w-4 h-4" />
+          Ver se tenho direito
+          <ArrowRight className="w-4 h-4" />
         </a>
       </Button>
     </div>
@@ -280,8 +282,9 @@ const Hero = () => (
               data-cta-id="hero-primary"
             >
               <a href={WHATSAPP}>
-                <MessageCircle className="w-5 h-5" />
-                Falar com o médico no WhatsApp
+                <Sparkles className="w-5 h-5" />
+                Iniciar meu pedido em 2 minutos
+                <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
             <Button
@@ -608,8 +611,9 @@ const QuantoCusta = () => (
               data-cta-id="pricing-primary"
             >
               <a href={WHATSAPP}>
-                <MessageCircle className="w-5 h-5" />
-                Iniciar laudo pelo WhatsApp
+                <Sparkles className="w-5 h-5" />
+                Começar meu pedido guiado
+                <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
             <p className="mt-4 text-[11px] text-white/40 text-center">
@@ -891,8 +895,9 @@ const CtaFinal = () => (
               data-cta-id="cta-final"
             >
               <a href={WHATSAPP}>
-                <MessageCircle className="w-5 h-5" />
-                Falar agora no WhatsApp
+                <Sparkles className="w-5 h-5" />
+                Começar agora — leva 2 minutos
+                <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
           </div>
