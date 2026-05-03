@@ -1,19 +1,14 @@
 ## Objetivo
-Reescrever os 5 CTAs da página `/fralda` com tom de "convite ao funil guiado", trocando o ícone `MessageCircle` por `Sparkles` + `ArrowRight` para reforçar progressão.
+Encurtar os textos dos 5 CTAs em `src/pages/Fralda.tsx`, removendo a palavra "grátis" e usando linguagem direta da persona (familiar/cuidador de idoso).
 
-## Mudanças em `src/pages/Fralda.tsx`
+## Novos textos
 
-| Linha | Local | Texto novo |
+| Linha | Local | Texto |
 |---|---|---|
-| 215 | Header desktop | "Ver se tenho direito (grátis)" |
-| 228 | Header mobile | "Ver se tenho direito" |
-| 282 | Hero principal | "Iniciar meu pedido em 2 minutos" |
-| 610 | Pricing | "Começar meu pedido guiado" |
-| 893 | CTA final | "Começar agora — leva 2 minutos" |
+| 217 | Header desktop | "Pedir meu laudo" |
+| 231 | Header mobile | "Pedir meu laudo" |
+| 286 | Hero | "Quero minha fralda" |
+| 615 | Pricing | "Quero meu laudo" |
+| 899 | CTA final | "Começar meu pedido" |
 
-Todos os botões: ícone `Sparkles` à esquerda + `ArrowRight` à direita, mantendo classes/tamanhos atuais e `data-cta-id` para tracking. `href={WHATSAPP}` (já aponta para `/funil`) permanece.
-
-## Notas técnicas
-- `Sparkles` e `ArrowRight` já estão importados no arquivo.
-- `MessageCircle` permanece importado (sem cleanup obrigatório).
-- Nenhuma outra mudança de layout.
+Mantém ícones `Sparkles` (esquerda) + `ArrowRight` (direita), `href={WHATSAPP}` e `data-cta-id`. Apenas a linha de texto entre os ícones muda.

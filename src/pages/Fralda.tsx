@@ -214,7 +214,7 @@ const Header = () => (
         >
           <a href={WHATSAPP}>
             <Sparkles className="w-4 h-4" />
-            Ver se tenho direito (grátis)
+            Pedir meu laudo
             <ArrowRight className="w-4 h-4" />
           </a>
         </Button>
@@ -228,7 +228,7 @@ const Header = () => (
       >
         <a href={WHATSAPP}>
           <Sparkles className="w-4 h-4" />
-          Ver se tenho direito
+          Pedir meu laudo
           <ArrowRight className="w-4 h-4" />
         </a>
       </Button>
@@ -283,7 +283,7 @@ const Hero = () => (
             >
               <a href={WHATSAPP}>
                 <Sparkles className="w-5 h-5" />
-                Iniciar meu pedido em 2 minutos
+                Quero minha fralda
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
@@ -612,7 +612,7 @@ const QuantoCusta = () => (
             >
               <a href={WHATSAPP}>
                 <Sparkles className="w-5 h-5" />
-                Começar meu pedido guiado
+                Quero meu laudo
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
@@ -896,7 +896,7 @@ const CtaFinal = () => (
             >
               <a href={WHATSAPP}>
                 <Sparkles className="w-5 h-5" />
-                Começar agora — leva 2 minutos
+                Começar meu pedido
                 <ArrowRight className="w-5 h-5" />
               </a>
             </Button>
