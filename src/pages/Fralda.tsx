@@ -31,8 +31,8 @@ import {
 } from "@/components/ui/collapsible";
 
 // ───────────────── Constantes [PREENCHER]
-const WHATSAPP =
-  "https://wa.me/5585991275429?text=Quero%20laudo%20m%C3%A9dico%20para%20fralda%20gratuita%20pela%20Farm%C3%A1cia%20Popular";
+const WHATSAPP = "/funil";
+// (legacy WhatsApp link removed)
 const PRECO = "R$ 49";
 const CNPJ = "[PREENCHER: 00.000.000/0001-00]";
 const ENDERECO = "[PREENCHER: ENDEREÇO COMPLETO]";
@@ -212,7 +212,7 @@ const Header = () => (
           className="rounded-full bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold gap-2"
           data-cta-id="header-whatsapp"
         >
-          <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+          <a href={WHATSAPP}>
             <MessageCircle className="w-4 h-4" />
             Falar no WhatsApp
           </a>
@@ -225,7 +225,7 @@ const Header = () => (
         className="md:hidden rounded-full bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold gap-2"
         data-cta-id="header-whatsapp-mobile"
       >
-        <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+        <a href={WHATSAPP}>
           <MessageCircle className="w-4 h-4" />
           WhatsApp
         </a>
@@ -279,7 +279,7 @@ const Hero = () => (
               className="w-full sm:w-auto rounded-full px-8 py-6 text-base bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold shadow-xl shadow-sky-500/25 hover:-translate-y-0.5 transition-all gap-2"
               data-cta-id="hero-primary"
             >
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+              <a href={WHATSAPP}>
                 <MessageCircle className="w-5 h-5" />
                 Falar com o médico no WhatsApp
               </a>
@@ -607,7 +607,7 @@ const QuantoCusta = () => (
               className="w-full rounded-full py-6 text-base bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold shadow-xl shadow-sky-500/25 hover:-translate-y-0.5 transition-all gap-2"
               data-cta-id="pricing-primary"
             >
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+              <a href={WHATSAPP}>
                 <MessageCircle className="w-5 h-5" />
                 Iniciar laudo pelo WhatsApp
               </a>
@@ -890,7 +890,7 @@ const CtaFinal = () => (
               className="rounded-full px-8 py-6 text-base bg-sky-500 hover:bg-sky-400 text-[#070B12] font-semibold shadow-xl shadow-sky-500/30 hover:-translate-y-0.5 transition-all gap-2"
               data-cta-id="cta-final"
             >
-              <a href={WHATSAPP} target="_blank" rel="noopener noreferrer">
+              <a href={WHATSAPP}>
                 <MessageCircle className="w-5 h-5" />
                 Falar agora no WhatsApp
               </a>
