@@ -197,7 +197,7 @@ const Logo = () => (
 const ProgressBar = ({ step }: { step: number }) => {
   const pct = Math.round((step / TOTAL) * 100);
   return (
-    <div className="w-full max-w-2xl mx-auto px-6 mt-6">
+    <div className="w-full max-w-2xl mx-auto px-4 sm:px-6 mt-6" aria-label={`Etapa ${step} de ${TOTAL}`}>
       <div className="flex items-center justify-between mb-2 text-[11px] uppercase tracking-[0.16em] text-white/45 font-mono">
         <span>
           Etapa {String(step).padStart(2, "0")}{" "}
@@ -378,9 +378,8 @@ const Funil = () => {
   const whatsOk = onlyDigits(s.whatsapp).length >= 10;
 
   const economia = s.freq ? FREQ_ECONOMIA[s.freq] : 4800;
-  const orderId = useMemo(
+  const [orderId] = useState(
     () => "FG-" + (Date.now() % 1000000).toString().padStart(6, "0"),
-    [],
   );
 
   return (
@@ -402,20 +401,21 @@ const Funil = () => {
       </div>
 
       {/* Header */}
-      <header className="relative z-10 max-w-2xl mx-auto px-6 pt-7 flex items-center justify-between">
+      <header className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 pt-6 sm:pt-7 flex items-center justify-between gap-3">
         <Logo />
-        <div className="text-right text-[11px] text-white/45 leading-tight font-mono">
+        <div className="text-right text-[10px] sm:text-[11px] text-white/45 leading-tight font-mono shrink-0">
           <div className="text-white/70 font-semibold">CRM ativo</div>
-          <div>Telemedicina · CFM 2.314/2022</div>
+          <div className="hidden sm:block">CFM 2.314/2022</div>
         </div>
       </header>
 
       <ProgressBar step={s.step} />
 
       {/* Card */}
-      <main className="relative z-10 w-full max-w-2xl mx-auto px-6 mt-6 pb-16">
+      <main className="relative z-10 w-full max-w-2xl mx-auto px-4 sm:px-6 mt-6 pb-16">
         <div
-          className={`${SURFACE} rounded-3xl backdrop-blur-xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] p-7 sm:p-10`}
+          className={`${SURFACE} rounded-3xl backdrop-blur-xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] p-5 sm:p-8 md:p-10 animate-fade-in`}
+          key={s.step}
         >
           {/* STEP 1 */}
           {s.step === 1 && (
@@ -434,10 +434,10 @@ const Funil = () => {
                 selected={s.paraQuem}
                 onSelect={choose("paraQuem", 2)}
                 options={[
-                  { value: "mae-pai", title: "Para minha mãe ou pai", sub: "O caso mais comum" },
-                  { value: "avo", title: "Para meu avô ou avó", sub: "Cuidando de quem cuidou de você" },
-                  { value: "familiar", title: "Para um familiar ou paciente", sub: "Outro grau de parentesco" },
-                  { value: "eu", title: "Para mim mesmo(a)", sub: "Solicitação para uso próprio" },
+                  { value: "mae-pai", icon: <Users className="w-5 h-5" />, title: "Para minha mãe ou pai", sub: "O caso mais comum" },
+                  { value: "avo", icon: <UserRound className="w-5 h-5" />, title: "Para meu avô ou avó", sub: "Cuidando de quem cuidou de você" },
+                  { value: "familiar", icon: <HeartHandshake className="w-5 h-5" />, title: "Para um familiar ou paciente", sub: "Outro grau de parentesco" },
+                  { value: "eu", icon: <User className="w-5 h-5" />, title: "Para mim mesmo(a)", sub: "Solicitação para uso próprio" },
                 ]}
               />
             </section>
@@ -459,10 +459,10 @@ const Funil = () => {
                 selected={s.idade}
                 onSelect={choose("idade", 3)}
                 options={[
-                  { value: "60-70", title: "60 a 70 anos" },
-                  { value: "71-80", title: "71 a 80 anos" },
-                  { value: "80+", title: "Mais de 80 anos" },
-                  { value: "pcd", title: "Menos de 60 anos", sub: "Pessoa com deficiência" },
+                  { value: "60-70", icon: <Calendar className="w-5 h-5" />, title: "60 a 70 anos" },
+                  { value: "71-80", icon: <Calendar className="w-5 h-5" />, title: "71 a 80 anos" },
+                  { value: "80+", icon: <Calendar className="w-5 h-5" />, title: "Mais de 80 anos" },
+                  { value: "pcd", icon: <Accessibility className="w-5 h-5" />, title: "Menos de 60 anos", sub: "Pessoa com deficiência" },
                 ]}
               />
               <BackBtn onClick={() => goto(1)} />
@@ -488,10 +488,10 @@ const Funil = () => {
                 selected={s.condicao}
                 onSelect={choose("condicao", 4)}
                 options={[
-                  { value: "urinaria", title: "Incontinência urinária", sub: "Perda involuntária de urina" },
-                  { value: "fecal", title: "Incontinência fecal", sub: "Perda involuntária de fezes" },
-                  { value: "mista", title: "Incontinência mista", sub: "Urinária e fecal" },
-                  { value: "acamado", title: "Acamado(a) ou imobilizado(a)", sub: "Mobilidade reduzida" },
+                  { value: "urinaria", icon: <Droplet className="w-5 h-5" />, title: "Incontinência urinária", sub: "Perda involuntária de urina" },
+                  { value: "fecal", icon: <Droplets className="w-5 h-5" />, title: "Incontinência fecal", sub: "Perda involuntária de fezes" },
+                  { value: "mista", icon: <RefreshCw className="w-5 h-5" />, title: "Incontinência mista", sub: "Urinária e fecal" },
+                  { value: "acamado", icon: <BedDouble className="w-5 h-5" />, title: "Acamado(a) ou imobilizado(a)", sub: "Mobilidade reduzida" },
                 ]}
               />
               <BackBtn onClick={() => goto(2)} />
@@ -514,10 +514,10 @@ const Funil = () => {
                 selected={s.gasto}
                 onSelect={choose("gasto", 5)}
                 options={[
-                  { value: "alto", title: "Sim, mais de R$ 300 por mês", sub: "Pesa bastante no orçamento" },
-                  { value: "economiza", title: "Sim, tentamos economizar", sub: "Difícil, mas a gente se vira" },
-                  { value: "preparando", title: "Ainda não, mas já está precisando", sub: "Estamos nos preparando" },
-                  { value: "outro", title: "Conseguimos por outro meio", sub: "Burocrático e demorado" },
+                  { value: "alto", icon: <TrendingDown className="w-5 h-5" />, title: "Sim, mais de R$ 300 por mês", sub: "Pesa bastante no orçamento" },
+                  { value: "economiza", icon: <PiggyBank className="w-5 h-5" />, title: "Sim, tentamos economizar", sub: "Difícil, mas a gente se vira" },
+                  { value: "preparando", icon: <Search className="w-5 h-5" />, title: "Ainda não, mas já está precisando", sub: "Estamos nos preparando" },
+                  { value: "outro", icon: <Building2 className="w-5 h-5" />, title: "Conseguimos por outro meio", sub: "Burocrático e demorado" },
                 ]}
               />
               <BackBtn onClick={() => goto(3)} />
@@ -633,10 +633,10 @@ const Funil = () => {
                   setTimeout(() => goto(7), 320);
                 }}
                 options={[
-                  { value: "P", title: "Pequeno", sub: "40 a 60 kg · cintura 60–80 cm" },
-                  { value: "M", title: "Médio", sub: "55 a 80 kg · cintura 80–110 cm" },
-                  { value: "G", title: "Grande", sub: "75 a 100 kg · cintura 110–135 cm" },
-                  { value: "EG", title: "Extra Grande", sub: "95 a 130 kg · cintura > 135 cm" },
+                  { value: "P", icon: <span className="font-semibold text-base">P</span>, title: "Pequeno", sub: "40 a 60 kg · cintura 60–80 cm" },
+                  { value: "M", icon: <span className="font-semibold text-base">M</span>, title: "Médio", sub: "55 a 80 kg · cintura 80–110 cm" },
+                  { value: "G", icon: <span className="font-semibold text-base">G</span>, title: "Grande", sub: "75 a 100 kg · cintura 110–135 cm" },
+                  { value: "EG", icon: <span className="font-semibold text-sm">EG</span>, title: "Extra Grande", sub: "95 a 130 kg · cintura > 135 cm" },
                 ]}
               />
               <BackBtn onClick={() => goto(5)} />
@@ -662,10 +662,10 @@ const Funil = () => {
                   setTimeout(() => goto(8), 320);
                 }}
                 options={[
-                  { value: "3-5", title: "Apenas à noite", sub: "3 a 5 fraldas por dia" },
-                  { value: "6-8", title: "Durante o dia também", sub: "6 a 8 fraldas por dia" },
-                  { value: "8+", title: "Uso contínuo", sub: "Acamado(a) — 8 ou mais por dia" },
-                  { value: "nao-sei", title: "Não sei ao certo", sub: "O médico avalia e prescreve" },
+                  { value: "3-5", icon: <Moon className="w-5 h-5" />, title: "Apenas à noite", sub: "3 a 5 fraldas por dia" },
+                  { value: "6-8", icon: <Sun className="w-5 h-5" />, title: "Durante o dia também", sub: "6 a 8 fraldas por dia" },
+                  { value: "8+", icon: <Repeat className="w-5 h-5" />, title: "Uso contínuo", sub: "Acamado(a) — 8 ou mais por dia" },
+                  { value: "nao-sei", icon: <HelpCircle className="w-5 h-5" />, title: "Não sei ao certo", sub: "O médico avalia e prescreve" },
                 ]}
               />
               <BackBtn onClick={() => goto(6)} />
