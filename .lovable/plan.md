@@ -1,45 +1,65 @@
-## Auditoria do `/funil` + correções
+## Objetivo
+Inserir as informações do "Guia Rápido: Fraldas Geriátricas na Farmácia Popular" dentro do funil `/funil`, de forma resumida e visualmente integrada ao design dark/glass já existente — fortalecendo a percepção de valor (gratuidade real + autoridade técnica) sem inflar a cópia.
 
-### 🐞 Bug crítico encontrado
-Os "ícones" das opções estão renderizando o `value` cru (ex: **"mae-pai"**, **"avo"**, **"familiar"**) porque o `OptionList` usa `o.icon ?? o.value` como fallback e nenhum ícone foi passado nas etapas 1–5 e 7. Isso quebra completamente a leitura visual do funil.
+A informação será **distribuída em 4 micro-blocos** ao longo das etapas (não concentrada em um único bloco), para reforçar a mensagem em momentos de decisão.
 
-### Plano de correção
+---
 
-**1. Substituir `value` como fallback por ícones lucide reais em cada etapa**
+## Onde cada parte entra
 
-| Etapa | Opção | Ícone |
-|---|---|---|
-| 1 — Para quem | mãe/pai · avós · familiar · eu | `Users` · `UserRound` · `HeartHandshake` · `User` |
-| 2 — Idade | 60–70 · 71–80 · 80+ · PCD | `Calendar` (×3) · `Accessibility` |
-| 3 — Condição | urinária · fecal · mista · acamado | `Droplet` · `Droplets` · `RefreshCw` · `BedDouble` |
-| 4 — Gasto | >300 · economiza · preparando · outro | `TrendingDown` · `PiggyBank` · `Search` · `Building2` |
-| 6 — Tamanho | P/M/G/EG | manter as letras (já fazem sentido como "glyph") |
-| 7 — Frequência | noite · dia · contínuo · não sei | `Moon` · `Sun` · `Repeat` · `HelpCircle` |
+### 1. Etapa 02 — "Quem tem direito" (reforço de elegibilidade)
+Logo após o `StepHeader`, adicionar um `InfoNote` discreto:
+> **Lei garante:** 60+ anos OU pessoa com deficiência (qualquer idade, com CID na receita).
 
-**2. Auditoria de funcionalidade**
-- ✅ Persistência sessionStorage funciona, mas se o usuário recarregar no step 10 com `nome` vazio, o resumo mostra "—". Aceitável.
-- ⚠️ `orderId` é gerado no `useMemo([])` — recalcula a cada mount. Trocar por `useState(() => …)` para travar o número uma vez.
-- ⚠️ Botão "Voltar" no step 10 leva ao 9, mas se usuário voltar e mudar o WA, o `orderId` já travado não muda — ok, comportamento desejado.
-- ⚠️ Step 8: validação só habilita o botão; mas se usuário colar CPF formatado vindo de outro lugar, a máscara reformatar. OK.
-- ⚠️ Link `MP_LINK` ainda é placeholder — manter com comentário `[PREENCHER]`.
-- ⚠️ Acessibilidade: adicionar `aria-label` ao progress bar e `role="radiogroup"` ao OptionList.
+Reforça a confiança de quem está respondendo a idade.
 
-**3. Auditoria de design**
-- Header em mobile: `CRM ativo · Telemedicina · CFM 2.314/2022` quebra/aperta. Reduzir texto em telas pequenas (esconder linha secundária < sm).
-- Card padding `p-7 sm:p-10` ok; em telas muito pequenas (<360px) reduzir para `p-5`.
-- Tipografia do título `text-2xl sm:text-3xl` ok.
-- Botão "Pagar" no step 10 — ajustar tamanho do `<Wallet>` icon (parece desproporcional em mobile).
-- Comparativo Hoje/Depois (step 5): em mobile pequeno os números R$ 450 podem cortar — adicionar `whitespace-nowrap`.
+---
 
-**4. Auditoria de responsividade**
-- Testar em 375px (iPhone SE), 390px (iPhone 13), 768px (iPad), 1024+ (desktop).
-- Garantir que o card não ultrapassa viewport e que o resumo (dl) trunca o nome corretamente — já tem `truncate max-w-[60%]`, manter.
-- Trust pills wrappam ok; em 320px reduzir gap.
+### 2. Etapa 05 — Bloco educacional (núcleo do guia)
+A etapa 5 já é o ponto educacional. Vamos **expandir o card "Como funciona, na prática"** acrescentando 2 itens novos ao `<ul>` existente, mantendo o mesmo padrão visual (ícone + frase curta):
 
-**5. Pequenos refinamentos**
-- Adicionar `scroll-mt-4` ao card para o `scrollTo top` ser mais suave.
-- Animação de entrada de cada step (`fade-in` 200ms) para reduzir sensação de salto.
-- Selecionar opção: adicionar `aria-pressed`.
+- **Calendar** — *Receita vale 6 meses (180 dias).* Um único laudo cobre todo o semestre.
+- **Package** — *Até 4 fraldas/dia, retirada a cada 10 dias = até 40 fraldas por viagem* à Farmácia Popular.
 
-### Arquivos afetados
+Sem alterar o layout — apenas mais 2 `<li>` no mesmo `<ul>`.
+
+---
+
+### 3. Etapa 07 — Frequência (contexto de quantidade)
+Adicionar um `InfoNote` curto acima das opções:
+> **Como funciona o fornecimento:** SUS libera até **4 fraldas/dia** (até **40 a cada 10 dias** na farmácia). A frequência informada aqui define a quantidade no laudo.
+
+Conecta a pergunta com o benefício concreto.
+
+---
+
+### 4. Etapa 09 — WhatsApp (instrução prática "o que levar")
+Após o input do WhatsApp, adicionar um mini-card `SURFACE` com checklist do que levar à farmácia:
+> **Ao retirar na Farmácia Popular, leve:**
+> - Laudo médico original (válido por 6 meses)
+> - Documento oficial com foto + CPF do paciente
+
+Prepara o cliente para o sucesso pós-laudo (reduz reembolso/atrito).
+
+---
+
+### 5. Etapa 10 — "Dica de Ouro" + gancho de renovação
+Após o resumo / antes do botão de pagar, inserir um callout final em destaque (ícone `Lightbulb`, borda sky-400/30):
+> **Dica de ouro:** anote a data de emissão do laudo. Faltando ~30 dias para completar 6 meses, **renove com a gente** para não ficar sem fralda. (gancho de recorrência futura)
+
+Plantio de receita recorrente sem ser invasivo.
+
+---
+
+## Padrão visual reaproveitado
+Tudo com componentes que já existem em `Funil.tsx`:
+- `InfoNote` (etapas 2, 7)
+- `<ul>` dentro do card SURFACE (etapa 5)
+- novo mini-card `SURFACE` rounded-2xl (etapas 9 e 10)
+- ícones lucide já importados + 2 novos (`Lightbulb`, `Package`, `IdCard`)
+
+## Arquivo afetado
 - `src/pages/Funil.tsx` — único arquivo modificado.
+
+## Não vai mudar
+- Fluxo de 10 etapas, validações, links WhatsApp/Mercado Pago, preço R$ 49, copy dos títulos, design tokens.

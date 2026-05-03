@@ -32,6 +32,9 @@ import {
   Sun,
   Repeat,
   HelpCircle,
+  Lightbulb,
+  Package,
+  IdCard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -455,6 +458,9 @@ const Funil = () => {
                 }
                 desc="A lei federal garante fraldas gratuitas a partir dos 60 anos, ou em qualquer idade para pessoas com deficiência."
               />
+              <InfoNote icon={<ShieldCheck className="w-4 h-4" />}>
+                <strong className="text-white">Quem tem direito:</strong> pessoas com <strong className="text-white">60+ anos</strong> ou <strong className="text-white">PcD em qualquer idade</strong> (com CID na receita).
+              </InfoNote>
               <OptionList
                 selected={s.idade}
                 onSelect={choose("idade", 3)}
@@ -557,6 +563,20 @@ const Funil = () => {
                     </span>
                   </li>
                   <li className="flex gap-3">
+                    <Calendar className="w-4 h-4 text-sky-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong className="text-white">Um único laudo vale 6 meses (180 dias).</strong>{" "}
+                      Você não precisa de receita nova toda vez — o mesmo papel cobre o semestre inteiro na farmácia.
+                    </span>
+                  </li>
+                  <li className="flex gap-3">
+                    <Package className="w-4 h-4 text-sky-400 mt-0.5 shrink-0" />
+                    <span>
+                      <strong className="text-white">Até 4 fraldas por dia</strong>, com retirada a cada 10 dias —{" "}
+                      <strong className="text-white">até 40 fraldas por viagem</strong> à Farmácia Popular.
+                    </span>
+                  </li>
+                  <li className="flex gap-3">
                     <AlertTriangle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
                     <span>
                       A Farmácia Popular{" "}
@@ -655,6 +675,9 @@ const Funil = () => {
                 }
                 desc="Define a quantidade prescrita no laudo. Quanto maior a necessidade, mais a Farmácia Popular fornece."
               />
+              <InfoNote icon={<Package className="w-4 h-4" />}>
+                <strong className="text-white">Como funciona o fornecimento:</strong> SUS libera até <strong className="text-white">4 fraldas/dia</strong> — você retira <strong className="text-white">até 40 a cada 10 dias</strong> na farmácia.
+              </InfoNote>
               <OptionList
                 selected={s.freq}
                 onSelect={(v) => {
@@ -779,6 +802,24 @@ const Funil = () => {
                   Use um número que você consulta com frequência.
                 </div>
               </div>
+
+              <div className={`${SURFACE} rounded-2xl p-5 mt-5`}>
+                <div className="text-[11px] uppercase tracking-[0.16em] text-sky-400/80 font-mono mb-3 flex items-center gap-2">
+                  <IdCard className="w-3.5 h-3.5" />
+                  Ao retirar na Farmácia Popular, leve
+                </div>
+                <ul className="space-y-2.5 text-sm text-white/75 leading-relaxed">
+                  <li className="flex gap-2.5">
+                    <Check className="w-4 h-4 text-sky-400 mt-0.5 shrink-0" />
+                    <span><strong className="text-white">Laudo médico original</strong> (válido por 6 meses)</span>
+                  </li>
+                  <li className="flex gap-2.5">
+                    <Check className="w-4 h-4 text-sky-400 mt-0.5 shrink-0" />
+                    <span><strong className="text-white">Documento oficial com foto + CPF</strong> do paciente</span>
+                  </li>
+                </ul>
+              </div>
+
               <PrimaryBtn onClick={() => goto(10)} disabled={!whatsOk}>
                 Ver resumo do pedido
               </PrimaryBtn>
@@ -844,6 +885,15 @@ const Funil = () => {
                 </div>
                 <div className="text-xs text-white/45 mt-2">
                   em fraldas que passarão a ser gratuitas pelo SUS
+                </div>
+              </div>
+
+              {/* Dica de ouro — gancho de renovação */}
+              <div className="flex gap-3 items-start rounded-xl border border-sky-400/30 bg-sky-500/[0.06] px-4 py-3 mb-4 text-xs text-white/75 leading-relaxed">
+                <Lightbulb className="w-4 h-4 text-sky-300 shrink-0 mt-0.5" />
+                <div>
+                  <strong className="text-white">Dica de ouro:</strong> anote a data de emissão do laudo. Faltando ~30 dias para completar 6 meses,{" "}
+                  <strong className="text-white">renove com a gente</strong> para nunca ficar sem fralda.
                 </div>
               </div>
 
