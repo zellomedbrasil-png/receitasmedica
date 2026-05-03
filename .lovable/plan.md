@@ -1,105 +1,45 @@
+## Auditoria do `/funil` + correções
 
-## Objetivo
+### 🐞 Bug crítico encontrado
+Os "ícones" das opções estão renderizando o `value` cru (ex: **"mae-pai"**, **"avo"**, **"familiar"**) porque o `OptionList` usa `o.icon ?? o.value` como fallback e nenhum ícone foi passado nas etapas 1–5 e 7. Isso quebra completamente a leitura visual do funil.
 
-Criar a rota `/funil` com um funil de conversão de **10 etapas** (eligibilidade → laudo → pagamento), inspirado no HTML enviado, mas com a **mesma identidade visual do `/fralda`** (dark `#070B12`, accent `sky-400`, tipografia atual, glass cards). Sem usar a paleta creme/verde-musgo do HTML original.
+### Plano de correção
 
-## Arquitetura
+**1. Substituir `value` como fallback por ícones lucide reais em cada etapa**
 
-**Novos arquivos:**
-- `src/pages/Funil.tsx` — página única, autocontida, com state machine local.
-- Rota adicionada em `src/App.tsx`: `<Route path="/funil" element={<Funil />} />`.
+| Etapa | Opção | Ícone |
+|---|---|---|
+| 1 — Para quem | mãe/pai · avós · familiar · eu | `Users` · `UserRound` · `HeartHandshake` · `User` |
+| 2 — Idade | 60–70 · 71–80 · 80+ · PCD | `Calendar` (×3) · `Accessibility` |
+| 3 — Condição | urinária · fecal · mista · acamado | `Droplet` · `Droplets` · `RefreshCw` · `BedDouble` |
+| 4 — Gasto | >300 · economiza · preparando · outro | `TrendingDown` · `PiggyBank` · `Search` · `Building2` |
+| 6 — Tamanho | P/M/G/EG | manter as letras (já fazem sentido como "glyph") |
+| 7 — Frequência | noite · dia · contínuo · não sei | `Moon` · `Sun` · `Repeat` · `HelpCircle` |
 
-**Sem dependências novas.** Reaproveita: `Button`, `Input`, `Progress`, `ScrollReveal`, ícones lucide.
+**2. Auditoria de funcionalidade**
+- ✅ Persistência sessionStorage funciona, mas se o usuário recarregar no step 10 com `nome` vazio, o resumo mostra "—". Aceitável.
+- ⚠️ `orderId` é gerado no `useMemo([])` — recalcula a cada mount. Trocar por `useState(() => …)` para travar o número uma vez.
+- ⚠️ Botão "Voltar" no step 10 leva ao 9, mas se usuário voltar e mudar o WA, o `orderId` já travado não muda — ok, comportamento desejado.
+- ⚠️ Step 8: validação só habilita o botão; mas se usuário colar CPF formatado vindo de outro lugar, a máscara reformatar. OK.
+- ⚠️ Link `MP_LINK` ainda é placeholder — manter com comentário `[PREENCHER]`.
+- ⚠️ Acessibilidade: adicionar `aria-label` ao progress bar e `role="radiogroup"` ao OptionList.
 
-## Estrutura da página
+**3. Auditoria de design**
+- Header em mobile: `CRM ativo · Telemedicina · CFM 2.314/2022` quebra/aperta. Reduzir texto em telas pequenas (esconder linha secundária < sm).
+- Card padding `p-7 sm:p-10` ok; em telas muito pequenas (<360px) reduzir para `p-5`.
+- Tipografia do título `text-2xl sm:text-3xl` ok.
+- Botão "Pagar" no step 10 — ajustar tamanho do `<Wallet>` icon (parece desproporcional em mobile).
+- Comparativo Hoje/Depois (step 5): em mobile pequeno os números R$ 450 podem cortar — adicionar `whitespace-nowrap`.
 
-```text
-┌──────────────────────────────────────────────┐
-│ Editorial band (atendimento online · 24h)    │
-├──────────────────────────────────────────────┤
-│ Header (logo Shield+Plus · CRM/CE)           │
-├──────────────────────────────────────────────┤
-│ Progress: "Etapa 03 / 10" · barra · 30%      │
-├──────────────────────────────────────────────┤
-│ Card glass (uma etapa visível por vez)       │
-│  - eyebrow                                   │
-│  - título com <em> em sky-400                │
-│  - descrição                                 │
-│  - opções / inputs / resumo                  │
-│  - botões primário + voltar                  │
-├──────────────────────────────────────────────┤
-│ Trust pills + assinatura                     │
-└──────────────────────────────────────────────┘
-```
+**4. Auditoria de responsividade**
+- Testar em 375px (iPhone SE), 390px (iPhone 13), 768px (iPad), 1024+ (desktop).
+- Garantir que o card não ultrapassa viewport e que o resumo (dl) trunca o nome corretamente — já tem `truncate max-w-[60%]`, manter.
+- Trust pills wrappam ok; em 320px reduzir gap.
 
-## State machine
+**5. Pequenos refinamentos**
+- Adicionar `scroll-mt-4` ao card para o `scrollTo top` ser mais suave.
+- Animação de entrada de cada step (`fade-in` 200ms) para reduzir sensação de salto.
+- Selecionar opção: adicionar `aria-pressed`.
 
-```ts
-type State = {
-  step: 1..10;
-  paraQuem, idade, condicao, gastoAtual: string;
-  tamanho: 'P' | 'M' | 'G' | 'EG';
-  freq: '3-5' | '6-8' | '8+' | 'nao-sei';
-  nome, cpf, whatsapp: string;
-  economiaAnual: number;  // derivado da freq
-};
-```
-
-Avança automático em etapas com opções (380ms delay), manual nas etapas 5, 8, 9. Botão "Voltar" em todas exceto a 1.
-
-## Conteúdo das 10 etapas
-
-1. **Elegibilidade** — Para quem? (mãe/pai · avós · familiar · eu)
-2. **Idade** — 60–70 · 71–80 · 80+ · <60 PCD
-3. **Condição** — Incontinência urinária / fecal / mista / acamado (com nota Portaria 3.073/2024)
-4. **Gasto atual** — >R$300/mês · economiza · ainda não · outro meio
-5. **Bloco educacional** — card explicando: fralda 100% gratuita, paga-se a consulta médica, sem laudo a Farmácia Popular não libera. Comparativo Hoje (R$ 450/mês) → Depois (R$ 0/mês). CTA "Entendi · quero meu laudo".
-6. **Tamanho** — P/M/G/EG com referências de cintura+peso
-7. **Frequência** — 3–5 (noite) · 6–8 (dia) · 8+ (acamado) · não sei. Define `economiaAnual` (3600/4800/6000/4800).
-8. **Nome + CPF** — inputs com máscara + validação CPF (algoritmo dos dígitos verificadores). Botão habilita só com nome ≥ 2 palavras + CPF válido.
-9. **WhatsApp** — input com máscara `(00) 00000-0000`. Habilita com ≥10 dígitos.
-10. **Resumo + pagamento** — checkmark de sucesso, resumo do pedido (paciente, CPF, tamanho, frequência, WA, prazo 24h), bloco "Economia anual estimada" R$ X, disclaimer (paga-se laudo, fralda gratuita), card de pagamento Mercado Pago (R$ 49) + CTA WhatsApp para enviar comprovante.
-
-## Decisões de conteúdo (mantém compliance do /fralda)
-
-- **Preço do laudo: R$ 49** (consistente com a memory do projeto e o /fralda atual — *não* R$ 97 do HTML enviado).
-- **Disclaimer obrigatório** no step 5 e step 10: "Você paga apenas pela consulta médica e emissão do laudo. As fraldas continuam 100% gratuitas pela Farmácia Popular."
-- Referência à **Portaria GM/MS 3.073/2024** e **Resolução CFM 2.314/2022** no rodapé/legal.
-- Sem nome de responsável técnico exposto (alinhado à decisão prévia do `/fralda`).
-- WhatsApp: o mesmo número já usado no projeto (`5585991275429`).
-
-## Design tokens (reutiliza os do `/fralda`)
-
-```ts
-BG = "bg-[#070B12]"
-SURFACE = "bg-white/[0.03] border border-white/[0.07]"
-ACCENT = "text-sky-400" / "bg-sky-500"
-SOFT_GRADIENT = radial sky-500/18 no topo
-```
-
-- Cards de opção: `rounded-2xl`, hover sky-400/30, selected com ring sky-400 + checkmark.
-- Botão primário: `bg-sky-500 hover:bg-sky-400 text-slate-950`, com ícone seta.
-- Botão pagamento (step 10): variant Mercado Pago (azul `#009ee3` → `#0070a8`) para diferenciar visualmente.
-- Botão WhatsApp: verde `#25D366`.
-- Progress: `<Progress />` do shadcn estilizado em sky-400.
-- Tipografia: mantém `tracking-tighter-custom` e fonte do tema (não importa Fraunces — mantém consistência com o resto do site).
-
-## SEO
-
-- `title`: "Solicite seu laudo para fralda gratuita · Funil guiado"
-- `description`: "Em 10 passos rápidos descubra se sua família tem direito à fralda geriátrica gratuita pelo SUS e receba o laudo médico em até 24h."
-- `canonical`: `https://receitas.site/funil`
-- `noindex` *não* será aplicado (página de conversão pública).
-
-## Scope e não-escopo
-
-- ✅ Página estática client-side com state local.
-- ✅ Validação de CPF e formatação de máscaras.
-- ✅ Persistência simples em `sessionStorage` (para o usuário não perder dados ao recarregar) — opcional, vou incluir.
-- ❌ Sem integração com backend / sem gravar lead em banco (pode ser adicionado depois com Lovable Cloud).
-- ❌ Sem A/B testing ou analytics events (pode ser plugado depois).
-
-## Arquivos afetados
-
-- **novo:** `src/pages/Funil.tsx`
-- **edit:** `src/App.tsx` (uma rota nova)
+### Arquivos afetados
+- `src/pages/Funil.tsx` — único arquivo modificado.
