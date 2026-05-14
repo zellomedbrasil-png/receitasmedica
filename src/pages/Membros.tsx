@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Download, Diamond, ArrowRight, ShieldCheck, BadgeCheck } from "lucide-react";
+import { useSeo } from "@/lib/seo";
 
 /* ─── Scroll Reveal ─── */
 const SR = ({ children, className, delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => (
