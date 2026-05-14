@@ -270,10 +270,18 @@ const faqs = [
 ];
 
 /* ════════════════════════════════════════════════════════════════════ */
+import { useSeo } from "@/lib/seo";
 export default function IndexV2() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
+  useSeo({
+    title: "receitas.site | Renovar Receita Médica Online",
+    description:
+      "Renove sua receita médica online por telemedicina. Receita digital ICP-Brasil válida em todo o Brasil. Atendimento rápido e seguro.",
+    canonical: "https://receitas.site/",
+    jsonLdId: "ld-home",
+  });
 
   useEffect(() => {
     const onScroll = () => {
