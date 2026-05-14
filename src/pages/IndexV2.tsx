@@ -481,6 +481,7 @@ export default function IndexV2() {
           </AnimatePresence>
         </header>
 
+        <main>
         {/* ── Hero ────────────────────────────────────────────────── */}
         <section
           className="relative pt-20 pb-28 px-5 md:px-8 text-center overflow-hidden"
