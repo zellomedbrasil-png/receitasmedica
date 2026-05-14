@@ -115,7 +115,7 @@ const useSeo = () => {
       {
         "@context": "https://schema.org",
         "@type": "MedicalBusiness",
-        name: "fraldageriatrica.com",
+        name: "receitas.site",
         url: CANONICAL,
         image: OG_IMAGE,
         description: PAGE_DESC,
