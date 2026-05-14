@@ -1521,6 +1521,7 @@ export default function IndexV2() {
             </SR>
           </div>
         </section>
+        </main>
 
         {/* ── Footer ──────────────────────────────────────────────── */}
         <footer
