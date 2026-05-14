@@ -1,0 +1,11 @@
+# receitas.site
+
+> Plataforma de saúde digital para renovação de receitas médicas de uso contínuo via telemedicina, com receita digital ICP-Brasil válida em todo o Brasil. Também emite laudo médico para retirada de fralda geriátrica gratuita pela Farmácia Popular.
+
+## Pages
+
+- [Home](/): Renovação de receita médica online por telemedicina, planos avulso (R$ 39) e assinatura (R$ 29/mês).
+- [Fralda Geriátrica](/fralda): Laudo médico online para fralda geriátrica gratuita pelo SUS (R$ 49).
+- [E-book O Código da Farmácia](/ebook): Guia investigativo para pagar menos em remédios usando programas oficiais e PBMs (R$ 29).
+- [Área de Membros](/membros): Acesso ao e-book e materiais exclusivos para compradores.
+- [Pagamento](/pagamento): Checkout via PIX ou cartão de crédito.

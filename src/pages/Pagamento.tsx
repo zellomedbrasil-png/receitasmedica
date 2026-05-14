@@ -15,11 +15,19 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import logoReceitas from "@/assets/logo-receitas.png";
+import { useSeo } from "@/lib/seo";
 
 const PIX_KEY = "contato@receitas.site";
 const CHECKOUT_URL = "https://pay.infinitepay.io/zellomed/VC1DLTItSQ-2Z2zPWDEXL-29,00";
 
 const Pagamento = () => {
+  useSeo({
+    title: "Pagamento | receitas.site",
+    description:
+      "Finalize seu pedido no receitas.site com PIX (aprovação imediata) ou cartão de crédito de forma segura.",
+    canonical: "https://receitas.site/pagamento",
+    jsonLdId: "ld-pagamento",
+  });
   const [tab, setTab] = useState<"pix" | "cartao">("pix");
   const [copied, setCopied] = useState(false);
 

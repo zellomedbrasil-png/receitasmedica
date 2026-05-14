@@ -269,7 +269,41 @@ const faqs = [
 ];
 
 /* ─── Page ──────────────────────────────────────────────────────────────── */
+import { useSeo } from "@/lib/seo";
 const Ebook = () => {
+  useSeo({
+    title: "O Código da Farmácia | E-book por R$ 29",
+    description:
+      "Guia prático para pagar menos em remédios: programas oficiais, PBMs e descontos legítimos. Acesso imediato em PDF por R$ 29.",
+    canonical: "https://receitas.site/ebook",
+    jsonLdId: "ld-ebook",
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: "O Código da Farmácia",
+        description:
+          "E-book com guia investigativo para reduzir gastos com medicamentos usando programas oficiais e PBMs.",
+        brand: { "@type": "Brand", name: "receitas.site" },
+        offers: {
+          "@type": "Offer",
+          price: "29.00",
+          priceCurrency: "BRL",
+          availability: "https://schema.org/InStock",
+          url: "https://receitas.site/ebook",
+        },
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+    ],
+  });
   return (
     <div
       className="min-h-screen font-sans scroll-smooth"
