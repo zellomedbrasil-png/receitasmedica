@@ -37,9 +37,9 @@ const PRECO = "R$ 49";
 const CNPJ = "[PREENCHER: 00.000.000/0001-00]";
 const ENDERECO = "[PREENCHER: ENDEREÇO COMPLETO]";
 
-const PAGE_TITLE = "Fralda Geriátrica Gratuita pelo SUS | Laudo Médico Online por R$ 49";
+const PAGE_TITLE = "Fralda Geriátrica Grátis pelo SUS | Laudo por R$ 49";
 const PAGE_DESC =
-  "Idosos 60+ e PCDs têm direito a fralda geriátrica gratuita pela Farmácia Popular. Emitimos o laudo médico online em até 24h por R$ 49. Fale no WhatsApp.";
+  "Idosos 60+ e PCDs têm direito a fralda geriátrica gratuita pela Farmácia Popular. Emitimos o laudo médico online em até 24h por R$ 49.";
 const CANONICAL = "https://receitas.site/fralda";
 const OG_IMAGE = "https://receitas.site/og-fralda.jpg";
 
