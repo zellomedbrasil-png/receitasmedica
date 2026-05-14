@@ -34,6 +34,13 @@ const readingOrder = [
 ];
 
 const Membros = () => {
+  useSeo({
+    title: "Área de Membros | O Código da Farmácia",
+    description:
+      "Acesse o e-book O Código da Farmácia, o guia de leitura e materiais exclusivos da área de membros do receitas.site.",
+    canonical: "https://receitas.site/membros",
+    jsonLdId: "ld-membros",
+  });
   return (
     <div className="min-h-screen font-sans scroll-smooth" style={{ background: "#0F1115", color: "#F0F2F5" }}>
       {/* Ambient glow */}
